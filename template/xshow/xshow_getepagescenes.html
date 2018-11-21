@@ -1,0 +1,320 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							单页模板采集列表
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">首页</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="/xshow/scenelist">模板管理</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="javascript:void(0);">单页模板采集列表</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="tabbable tabbable-custom tabbable-full-width">
+						<ul class="nav nav-tabs">
+                            <li {if $p_cate eq 'all'}class="active"{/if}><a href="/xshow/getepagescenes?c=all">全部</a></li>
+                            {foreach from=$e_parent_category key='k' item='item'}                                
+								<li {if $p_cate eq $k}class="active"{/if}><a href="/xshow/getepagescenes?c={$k}">{$item}</a></li>
+                            {/foreach}
+                            <li {if $p_cate eq 'other'}class="active"{/if}><a  href="/xshow/getepagescenes?c=other">其他</a></li>
+						</ul>
+                        </div>
+                        
+                        
+						<div class="tab-content" id="sub_search">
+                            <div class="row-fluid search-forms search-default">
+									<form class="form-search" action="#" method="GET">
+										<div class="chat-form">
+											<div class="input-cont">
+     										<select onchange="get_sub_category($(this));" name="c" id="e_category">
+     											<option value="all" {if $p_cate eq 'all'}selected{/if}>全部</option>
+     											 {foreach from=$e_parent_category key='k' item='item'}                                
+													<option value='{$k}' {if $p_cate eq $k}selected{/if}>{$item}</option>
+					                            {/foreach}
+     											<option value="other" {if $p_cate eq 'other'}selected{/if}>其他</option>
+     										</select>
+     										<select id="sub_category" name="s">
+     											<option value="0">请选择</option>
+     										</select>
+											名称 <input type="text"  name="keyword"  value="{$keyword}" placeholder="请输入关键词..." class="m-wrap" style="width:200px" id="name_keyword">
+<button type="submit" class="btn green" style=" ">搜 索 &nbsp; <i class="m-icon-swapright m-icon-white"></i></button>
+											</div>
+
+
+										</div>
+									</form>
+								</div>
+                                
+                                
+                    
+                         <div class="row-fluid portfolio-block" id="pageScenelog">
+                        {foreach from=$pageScenes item='item'}
+                      			<div class="portfolio-text" style="width:400px;float:left;margin-left:10px;margin-top:10px;">
+									<img src="{$publicserver}/public/uploads/xshow/{$item.thumbsrc_varchar}" style="width:160px;height:243px;cursor:pointer;" class="thumbnail" title="{$item.pagename_varchar}" onclick="ajaxpreview($(this),{$item.pageid_bigint})">
+						  			<div class="portfolio-text-info" style="padding-top:12px;">
+										   <h4 style="width:200px;height:30px;line-height:30px;overflow:hidden;" title="{$item.pagename_varchar}"> {$item.pagename_varchar}</h4>
+										   <p>添加时间：<span> {$item.createtime_time}</span></p>
+										   <p><input type="hidden" value="{$item.pageid_bigint}" /></p>
+										   <p>类别：<select style="width:120px;" onchange="changeCategoryBorder($(this));">
+													<option value="0">请选择</option>
+													{foreach from=$xdf_pageSceneCategory key=k item=i}
+														<option value="{$k}" {if $k eq $item.cate_id}selected{/if}>{$i}</option>
+													{/foreach}
+												</select>
+										   </p>
+										   <p><input type="checkbox" style="margin:0px;"/> 设为推荐</p>
+										   <p style="margin-top:45px;"><input type="button" value="设定" class="btn blue" onclick="setPageScene($(this),'{$item.pageid_bigint}');"/><span style="margin-left:10px;display:none;"></span></p>
+									</div>
+								</div>
+                         {/foreach}  
+                         </div>          
+                                   <div class="space5" style="clear:both;"></div>
+                                    <div class="pagination pagination-left"><input type="button" class="btn blue" value="提交" onclick="setAllPageScenes($(this));" id="addPageSceneButton" style="display:none;"/></div>
+                                   <div class="pagination pagination-right"><div class="pages">{$page}</div></div>
+                                </div>
+                                </div>
+                                 </div>
+                                 </div>
+                                <style>
+                                .center{ text-align:center}
+								.center .p{ line-height:30px}
+                                </style>
+                                <div style="display:none;" id="category_json">{$e_ps_category}</div>
+                                <div style="display:none;" id="s_cate">{$s_cate}</div>
+                                {include file="xshow/xshow_footer.html"}                             
+ <script type="text/javascript">
+  var e_category_json_str = $.trim($('#category_json').html());
+  var s_cate = $('#s_cate').text();
+  var e_category = JSON.parse(e_category_json_str);
+  function get_sub_category(obj){
+  		var option_str = "<option value='0'>请选择</option>";
+  		var value = obj.val();
+  		var category_name = obj.find('option:selected').text();
+  		if(value !='all' && value!='other'){
+	  		$.each(e_category,function(index,entry){
+	  			if(category_name == index){
+	  				$.each(entry,function(i,e){
+	  					if(s_cate > 0 && i == s_cate)option_str +=  "<option value='"+i+"' selected>"+e+"</option>";
+	  					else option_str +=  "<option value='"+i+"'>"+e+"</option>";
+	  				});
+	  			}
+	  		});
+  		}
+  		$('#sub_category').empty().append(option_str);
+  }
+  function setPageScene(obj,pageId){
+  	   layer.confirm('您确定要把该单页采集模板设为单页模板吗？',{icon:3},function(index){
+	  	   var pageSceneCategory = obj.parent().prev().prev().find('select').val();
+	  	   var img = obj.parent().parent().prev();
+	  	   var recommend = obj.parent().prev().find('input').prop('checked')?1:0;
+	  	   //var addToPageScene = obj.parent().prev().prev().prev().find('input');
+	  	   var style = img.attr('style');
+	  	   if(pageSceneCategory == 0){
+	  	   	    img.attr('style',style+'border:1px solid red;');
+	  	   		layer.alert('请选择单页模板的类别',{icon:5},function(index){
+	  	   			img.attr('style',style);
+	  	   			layer.close(index);
+	  	   		});
+	  	   }else{
+	  	   		$.ajax({
+	  	   			url:'/xshow/ajax_addpagescenesys',
+	  	   			type:'POST',
+	  	   			dataType:'json',
+	  	   			data:{sa:[[pageId,pageSceneCategory,recommend]]},
+	  	   			beforeSend:function(){
+	  	   				obj.prop('disabled',true);
+	  	   			},
+	  	   			success:function(data){
+	  	   				var span = obj.next();
+	  	   				var span_style = span.attr('style');
+	  	   				if(data.result){
+	  	   					layer.alert(data.msg,{icon:6},function(index){
+	  	   						obj.parent().parent().parent().remove();
+	  	   						layer.close(index);
+	  	   					});
+	  	   					
+	  	   				}else{
+	  	   					span.attr('style',span_style+'color:red;').empty().append(data.msg).show();
+	  	   				}
+	  	   			}
+	  	   		});
+	  	   }
+  	   });
+  }
+  function changeCategoryBorder(obj){
+  	var selectValue = obj.val();
+  	var img = obj.parent().parent().prev();
+  	var imgStyle = 'width:160px;height:243px;';
+  	if(selectValue > 0){
+  		img.attr('style',imgStyle+'border:1px solid blue;');
+  	}else{
+  		img.attr('style',imgStyle);
+  	}
+  }
+  function setAllPageScenes(obj){
+	var scenePagesArr = [];
+  	var scenePageObj = $('#pageScenelog').find('.portfolio-text');
+	var imgStyle = 'width:160px;height:243px;';
+	var flag = true;
+  	scenePageObj.each(function(index){
+  		var scenePage = $(this);
+  		var img = scenePage.find('img');
+  		var pageidObj= scenePage.find('input:hidden');
+  		var sceneCategoryObj = scenePage.find('select');
+  		var sceneRecommend = scenePage.find('input:checkbox');
+  		var pageid = pageidObj.val();
+  		sceneCategory = sceneCategoryObj.val();
+  		var sceneRecommendValue = sceneRecommend.prop('checked')?1:0;
+  		if(sceneCategory > 0){
+  			scenePagesArr.push([pageid,sceneCategory,sceneRecommendValue]);
+  		}else{
+  			if(sceneRecommendValue == 1){
+	  			img.attr('style',imgStyle+'border:1px solid red;');
+	  			layer.msg('请为单页模板选择类别',{icon:5});
+	  			flag = false;
+	  			return false;
+  			}
+  		}
+  		
+  	});
+  	if(flag){
+	  	if(scenePagesArr.length == 0){
+	  		layer.alert('您没有选择任何单页模板',{icon:5});
+	  	}else{
+	   		$.ajax({
+  	   			url:'/xshow/ajax_addpagescenesys',
+  	   			type:'POST',
+  	   			dataType:'json',
+  	   			data:{sa:scenePagesArr},
+  	   			beforeSend:function(){
+  	   				obj.prop('disabled',true);
+  	   			},
+  	   			success:function(data){
+  	   				if(data.result){
+  	   					layer.alert(data.msg,{icon:5},function(index){
+  	   						layer.close(index);
+  	   						window.location.reload();
+  	   					});
+  	   				}else{
+  	   					obj.prop('disabled',false);
+  	   					layer.alert(data.msg,{icon:5});
+  	   				}
+  	   			}
+  	   		});
+	  	}
+  	}
+  }
+  $(function(){
+  	get_sub_category($('#e_category'));
+  	if($('#pageScenelog').find('.portfolio-text').length > 0){
+  		$('#addPageSceneButton').show();
+  	}
+  })	 
+	function ajaxpreview(obj,styleid) {
+		title = obj.attr('title');
+		layer.open({
+		  type: 2,
+		  title:title,
+		  shadeClose:true,
+		  area: ['323px','678px'] ,
+		  content: '/xshow/pageview?id='+styleid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+		}); 
+		return false;
+	}
+//-->
+</script>  
+
+<script type="text/javascript">
+    $(document).ready(function(){
+  $("#dtagid").change(function(){ 
+//  var url = $("#text").val();
+  var biztype = $("#dtagid").val();
+  $("#tagid").empty();
+   $.get("adminc.php?c=Scene&a=Type",{biztype:biztype}, function(data){
+if(data != null){
+   $("#tagid ").append(data);
+    }else{$('#tagid').after();
+        }
+   });
+    }); 
+	});
+	function setSceneStatus(sceneId,is_tpl,status_int){
+		var tpl_msg = '场景';
+		if(is_tpl == 1)tpl_msg = '模板';
+		var msg = '您确定要关闭该'+tpl_msg+'吗？';
+		if(status_int == 2){
+			msg = '您确定要开启该'+tpl_msg+'吗？';
+		}
+		layer.confirm(msg,{icon:5},function(index){
+						$.ajax({
+				url:'/xshow/ajax_setscenestatus',
+				type:'POST',
+				dataType:'json',
+				data:{sceneId:sceneId},
+				beforeSend:function(){
+					num = layer.load(2, {time: 10*1000});
+				},
+				success:function(data){
+					layer.close(num);
+					if(data.code){
+						layer.alert(data.msg, {icon: 5},function(index){
+							window.location.reload();
+						});
+					}else{
+						layer.alert(data.msg, {icon: 6});
+					}
+				}
+			});
+		});
+	}
+	function delScene(obj,sceneId){
+		var name = $.trim(obj.parent().prev().prev().find('h4').text());
+		var msg = '';
+		if(name == ''){
+			msg = '您确认要删除该场景吗？';
+		}else{
+			msg = '您确定要删除名称为['+name+']的场景吗？';
+		}
+		layer.confirm(msg,{icon:5},function(index){
+			$.ajax({
+				url:'/xshow/ajax_delscene',
+				type:'POST',
+				dataType:'json',
+				data:{sceneId:sceneId},
+				beforeSend:function(){
+					num = layer.load(2, {time: 10*1000});
+				},
+				success:function(data){
+					layer.close(num);
+					if(data.code){
+						layer.alert(data.msg, {icon: 5},function(index){
+							window.location.reload();
+						});
+					}else{
+						layer.alert(data.msg, {icon: 6});
+					}
+				}
+			});
+		});
+	}
+</script>
+
+
+                              
+                             
+      

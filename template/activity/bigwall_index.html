@@ -1,0 +1,205 @@
+{include file="activity/common_header.html"}
+
+<div class="clearfix">
+	<div class="we7-padding-bottom clearfix">
+	<div class="pull-left">
+		<form class="form-inline" action="" method="GET" onsubmit="return search_activity();">
+		  <div class="form-group">
+		    <label for="email">活动主题</label>
+		    <div class="input-group">
+		      <input type="text" name='keyword' class="form-control" id="keyword" placeholder="活动主题" value="{$keyword}"/>
+		    </div>
+		  </div>
+		  <button type="submit" class="btn btn-success">查询</button>
+		</form>
+		</div>
+		<div class="pull-right">
+			<a href="/activity/bigwalldetail" class="btn btn-primary we7-padding-horizontal" data-functionid="101" style="display:none;">添加活动</a>
+		</div>
+	</div>
+		{if $activityWall|@count neq 0}
+		{foreach from=$activityWall item=item}
+		<div>活动时间：{$item.beginTime}~{$item.endTime} 签到时间：{$item.qdBeginTime}~{$item.qdEndTime} 创建时间：{$item.createTime}</div>
+		<table class="layui-table" style="margin-bottom: 5px;margin-top: 5px;">
+		<thead class="navbar-inner">
+		<tr>
+			<th class="text-center" style="width:280px;">活动名称</th>
+			<th class="text-center">二维码</th>
+			<th class="text-center">入口地址</th>
+			<th class="text-center">创建人</th>
+			<th class="text-center">操作</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="text-center">{$item.title}</td>
+				<td class="text-center"><a href="javascript:void(0);" onclick="show_activity_qrcode($(this),'{$item.id}');">查看</a></td>
+				<td class="text-center"><a href="/activity/bigwallanimation?id={$item.id}" target="_blank">进入</a></td>
+				<td class="text-center">{$item.email}</td>
+				<td class="text-center link-group">
+						<a href="/activity/signinlist?id={$item.id}" data-functionid="1" style="display:none"/>签到人员</a>
+						<a href="/activity/awardpersonlist?id={$item.id}" data-functionid="1" style="display:none"/>获奖人员</a>
+						<a href="/activity/messagelist?id={$item.id}&s=0" data-functionid="1" style="display:none"/>消息列表</a>
+						<a href="/activity/bigwallmodify?id={$item.id}" data-functionid="102" style="display:none;">编辑</a>
+						{if $isSuperAdmin eq 1}
+						<a href="javascript:void(0);" onclick="initActivity($(this),'{$item.id}');">清理</a>
+						{/if}
+						<a href="javascript:void(0);" class="del" data-functionid="103" onclick="activityDel('{$item.id}');return false;"style="display:none;">删除</a>
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		{/foreach}
+		{else}
+		暂无数据
+		{/if}
+	<div style="text-align:right;">
+		<nav aria-label="Page navigation">
+			<ul class="pagination">{$page}</ul>
+		</nav>
+	</div>
+</div>
+<script type="text/javascript">
+function activityDel(id){
+	layer.confirm('您确定要删除该活动吗？', {icon: 3, title:'删除提示'}, function(index){
+		layer.close(index);
+		var num = '';
+		//请求服务删除管理员
+   		$.ajax({
+   			url:'/activity/ajax_activitydel',
+   			type:'POST',
+   			dataType:'json',
+   			data:{id:id},
+   			beforeSend:function(){
+   				num = layer.load(2, {time: 10*1000});
+   			},
+   			success:function(data){
+   				layer.close(num);
+   				if(data.code == 1){
+   					var index = layer.open({
+				   					title:'提示',
+				   					content:data.message,
+				   					yes:function(){
+				   						layer.close(index);
+		   								window.location.reload();
+				   					}
+				   				});
+   				}else{
+   					layer.alert(data.message);
+   				}
+   			}
+   		});
+	});
+}
+function search_activity(){
+	var keyword = $('#keyword').val();
+	if(!typeof keyword == string){
+		layer.alert('请输入正确的关键词',{icon:5});
+		return false;
+	}
+	if(keyword == ''){
+		layer.alert('关键字不能为空',{icon:5});
+		return false;
+	}
+	return true;
+}
+function downloadIamge(obj) {
+	if (!!window.ActiveXObject || "ActiveXObject" in window){
+		return true;
+	}else{
+		var selector = obj;
+		var name = obj.attr('download');
+		var image = new Image();
+		// 解决跨域 Canvas 污染问题
+		image.setAttribute('crossOrigin', 'anonymous');
+		image.onload = function () {
+			var canvas = document.createElement('canvas');
+			canvas.width = image.width;
+			canvas.height = image.height;
+			var context = canvas.getContext('2d');
+			context.drawImage(image, 0, 0, image.width, image.height);
+			var url = canvas.toDataURL('image/png');
+			// 生成一个a元素
+			var a = document.createElement('a');
+			// 创建一个单击事件
+			var event = document.createEvent("MouseEvents");
+			event.initMouseEvent(
+				"click", true, false, window, 0, 0, 0, 0, 0
+				, false, false, false, false, 0, null
+			);
+			// 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
+			a.download = name || '下载图片名称';
+			// 将生成的URL设置为a.href属性
+			a.href = url;
+			a.dispatchEvent(event);
+		}
+		image.src = selector.attr('href');
+		return false;
+	}
+}
+function show_activity_qrcode(obj,id){
+	$.ajax({
+		url:'/activity/ajax_getactivityercode',
+		type:'POST',
+		dataType:'json',
+		data:{id:id},
+		success:function(data){
+			if(data.code==1){
+				var str = '<div style="height:205px;text-align:center;" onmouseover="changeErcodeHide($(this));" onmouseout="changeErcodeShow($(this));">\
+							<div>\
+								<img src="'+data.url+'"/>\
+							</div>\
+							<div style="height:205px;border:1px solid #ccd5db;display:none;">\
+							 	<p class="qrcode-select-p">下载二维码</p>\
+								<ul  class="qrcode-select">\
+								    <li style="margin-top:10px;margin-bottom:10px;"><a class="qrcode-select-btn btn-border" href="'+data.urlSmall+'" onclick="return downloadIamge($(this));" download="small.png" target="_blank">小（287px）</a><li>\
+								    <li style="margin-bottom:10px;"><a class="qrcode-select-btn btn-border" href="'+data.urlMiddle+'" onclick="return downloadIamge($(this));" download="middle.png" target="_blank">中（615px）</a><li>\
+								    <li><a class="qrcode-select-btn btn-border" href="'+data.urlBig+'" onclick="return downloadIamge($(this));" download="big.png" target="_blank">大（902px）</a><li>\
+								</ul>\
+							</div>\
+							</div>';
+				layer.open({
+					title:obj.parent().parent().parent().find('tr').eq(0).find('td').eq(0).text(),
+					content:str,
+					yes:function(index,layero){
+						layer.close(index);
+					}
+				});
+			}else{
+				layer.alert(data.message,{icon:5});
+			}
+		}
+	});
+}
+function initActivity(obj,id){
+	var activityName = obj.parent().parent().children(':nth-child(1)').text();
+	var msg = '您确认要清除名称为【<font color="red">'+activityName+'</font>】的数据吗？清除后数据无法恢复！请慎重操作。';
+	var num = 0 ;
+	layer.confirm(msg,{icon:3},function(index){
+		$.ajax({
+			url:'/activity/ajax_activityinit',
+			type:'POST',
+			dataType:'json',
+			data:{id:id},
+			beforeSend:function(){
+	   			num = layer.load(2, {time: 10*1000});
+	   		},
+			success:function(data){
+				layer.close(num);
+				layer.alert(data.message);
+			}
+		});
+	});
+}
+function changeErcodeShow(obj){
+	obj.find('div').eq(0).show();
+	obj.find('div').eq(1).hide();
+	return false;
+}
+function changeErcodeHide(obj){
+	obj.find('div').eq(1).show();
+	obj.find('div').eq(0).hide();
+	return false;
+}
+</script>
+{include file="activity/common_footer.html"}

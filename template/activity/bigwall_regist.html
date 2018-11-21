@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	    <title>新东方</title>
+	    <script src="http://file.xdf.cn/diy/public/js/jquery.1.7.2.min.js"></script>
+	    <link rel="stylesheet" href="{$publicserver}/public/activity/css/style.css" type="text/css"/>
+	    <script src="{$publicserver}/public/gouke/app/js/layer/layer.js" type="text/javascript"></script>
+    	<link rel="stylesheet" href="{$publicserver}/public/gouke/app/js/layer/skin/layer.css">
+		
+		<style>
+		.warp {
+			max-width: 750px;
+			margin: 0 auto;
+			min-width:320px;
+			background: url({if $activity.qdPagePicture neq ''}{$activity.qdPagePicture}{else}{$publicserver}/public/activity/images/bodybg1.jpg{/if}) no-repeat;
+		  	-webkit-background-size: 100% 100%;/*cover;*/
+		  	-moz-background-size: cover;
+		  	-o-background-size: cover;
+		  	background-size: 100% 100%;/*cover;*/
+		}
+		label>span {
+			float: left;
+			text-align: left;
+			color:white;
+			line-height: 1.1rem;
+    		text-align: left;
+    		font-size: 0.7rem;
+    		display:block;
+		}
+		
+		</style>
+		<script>
+		
+			function checkMobile() {
+		        telephone = $("#mobile").val();
+		        if (null==telephone || telephone=='' || telephone=='undefined') {
+		            layer.msg('请输入手机号');
+		            return false;
+		        }
+		        var regn= /^[1][3578]\d{9}$/;
+		        if(!regn.test(telephone)){
+		            layer.msg('请填入正确的手机号');
+		            $("#mobile").val('');
+		            return false;
+		        }
+		        return true;
+		    }
+			
+			function checkEmail()  {
+				email = $("#email").val();
+				
+				var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+				{if $activity.isxdf}
+					mailformat = /^\w+([\.-]?\w+)*@xdf.cn$/i;
+				{/if}
+				if(email.match(mailformat))   {  
+					return true;  
+				}
+				return false;
+			}
+			
+			function validateInput(){
+				{if $fields.name eq 1}
+					if($("#username").val()=='' || $("#username").val()=='undefined'){
+						layer.msg('请填入您的姓名');
+						return false;
+					}
+				{/if}
+				{if $fields.mobile eq 1}
+					if(!checkMobile()){
+						return false;
+					}
+				{/if}
+				{if $fields.dept eq 1}
+					if($("#dept").val()=='' || $("#dept").val()=='undefined'){
+						layer.msg('请填入您所在部门');
+						return false;
+					}
+				{/if}
+				{if $fields.email eq 1}
+					if($("#email").val()=='' || $("#email").val()=='undefined' || !checkEmail()){
+						layer.msg({if $activity.isxdf}'输入企业邮箱 xxx@xdf.cn'{else}'输入常用邮箱'{/if});
+						return false;
+				}
+				{/if}
+				{if $fields.address eq 1}
+					if($("#address").val()=='' || $("#address").val()=='undefined'){
+						layer.msg('请输入您的地址');
+						return false;
+				}
+				{/if}
+				
+				{if $fields.class eq 1}
+					if($("#class").val()=='' || $("#class").val()=='undefined'){
+						layer.msg('请输入您的年级');
+						return false;
+				}
+				{/if}
+				
+				{if $fields.school eq 1}
+					if($("#school").val()=='' || $("#school").val()=='undefined'){
+						layer.msg('请输入您的学校');
+						return false;
+				}
+				{/if}
+				{if $fields.customize eq 1}
+					if($("#customize").val()=='' || $("#customize").val()=='undefined'){
+						layer.msg("请输入{$activity.customize_label}");
+						return false;
+				}
+				{/if}
+					
+				return true;
+			}
+		
+		</script>
+	</head>
+	<body  class="warp">
+		
+		<div>
+			<header class="header header2" style="min-height:230px;">
+				<img src="{$publicserver}/public/activity/images/logo.png" alt=""  style="display:none;"/>
+			</header>
+			<div class="textform" >
+				<form action="bigwalldoregist"  method="post" name="registerform" onsubmit="return validateInput(this);">
+					<input class="enter" type="hidden" id="aid"  name="aid"  value="{$activity.id}">
+					
+					{if $fields.name eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" id="username" name="username" placeholder="请输入您的姓名">{/if}
+					{if $fields.mobile eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" id="mobile"  name="mobile" placeholder="请输入您的手机">{/if}
+					{if $fields.dept eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" id="dept"  name="dept" placeholder="请输入您所在部门">{/if}
+					{if $fields.email eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" type="text" id="email"  name="email" placeholder="{if $activity.isxdf}输入企业邮箱 xxx@xdf.cn{else} 输入常用邮箱{/if}">{/if}
+					{if $fields.address eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" type="text" id="address"  name="address" placeholder="请输入您的地址">{/if}
+					{if $fields.class eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" type="text" id="class"  name="class" placeholder="请输入您的年级">{/if}
+					{if $fields.school eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" type="text" id="school"  name="school" placeholder="请输入您的学校" maxlength="32">{/if}
+					{if $fields.customize eq 1}<input type="text" style="border:1px solid rgba(255, 255, 255, 0.3);" type="text" id="customize"  name="customize" placeholder="请输入{$activity.customize_label}" maxlength="32">{/if}
+					
+					<input type="submit" value="提交" class="submit">
+				</form>
+			</div>
+			<div class="botcon">
+				<p class="">
+					<label>
+					<span style="width: 35%;{if $activity.qdFontColor}color:{$activity.qdFontColor};{/if}">活动名称：</span>
+					<span style="width: 65%;{if $activity.qdFontColor}color:{$activity.qdFontColor};{/if}">{$activity.title}</span>
+					</label>
+				</p>
+				<p class="">
+					<label>
+					<span style="width: 35%;{if $activity.qdFontColor}color:{$activity.qdFontColor};{/if}">活动时间：</span>
+					<span style="width: 65%;{if $activity.qdFontColor}color:{$activity.qdFontColor};{/if}">{$activity.beginTime}</span>
+					</label>
+				</p>
+				<div class="erweima" style="display:none;">
+					
+				</div>
+			</div>
+
+        </div>
+		
+	</body>
+</html>

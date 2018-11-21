@@ -1,0 +1,189 @@
+{include file="xshow/xshow_header.html"}
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<!-- END BEGIN STYLE CUSTOMIZER -->   
+
+						<h3 class="page-title">
+模板采集
+
+
+						</h3>
+
+						<ul class="breadcrumb">
+
+							<li>
+
+								<i class="icon-home"></i>
+
+								<a href="/xshow/Index">首页</a> 
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li>
+
+								<a href="#">场景管理</a>
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li><a href="#">模板采集 </a></li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN SAMPLE FORM PORTLET-->   
+
+		  <div class="tabbable tabbable-custom tabbable-full-width">
+							<ul class="nav nav-tabs">
+                               <li class=""> 
+<a href="/xshow/scenelist"> 系统模板列表</a>
+            </li>
+                <li class="{if $from == 0}active{/if}"> 
+                <a href="/xshow/reptile?from=0"> 易企秀模板采集 </a> </li>
+                
+                <li class="{if $from == 70}active{/if}"> 
+                <a href="/xshow/reptile?from=70"> 70度模板采集 </a> </li>
+							</ul>
+                            <hr>
+                </div>
+           
+
+      <!--内容显示 Begin-->
+     <div class="col_main span6 ">
+     
+     <div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-reorder"></i>采集设置</div>
+
+							</div>
+
+							<div class="portlet-body">
+     
+     
+     							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								 <form action="/xshow/{if $from eq 70}seventyc{else}eqxiu{/if}" class="form-horizontal" method="post" onsubmit="return CJSceneForm();">
+
+									<div class="control-group">
+										<span>易企秀参数：</span>
+											<input type="text" id='text'  name="cs" class="m-wrapt"  /> 
+									</div>
+                                    
+                                <div class="control-group">
+													<label class="control-label">类型</label>
+													<div class="controls" id="scenetype">
+													{foreach from=$sceneSubCategory key=k item='item'}
+ 														<div class="col-md-2" style="float:left">
+ 														<ul>
+ 															<li style="padding-left:25px;">{$sceneCategory.$k}</li>
+ 															<li>
+ 																<ul>
+ 																	{foreach from=$item key=key item='i'}
+ 																	<li><input type="checkbox" name="scenetype[]" value="{$key}"/> {$i}</li>
+ 																	{/foreach} 
+ 																</ul>
+ 															</li>
+ 														</ul>
+														</div>
+      													{/foreach}
+													</div>
+													<div style="clear:both;"></div>
+												</div> 
+
+												<div class="controls" style="margin:10px 0px;">
+												<label class="checkbox"><input type="checkbox" name="isMusicToSys" id="isMusicToSys"  value="1" checked/>&nbsp;音乐是否加入系统库</label>
+												</div>
+
+									<div class="form-actions">
+    									<input type="submit" class="btn green big" value="采集 " id="cj"/>
+									</div>
+
+								</form>
+
+								<!-- END FORM-->       
+
+							</div>
+     
+        <div>
+        <ul id="cjzt">
+        
+        </ul>
+        </div>
+		说明:{if $from =='70'}
+		70C模板查找地址：http://www.70c.com/caselist.html<br/>
+	    查找到某一模板后复制链接：<br/>
+	    例：http://www.70c.com/w/SSWWZZ，然后在“易企秀参数：”对话框中只输入http://www.70c.com/w/SSWWZZ<br/>
+        后面：<b>SSWWZZ</b>
+		{else}
+		易企秀模板查找地址：http://http://store.eqxiu.com/<br/>
+	    查找到某一模板后复制链接：<br/>
+	    例：http://store.eqxiu.com/scene-824203.html，然后在“易企秀参数：”对话框中只输入http://store.eqxiu.com/scene-824203.html<br/>
+        后面：<b>824203</b>,程序会自动寻找免费模板进行采集
+		{/if}
+    </div>
+           
+</div>
+
+</div>
+
+
+            </div>
+            </div>
+            <div id="from" style="display:none">{$from}</div>
+{include file="xshow/xshow_footer.html"}
+
+<script type="text/javascript">
+  function CJSceneForm(){
+    	var from = $('#from').text();
+		var url = $.trim($("#text").val());
+		var reg_url = /^[a-zA-Z0-9]{4,16}$/;
+		if (from == 70){
+			reg_url = /^[a-z0-9A-Z]+(-[a-z0-9A-Z]+)?$/;
+		}
+		if(!reg_url.test(url)) {
+			alert('参数格式不正确');
+			return false;
+		}
+		var i = 0;
+		var sceneTypeCheckbox = $('#scenetype').find('input:checkbox');
+		sceneTypeCheckbox.each(function(index){
+			var checkbox = $(this);
+			if(checkbox.prop('checked'))i++;
+		});
+		if(i == 0){
+			layer.alert('请选择模板所属类型',{icon:5});
+			return false;
+		}
+    	$("#cj").val('拼命采集中...').attr('disabled',true);
+    	return true;
+	 };
+	
+	
+</script>

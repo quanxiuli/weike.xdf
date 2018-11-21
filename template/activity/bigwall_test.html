@@ -1,0 +1,151 @@
+{include file="activity/common_header.html"}<br>
+<div class="clearfix">
+	<div class="we7-padding-bottom clearfix">
+	
+	<div style="padding-bottom:10px">{$activityTitle}</div>
+
+	<div class="clearfix">
+		<div class="pull-left">
+		  <ul class="layui-tab-title" id="msg_status">
+		    <li data-id=3>全部<span class="layui-badge layui-bg-black" data-id=3></span></li>
+		    <li data-id=0 class="layui-this" >未审核<span class="layui-badge layui-bg-orange" data-id=0></span></li>
+		    <li data-id=1>已审核<span class="layui-badge layui-bg-green" data-id=1></span></li>
+		    <li data-id=2>已屏蔽<span class="layui-badge" data-id=2></span></li>
+		  </ul>
+		</div>
+		<div class="pull-right">
+			<button class="btn btn-primary" data-functionid="105" data-event="setActivityMsgStatusPass" style="display:none;">批量通过</button>
+			<button class="btn btn-primary" data-functionid="106" data-event="setActivityMsgStatusNoPass" style="display:none;">批量屏蔽</button>
+		</div>
+	</div>
+	<table class="layui-table" id="msg_table" lay-filter="msgTable" data-aid="{$id}"></table>
+</div>
+
+{include file="activity/common_footer.html"}
+<script type="text/html" id="action">
+  <a class="layui-btn layui-btn-xs" lay-event="pass">通过</a>
+  <a class="layui-btn layui-btn-xs" lay-event="noPass">屏蔽</a>
+</script>
+<script type="text/javascript">
+  var table = layui.table;
+  var aid = $('#msg_table').attr('data-aid');
+  //第一个实例
+  table.render({
+    elem: '#msg_table'
+    ,url: '/activity/ajax_test' //数据接口
+    ,where:{id:aid,s:$('#msg_status .layui-this').attr('data-id')}
+    ,page: true //开启分页
+    ,cols: [[ //表头
+      {field:'id',type: 'checkbox'}
+      ,{field: 'sortNum', title: '编号', width:80}
+      ,{field: 'name', title: '姓名', width:80}
+      ,{field: 'dept', title: '部门', width:80}
+      ,{field: 'email', title: '邮箱', width:80} 
+      ,{field: 'msg', title: '消息', width: 388}
+      ,{field: 'msgStatus', title: '状态', width: 80}
+      ,{title: '操作', width: 120, toolbar: '#action'}
+    ]],
+     done: function(res, curr, count){
+     	$('#msg_status span').each(function(index){
+     		var span = $(this);
+     		var status = span.attr('data-id');
+     		span.empty().append(res.msgStatusCount[status]);
+     	});
+     	console.log(res);
+     }
+  });
+  $('#msg_status li').click(function(idnex){
+  	var li = $(this);
+  	$('#msg_status li').removeClass('layui-this');
+  	li.addClass('layui-this');
+  	var msg_status = li.attr('data-id');
+	table.reload('msg_table', {
+	url: '/activity/ajax_test'
+	,where: {id:aid,s:msg_status}
+	});
+  });
+
+  table.on('tool(msgTable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+  var data = obj.data; //获得当前行数据
+  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+  var tr = obj.tr; //获得当前行 tr 的DOM对象
+  var ids = [data.id];
+  if(layEvent === 'pass'){ //查看
+      layer.confirm('您确定要通过该条数据吗?',{icon:3},function(index){
+      	var data =  {ids:ids,aid:aid,s:1};
+      	setActivityMsgStatus(data);
+      });
+  } else if(layEvent === 'noPass'){ //删除
+  	 layer.confirm('您确定要屏蔽该条数据吗?',{icon:3},function(index){
+      		var data =  {ids:ids,aid:aid,s:2};
+      		setActivityMsgStatus(data);
+      });
+  }
+});
+  function getCheckData(){
+  	var ids = [];
+   	var checkStatus = table.checkStatus('msg_table')
+  	,data = checkStatus.data;
+  	if(data.length > 0){
+      for(var i in data){
+      	ids.push(data[i].id);
+      }
+  	}
+  	return ids;
+  }
+  var active = {
+    setActivityMsgStatusPass: function(){ //获取选中数据
+      var ids = getCheckData();
+      if(ids.length ==0){
+      	layer.alert('请选择要通过的消息');
+      	return false;
+      }
+      layer.confirm('您确定要通过'+ids.length+'条数据吗?',{icon:3},function(index){
+      	var data =  {ids:ids,aid:aid,s:1};
+      	setActivityMsgStatus(data);
+      });
+      
+    }
+    ,setActivityMsgStatusNoPass: function(){ //获取选中数目
+       var ids = getCheckData();
+      if(ids.length ==0){
+      	layer.alert('请选择要屏蔽的消息');
+      	return false;
+      }
+       layer.confirm('您确定要屏蔽'+ids.length+'条数据吗?',{icon:3},function(index){
+      		var data =  {ids:ids,aid:aid,s:2};
+      		setActivityMsgStatus(data);
+      });
+    }
+  };
+  
+  $('.pull-right button').click(function(){
+    var type = $(this).attr('data-event');
+    active[type] ? active[type].call(this) : '';
+  });
+	function setActivityMsgStatus(data){
+		var loadIndex = 0;
+		$.ajax({
+			url:'/activity/ajax_setactivitymsgstatus',
+			type:'POST',
+			dataType:'json',
+			data:data,
+			beforeSend:function(){
+				loadIndex = layer.load(2, {time: 10*1000});
+			},
+			success:function(data){
+				layer.close(loadIndex);
+				if(data.code == 1){
+					layer.alert(data.message,{icon:6},function(index){
+						layer.close(index);
+							table.reload('msg_table', {
+								url: '/activity/ajax_test'
+							});
+					});
+				}else{
+					layer.alert(data.message,{icon:5});
+				}
+			}
+		});
+	}
+</script>

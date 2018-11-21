@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>{$collection.title}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta http-equiv="Content-Language" content="zh-CN"/>
+    {if $pmc eq 1}  
+    <link href="{$publicserver}/public/collection/css/framework7.ios.min.css" rel="stylesheet">
+    {/if}
+    <!--公共css样式-->
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/publicCss.css">
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/GlobalSetting_ALL.css">
+    <script src="http://file.xdf.cn/diy/public/js/jquery.1.7.2.min.js"></script>
+    <script src="{$publicserver}/public/gouke/app/js/layer/layer.js" type="text/javascript"></script>
+	<!--<script src="{$publicserver}/public/collection/js/public-form.js"></script>-->
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/js/layer/skin/layer.css">
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/quill.bubble.css">
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/quill.snow.css">
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/quill.core.css">
+    	
+    <base target="_blank"/>
+    	<style type="text/css">
+.XQAndCon3 input[type="radio"]:checked+label {
+    display: inline-block;
+    width: 15px;
+    height: 20px;
+	background: url({$publicserver}/public/collection/images/QJSZImg/BTXZNImg.png) no-repeat center center;
+}
+
+
+.XQAndCon2 input[type="checkbox"]:checked+ .choice-box-XQ {
+    background: url({$publicserver}/public/collection/images/QJSZImg/BTXZImg.png) no-repeat center center;
+    background-size: contain;
+	/*
+    display: inline-block;
+    color: #9a9a9a;
+    font-size: .7rem;
+	padding-left: 1.2rem;
+	*/
+}
+
+
+.choice #userlicense_check:checked + .choice-box1 {
+    background: url({$publicserver}/public/collection/images/MobileImg/xz1.jpg) no-repeat left top;
+    background-size: contain; 
+	
+}
+
+	</style>
+
+	<!--neworiental全站异步 google分析开始-->
+	<script>
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-20005525-1']);
+        _gaq.push(['_setDomainName', '.xdf.cn']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_setAllowHash', false]);
+        _gaq.push(['_addOrganic', 'baidu', 'word']);
+        _gaq.push(['_addOrganic', '360', 'q']);
+        _gaq.push(['_addOrganic', 'so.com', 'q']);
+        _gaq.push(['_addOrganic', 'soso', 'w']);
+        _gaq.push(['_addOrganic', 'yodao', 'q']);
+        _gaq.push(['_addOrganic', 'sogou', 'query']);
+        _gaq.push(['_addOrganic', 'gougou', 'search']);
+        _gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+        _gaq.push(['_addOrganic', 'haosou', 'q']);
+        _gaq.push(['_setLocalGifPath', 'http://ads.staff.xdf.cn/_.gif']);
+        _gaq.push(['_setLocalRemoteServerMode']);
+        _gaq.push(['_trackPageview']);
+	</script>
+	<!-- google分析结束-->
+	<style>
+		.ql-container,ql-editor{
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+ {if $preview eq 1}	
+<div class="WJYYGJ_16">
+{/if}
+    <div class="WJYYGJ_16_Box">
+        <div class="sectionZBox">
+            <h2 id="h2"></h2>
+            <div class="banner"><img src="{if $bannerimage}{$bannerimage}{else}{$publicserver}/public/collection/images/GlobalSetting_TCC/banner_16.jpg{/if}" alt=""/></div>
+            <div class="BT">
+                <p class="sectionZBox1">{$formlabel}</p>
+				<div class="ql-container ql-snow" style="border:0;height:auto;">
+					<div class="ql-editor">{$formdesc}
+					</div>
+				</div>
+            </div>
+			<p class="pline"></p>
+            <div class="formAll">
+				<!-- <p>000</p>
+				{$phoneStatus}
+				<p>000000000</p> -->
+            {if $inputs}
+						{foreach from = $inputs item=item}
+						
+						   {if $item.type eq 'p'}
+
+							<div class="formGroup clear">
+								<p class="formGroup_DBSM2">{$item.value}</p>
+							</div>
+							{/if}
+							
+							{if $item.type eq 'text'}
+								{if $item.name eq 'mobile'}
+									<div class="formGroup clear">
+										<label for="name">{$item.label}<b>{if $item.required}*{/if}</b></label>
+										<input type="text" id="{$item.name}" name="{$item.name}" {if $item.required}required{/if}  placeholder="{$item.placeholder}">
+									</div>
+									<div class="formGroup clear wjValidateWrap graphCodeWrap"  id="graphCodeWrap">
+										<label for="name">验证码<b>{if $item.required}*{/if}</b></label>
+										<input type="text" id="graphCode" name="graphCode"  placeholder="请输入验证码">
+										<img src="{$publicserver}/public/collection/images/QJSZImg/graphcode.png" alt=""/>
+									</div>
+									<div class="formGroup clear msgCodeWrap wjValidateWrap" id="msgCodeWrap">
+										<label for="name">短信验证码<b>{if $item.required}*{/if}</b></label>
+										<input type="text" id="msgCode" name="msgCode"  placeholder="请输入短信验证码">
+										<div class="validate"><input type="button" value="获取验证码" class="validatebtn"></div>
+
+									</div>
+								{else}
+									<div class="formGroup clear">
+										<label for="name">{$item.label}<b>{if $item.required}*{/if}</b></label>
+										<input type="text" id="{$item.name}" name="{$item.name}"  placeholder="{$item.placeholder}">
+									</div>
+								{/if}
+							{/if}
+							{if $item.type eq 'image'}
+                			<div class="formGroup clear">
+			                    <label for="PictureUploading">{$item.label}<b>{if $item.required}*{/if}</b><span class="formGroupL_Span_TPSC">支持JPG\JPEG\PNG格式，大小不超过4M</span></label>
+			                    <div class="PictureUploading" id="PictureUploading">
+			                        <div class="PictureUploading_L"><img id="PictureUploading_Dft"  src="{$publicserver}/public/collection/images/QJSZImg/ImgBG2Img.png" alt=""/></div>
+			                        <div class="PictureUploading_R">
+			                            <input type="file" id="imgUploadBtn"  name="fileName" accept=“image/*” onChange='handleInputChange();'/> 
+										<input type="hidden" name="image" id="image" /> 
+										<input type="hidden" name="{$item.aux}" id="{$item.aux}" /> 
+			                        </div>
+			                    </div>
+			                </div>
+                			{/if}
+                			{if $item.type eq 'file'}
+                			<div class="formGroup clear">
+			                    <label for="PictureUploading">{$item.label}<b>{if $item.required}*{/if}</b><span class="formGroupL_Span_TPSC">支持DOC\DOCX\XLS\XLSX\ZIP格式，大小不超过4M</span></label>
+			                    <div class="PictureUploading" id="PictureUploading">
+			                        <div class="PictureUploading_L"><img id="PictureUploading_Dft"  src="{$publicserver}/public/collection/images/QJSZImg/ImgBG3Img.png" alt=""/></div>
+			                        <div class="PictureUploading_R">
+			                            <input type="file" id="imgUploadBtn2"  name="fileName2" accept="application/msword,aplication/zip,,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" onChange='handleInput2Change();'/> 
+										<input type="hidden" name="{$item.aux}" id="{$item.aux}" /> 
+			                        </div>
+			                    </div>
+			                </div>
+                			{/if}
+							{if $item.type eq 'radio'}
+							<div class="formGroup clear">
+			                    <label for="nan">{$item.label}<b>{if $item.required}*{/if}</b>（单选）</label>
+			                    <div class="XQAndCon3 clear">
+			                    		{foreach from = $item.values item=i name=foo}
+			                            <div>
+			                                <input type="radio" name="{$item.name}"  id="{$item.name}_{$smarty.foreach.foo.index}"  class="choice-box_hind" value="{$i.name}"> 
+											<label for="{$item.name}_{$smarty.foreach.foo.index}" class="checked choice-box-NJDX1"></label><span>{$i.name}</span>
+			                            </div>
+			                            {/foreach}
+								
+			                   </div>
+			                </div>
+							{/if}
+							{if $item.type eq 'textarea'}
+                			<div class="formGroup clear">
+			                    <label for="MultilineText">{$item.label}<b>{if $item.required}*{/if}</b></label>
+			                    <div class="MultilineText">
+			                        <textarea rows="5" id="MultilineText" placeholder="{$item.placeholder}" name="{$item.name}" maxlength="{$item.choiceNumber}"></textarea>
+			                        <div class="Dxwb_26"></div>
+			                    </div>
+		                	</div>
+                			{/if}
+                			{if $item.type eq 'select'}
+							
+							<div class="formGroup clear">
+			                    <label for="campus">{$item.label}<b>{if $item.required}*{/if}</b></label>
+			                    <select name="{$item.name}"  id="{$item.name}" class="campus" style="width:638px;">
+			                        {if $item.defaultvalue}
+				                    	<option value="">{$item.defaultvalue}</option>
+				                    {/if}
+			                        {foreach from = $item.values item=i}
+										<option value="{$i.value}">{$i.name}</option>
+									{/foreach}
+			                    </select>
+			                </div>
+                			{/if}
+							{if $item.type eq 'date'}
+							<div class="formGroup clear">
+			                    <label for="{$item.name}">{$item.label}<b>{if $item.required}*{/if}</b></label>
+			                    <div class="formGroupL_CSRQ">
+			                        <input type="date" placeholder="{$item.placeholder}" id="{$item.name}"   name="{$item.name}" />
+			                        <span></span>
+			                    </div>
+			                </div>
+							{/if}
+							
+							{if $item.type eq 'datetime'}
+							<div class="formGroup clear">
+			                    <label for="{$item.name}">{$item.label}<b>{if $item.required}*{/if}</b></label>
+			                    <div class="formGroupL_CSRQ">
+			                        <input type="text" placeholder="{$item.placeholder}" id="{$item.name}"   name="{$item.name}"  data-options="{'type':'YYYY-MM-DD hh:mm:ss','beginYear':1970,'endYear':2099}"/>
+			                        <span></span>
+			                    </div>
+			                </div>
+							{/if}
+							
+                			{if $item.type eq 'checkbox'}
+                			<div class="formGroup clear">
+			                    <label for="campus">{$item.label}<b>{if $item.required}*{/if}</b>{if $item.choiceNumber neq ''}（多选，可选{$item.choiceNumber}个）{else}（多选）{/if}</label>
+			                    <div class="XQAndCon XQAndCon_XG">
+			                        <div class="XQAndCon2 clear">
+			                        	{foreach from = $item.values item=i name=foo}
+			                            <div>
+			                                <input type="checkbox" name="{$item.name}" id="{$item.name}_{$smarty.foreach.foo.index}" class="choice-box_hind" value="{$i.name},">
+			                                <label for="{$item.name}_{$smarty.foreach.foo.index}" class="choice-box-XQ"></label><span>{$i.name}</span>
+			                            </div>
+			                            {/foreach}
+			                            
+			                        </div>
+			                    </div>
+			                </div>
+                			{/if}
+                			
+                			
+                			{if $item.type eq 'pmc'}
+                			 <div class="formGroup clear">
+			                    <label for="AdministrativeArea">{$item.label}<b>{if $item.required}*{/if}</b></label>
+			                    <div class="formGroupL_XZQ">
+			                    <input type="text" id="location" name="pmc" value="{$item.province}  {$item.city}  "/>
+			                    <!-- 
+			                        <input type="text" name="province" placeholder="省" id="province"   value="{$item.province}"  {if $item.province neq ''}readonly="readonly"{/if}/>
+			                        <span>-</span>
+			                        <input type="text" name="city" placeholder="市" id="city"   value="{$item.city}"  {if $item.city neq ''} readonly="readonly"{/if}/>
+			                        <span>-</span>
+			                        <input type="text" name="district" placeholder="行政区" id="district"    value="{$item.district}"  {if $item.district neq ''} readonly="readonly"{/if}/>
+			                    -->
+			                    </div>
+			                </div>
+                			
+                			{/if}
+
+							{if $item.type eq 'selectTwo'}
+							<!--二级联动-->
+							<div id="{$item.name}" class="formGroup_ZTMB clear">
+								<label for="twolevellink">{$item.label}<b>{if $item.required}*{/if}</b></label>
+								<select class="yiji twolevellink floatL" onchange="ChangeerjiSelect{$item.name}(this.value,$('#{$item.name}'))">
+
+								</select>
+								<select class="erji twolevellink floatR">
+								</select>
+								
+							</div>
+							<!--二级联动-->
+							{/if}
+
+							{if $item.type eq 'score'}
+							<!--评分-->
+							<div class="formGroup_ZTMB clear">
+								<label for="score">{$item.label}<b>{if $item.required}*{/if}</b></label>
+								<p class="score">{$item.describe}</p>
+								<input type="hidden" name="{$item.name}" id="{$item.name}">
+									
+								<p class="xj_zs">
+									{foreach from = $item.values item=i name=foo}
+									<span class="{$i}"  alt="{$smarty.foreach.foo.index}"></span>
+									{/foreach}
+								</p>
+							</div>
+							<!--评分-->
+							{/if}
+
+						{/foreach}
+			   {/if}				
+               
+                <div class="formGroup clear"">
+                    <div class="formGroup_YHFWTK clear">
+                     	<input type="hidden" name="scene_id" value="{$sid}" />
+                        <input type="checkbox" name="choice-box-XQ" id="userlicense_check" class="choice-box_hind" >
+                        <label for="userlicense_check" class="choice-box-XQ"></label><span>我已阅读并同意《<a href="/collection/userlicense" onclick="javascript: window.location.href='userlicense';" >用户服务条款</a>》和 《<a href="/collection/privacypolicy" onclick="javascript: window.location.href='privacypolicy';" >隐私政策</a>》</span>
+			        </div>
+                </div>
+
+                <div class="formGroup clear">
+                	<input type="button" name="" id="submitbtn" value="{if $submit.label}{$submit.label}{else}点击提交{/if}"  class="formGroup_AN" style="font-size:16px;color:#fff;height:50px;line-heigh4:50px;{if $themecolor neq ''}background:{$themecolor};"{/if}"/>
+                
+                    
+                </div>
+                
+                {if $footertype eq 'img'}
+                <div class="formGroup clear">
+                    <div class="bottomFoot" id="bottomFoot">
+                        <img src="{$footerimage}" alt=""/>
+                    </div>
+                </div>
+				{/if}
+				{if $footertype eq 'imgandtext'}
+                <div class="formGroup clear">
+                    <div class="bottomFoot_TuAndWZ" id="bottomFoot_TuAndWZ">
+                        <div class="bottomFoot_TuAndWZ_L"><img src="{$footerimage}" alt=""/></div>
+                        <div class="bottomFoot_TuAndWZ_R">
+                            <div>
+                                <h3>{$footertitle}</h3>
+                                <p>{$footercontent}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/if}
+                {if $footertype eq 'text'}
+                <div class="formGroup clear">
+                    <div class="bottomFoot_WZ" id="bottomFoot_WZ">
+                        <h3>{$footertitle}</h3>
+                        <p>{$footercontent}</p>
+                    </div>
+                </div>
+                {/if}
+                {if $footertype eq 'describe'}
+			    <div class="formGroup clear">
+			    	<div class="bottomFoot_TuAndWZ"  >
+						<div class="bottomFoot_TuAndWZ_L bottomFoot_TuAndWZ_L_des"><img class="texticon" src="{$publicserver}/public/collection/images/MobileImg/i.png" alt=""/></div>
+						<dl class="bottomFoot_TuAndWZ_R bottomFoot_TuAndWZ_R_des">
+							<dd class="dda">{$footerdescription}</dd>
+						</dl></div>
+				</div>
+			    {/if}
+
+                <!--<div class="formGroup clear">-->
+                    <div class="formGroup_DBSM">
+                    	<p class="formGroup_DBSM2">{$copyright.groupName}<br>
+					{$copyright.recordNumber}<br>
+					{$copyright.hotName} {$copyright.tel}</p>
+                    </div>
+                <!--</div>-->
+            </div>
+        </div>
+         {if $preview eq 1}	
+        <div class="QRCode">
+            <div class="QRCode_Up">
+                <img src="{$publicserver}/public/collection/fileS/QRfilePath/{$collection.id}.png" alt=""/>
+                <p>扫描二维码在手机上预览</p>
+                <!-- <a href="javascript:void(0);">返回编辑界面</a> -->
+            </div>
+            <div class="QRCode_Down" style="display:none;">
+                <input type="text" value="http://{$domain}/collection/collect?id={$collection.aid}" style="padding: 10px" readonly="readonly">
+				<img src="{$publicserver}/public/collection/fileS/QRfilePath/{$collection.aid}.png" alt=""/>
+                <a href="javascript:void(0);">复制网址</a><a href="javascript:void(0);">下载二维码</a>
+            </div>
+        </div>
+         {/if}	
+    </div>
+ {if $preview eq 1}	    
+</div>
+{/if}
+
+
+<script>
+	//  验证码
+	function getVerification(){
+		if('{$phoneStatus}'=='0'){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	{if $preview neq 1}
+		getVerification()?$(".msgCodeWrap").css("display","block"):$(".msgCodeWrap").css("display","none");
+	{/if}
+	{if $preview eq 1}
+		getVerification()?$(".msgCodeWrap").css("display","block"):$(".msgCodeWrap").css("display","none");
+	{/if}
+	var timeId;
+	var curCount;
+	var lastPhone=$("[name='mobile']").val()
+
+	function getParams4Code(type,code,code3){
+		var data=new Object();
+		data.id='{$collection.aid}';
+		data.name='{$collection.title}';
+		getVerification() ? data.verification='7' : data.verification='12';
+		data.status=type;
+		data.code=code;
+		data.code3=code3;
+		var phone=$("[name='mobile']").val()
+		if(!phone){
+			layer.msg('手机号不能为空!');
+			return false;
+		}else{
+			if(!mobilereg.test(phone)) {
+				layer.msg('手机号无效');
+				return false;
+			}
+			data.phone=phone;
+		}
+		return data;
+	}
+	// 发送验证码
+	$(".validatebtn").on('click',function(){
+		var data=getParams4Code("1","","")
+		if(!data) return;
+
+		getValidate(data,function(obj){
+			if(!obj)return;
+			var {code,msg,code}=JSON.parse(obj);
+			if(code==200 || code == 201){
+				layer.msg('发送短信验证码成功,请及时填写');
+				$("#graphCodeWrap").addClass("graphCodeWrap")
+			}else if(code == '-1009'){
+				$("#graphCodeWrap").removeClass("graphCodeWrap")
+				var data=getParams4Code("3","","")
+				if(!data) return;
+				var url="ajax_collectionverifymobile?status=3&phone="+data.phone+"&verification="+data.verification+"&name="+data.name+"&id="+data.id+"&time="+new Date().getTime();
+				$("#graphCodeWrap img").attr("src",url)
+			}else{
+				layer.msg(msg)
+				$("#graphCodeWrap").addClass("graphCodeWrap")
+			}
+		})
+		
+		curCount= 60;//当前剩余秒数
+		$(".validatebtn").attr("disabled","true");
+		$(".validatebtn").val(curCount+"s后重新发送");
+		$(".validatebtn").addClass("unactive")
+
+		clearInterval(timeId);
+		timeId = setInterval(remainTime, 1000);  
+		
+	})
+	// 获取图像验证码
+	$("#graphCodeWrap img").on('click',function(){
+		var data=getParams4Code("3","","")
+		if(!data) return;
+		var url="ajax_collectionverifymobile?status=3&phone="+data.phone+"&verification="+data.verification+"&name="+data.name+"&id="+data.id+"&time="+new Date().getTime();;
+		$("#graphCodeWrap img").attr("src",url)
+	})
+
+
+	function getValidate(data,callback){
+		$.get("ajax_collectionverifymobile",data).success(function(obj){callback(obj)});
+	}
+    function remainTime() {        
+        if (curCount == 1) {                 
+	        window.clearInterval(timeId);
+	        $(".validatebtn").removeAttr("disabled");
+	        $(".validatebtn").val("重新获取验证码");
+			$(".validatebtn").removeClass("unactive")
+	    } else{
+			curCount--;  
+	        $(".validatebtn").val(curCount + "秒后重新获取");
+		}   
+    }  
+
+</script>
+ <script type="text/javascript">
+//  console.log('{$collection.aid}')
+    const imgFile = {};
+  //email //mobile
+	var mobilereg=/^[1][3,4,5,6,7,8][0-9]{9}$/;
+	var emailreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	
+	$('.xj_zs span').click(function(e){
+   	 var score=parseInt($(this).attr("alt"))+1;
+   	 var base=co=cn="";
+   	 base=$(this).attr('class').replace("_light","");
+   	 //base=base.replace(" active-state","");
+   	 $(this).removeClass(base);
+   	 $(this).removeClass(base+"_light");
+   	 $(this).addClass(base+"_light");
+   	 
+		 $(this).prevAll().removeClass(base);
+		 $(this).prevAll().removeClass(base+"_light");
+		 $(this).prevAll().addClass(base+"_light");
+		 
+		 $(this).nextAll().removeClass(base);
+		 $(this).nextAll().removeClass(base+"_light");
+		 $(this).nextAll().addClass(base);
+		 
+		 $("#"+$(this).attr("for")).val(score);
+   	 /*
+   	 $(".xj_zs span").each(function(){
+   		 var index=parseInt($(this).attr("alt"));
+   		 
+   		 if(index<=score){
+   			 co=$(this).attr('class').replace("_light","");
+   			 cn=co+"_light";
+   			 $(this).removeClass(co);
+   			 $(this).addClass(cn);
+   			 
+   		 }
+   		 if(index>score){
+   			 co=$(this).attr('class');
+   			 cn=co.replace("_light","");
+   			 $(this).removeClass(co);
+   			 $(this).addClass(cn);
+   		 }
+   	 });
+   	 alert(score+1);
+   	 return score+1;
+   	 */
+	 });
+	
+{if $preview neq 1}		
+    {if $inputs}
+	{foreach from = $inputs item=item}
+		{if $item.type eq 'checkbox'}
+		var {$item.name}limit=255;
+		if(parseInt('{$item.choiceNumber}')>0){
+			{$item.name}limit=parseInt('{$item.choiceNumber}');
+		}
+var {$item.name}num = 0;
+		
+		$("*[name='{$item.name}']").each(function(){
+	        $(this).click(function(){
+	        	
+	        	if($(this)[0].checked) {
+	                ++{$item.name}num;
+	                if({$item.name}num > {$item.name}limit) {
+	                	layer.msg("最多选择 "+{$item.name}limit+"项");
+                    	$(this)[0].checked=false;
+                    	--{$item.name}num;
+	                }
+	            } else {
+	                --{$item.name}num;
+	                if({$item.name}num <={$item.name}limit-1) {
+	                    $("*[name='{$item.name}']").each(function(){
+	                        if(!$(this)[0].checked) {
+	                            $(this).removeAttr("disabled");
+	                        }
+	                    });
+	                }
+	            }
+	        });
+	    });
+		{/if}
+		
+		{if $item.type eq 'image'}
+	         
+	         function handleInputChange (e) {
+	        	 var fileObj = document.getElementById("imgUploadBtn").files[0]; 
+	             var url =  "ajax_collectionuploadimage?id={$collection.aid}"; 
+
+	             var form = new FormData(); 
+	             form.append("file", fileObj); 
+
+	             xhr = new XMLHttpRequest();  
+	             xhr.open("post", url, true);
+	             xhr.onload = uploadComplete; //请求完成
+	             //xhr.onerror =  uploadFailed; //请求失败
+	             //xhr.upload.onprogress = progressFunction;
+	             xhr.send(form); //开始上传，发送form数据
+	         }
+	         function uploadComplete(evt) {
+	             var data = JSON.parse(evt.target.responseText);
+	             if(data.errno==0){
+ 	                	//$('#img_preview').attr("src","{$publicserver}/public/uploads/collection/"+result.data.path);
+ 	                	var bg="{$publicserver}/public/uploads/collection/"+data.data.path;
+ 	                	$('#PictureUploading').css("background","url("+bg+") no-repeat");
+ 	                	$('#PictureUploading').css("background-size","100% 100%");
+ 	                	$('#PictureUploading_Dft').css('display','none');
+ 	                	$('#image').val(data.data.path);
+ 	                	$('#{$item.aux}').val(data.data.path);
+	             }else{
+	            	 layer.msg(data.msg);
+	             }
+
+	         }
+	         {/if}
+		
+	        	 {if $item.type eq 'file'}
+	             function handleInput2Change(e) {
+		        	 var fileObj = document.getElementById("imgUploadBtn2").files[0]; 
+		             var url =  "ajax_collectionuploadfile?id={$collection.aid}"; 
+
+		             var form = new FormData(); 
+		             form.append("file", fileObj); 
+
+		             xhr = new XMLHttpRequest();  
+		             xhr.open("post", url, true);
+		             xhr.onload = uploadComplete2; //请求完成
+		             //xhr.onerror =  uploadFailed; //请求失败
+		             //xhr.upload.onprogress = progressFunction;
+		             xhr.send(form); //开始上传，发送form数据
+		         }
+		         function uploadComplete2(evt) {
+		             var data = JSON.parse(evt.target.responseText);
+		             if(data.errno==0){
+	 	                	//$('#img_preview').attr("src","{$publicserver}/public/uploads/collection/"+result.data.path);
+	 	                	var bg="{$publicserver}/public/uploads/collection/"+data.data.path;
+	 	                	$('#{$item.aux}').val(data.data.path);
+	 	             }else{
+		            	 layer.msg(data.msg);
+		             }
+
+		         }
+		         {/if}	 	 
+	{/foreach}
+	
+		$("#submitbtn").click(function(){
+       	 var data=new Object();
+       	 data.id='{$collection.aid}';
+       	$("#submitbtn").attr("disabled",true);
+       	 var agreed=$('#userlicense_check').prop("checked");
+       	 if(!agreed){
+				layer.msg('请先同意用户服务条款!');
+				$("#submitbtn").attr("disabled",false);
+       		 return false;
+       	 }
+       	 
+       	 {foreach from = $inputs item=item}
+	       	{if $item.type eq 'radio'}
+		 		var {$item.name}=  $("*[name='{$item.name}']:checked").val();
+		 	 {else}
+				{if $item.type eq 'checkbox'}
+		 			var {$item.name}="";
+			 		$("*[name='{$item.name}']").each(function(){
+			 			 if($(this).attr("checked")=="checked"){
+			 			 	{$item.name}+=$(this).val();
+			 			 }
+		 			});
+			 	{else}	
+		 		
+		 			var {$item.name}=  $("*[name='{$item.name}']").val();
+		 		{/if}
+		 	 {/if}
+		 	{if $item.type eq 'image'}
+	 	 		var {$item.aux}=   $("*[name='{$item.aux}']").val();
+	 	 		data.{$item.aux}={$item.aux};
+	 	 	 {/if}	
+       	 	data.{$item.name}={$item.name};
+       	 	if($("#image")!=undefined){
+       	 		data.image=$("#image").val();
+       	 	}
+       	 	
+       	 	{if $item.required}
+	       	 	if({$item.name}=='' || {$item.name}==undefined){
+					layer.msg('{$item.label}'+'不能为空!');
+					$("#submitbtn").attr("disabled",false);
+					return false;
+	 			}
+				if('{$item.name}'=='mobile'){
+				if($(".msgCodeWrap").css("display")=="block" && $("#msgCode").val()==''){
+					layer.msg('短信验证码不能为空!');
+					$("#submitbtn").attr("disabled",false);
+					return false;
+				}
+				if(!$("#graphCodeWrap").hasClass("graphCodeWrap") && $("#graphCode").val()==''){
+					layer.msg('验证码不能为空!');
+					$("#submitbtn").attr("disabled",false);
+					return false;
+				}
+			}
+       		{/if}
+       			if('{$item.name}'=='mobile' && {$item.name}!=''){
+        	 		if(!mobilereg.test({$item.name})) {
+						layer.msg('手机号无效');
+						$("#submitbtn").attr("disabled",false);
+        	         	return false;
+        	 		}
+        	     }
+        	 	 if('{$item.name}'=='email'  && {$item.name}!=''){
+            	 		if(!emailreg.test({$item.name})) {
+							layer.msg('邮箱无效');
+							$("#submitbtn").attr("disabled",false);
+        	         		return false;
+            	 		}
+        	     }
+       	 {/foreach}
+     	var scene_id = $('input[name=scene_id]').val();
+    	if(scene_id > 0)data.scene_id = scene_id;	 	
+			// 开启验证
+		if(getVerification()){
+				if($("[name='mobile']").attr('required')){
+					doVerifyCode();
+				}else if( $("[name='mobile']").val() ){
+					if(!$("#msgCode").val()){
+						layer.msg('请填写短信验证码');
+						$("#submitbtn").attr("disabled",false);
+						return false;
+					}else{
+						doVerifyCode();
+
+					}
+				}else{
+					doSubmit(data);
+				}
+			}else{
+				doSubmit(data);
+			}
+		function doVerifyCode(){
+			var msgCode=$("#msgCode").val() ? $("#msgCode").val() : "1";
+			var graphCode=$("#graphCode").val() ? $("#graphCode").val() : "1";
+			var obj=getParams4Code("2",msgCode,graphCode)
+			$.post("ajax_collectionverifymobile",obj).success(function(res){
+				if(!res){
+					return;
+				}
+				var {code,msg}=JSON.parse(res)
+				if(code ==201 || code == 200){
+					// layer.msg("验证成功")
+					doSubmit(data)
+				}else{
+					// 有图形验证码
+					if(!$("#graphCodeWrap").hasClass("graphCodeWrap")){
+						var url="ajax_collectionverifymobile?status=3&phone="+obj.phone+"&verification="+obj.verification+"&name="+obj.name+"&id="+obj.id+"&time="+new Date().getTime();
+						$("#graphCodeWrap img").attr("src",url)
+					}
+					$("#submitbtn").attr("disabled",false);	
+					layer.msg(msg)
+				}
+			})
+		}
+		
+		function doSubmit(data){
+			$.post("ajax_submit",data).success(function(data){
+				if(data.errno!=0){
+					$("#submitbtn").attr("disabled",false);	
+					layer.msg(data.msg);
+				}else{
+					layer.msg(data.msg);
+					$('#content').val("");
+					$('#result').html("0");
+					if(data.redirect !=undefined){
+						setTimeout(function() {
+							st('default',{session_id:data.clid});
+							window.location.href=data.redirect;
+						},3000);
+					}else{
+						setTimeout(function(){
+							window.location.reload();
+						},1000)
+					}
+				}
+				});
+		}
+         });
+		
+	{/if}
+{/if}	
+</script> 
+
+ 
+ 
+ {if $pmc eq 1}     
+<script type="text/javascript" src="{$publicserver}/public/collection/js/framework7.min.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/collection/js/district.js"></script>
+<script type="text/javascript">
+;(function(window,$,undefined){
+	function getProvince(regions){ {if $province eq ''} return regions['provincesArr']; {else} return new Array("{$province}");{/if} }
+		function getCity(regions,provinceName){return regions['provinces'][provinceName]['citiesArr'];}
+		function getArea(regions,provinceName,cityName){
+			if(cityName==''){
+				cityName=regions['provinces'][provinceName]['citiesArr'][0];
+			}
+			return regions['provinces'][provinceName]['cities'][cityName]['areasArr'];
+			
+		}
+		var myApp=new Framework7();
+		var province=getProvince(regions),
+		{if $province eq '' and $city eq ''}
+					city=getCity(regions,'北京市'),
+					area=getArea(regions,'北京市','北京市');
+		{/if}
+		{if $province neq '' and $city eq ''}
+				city=getCity(regions,'{$province}'),
+				area=getArea(regions,'{$province}','');
+		{/if}
+
+		{if $province neq '' and $city neq ''}
+					city=new Array('{$city}'),
+					area=getArea(regions,'{$province}','{$city}');
+		{/if}	
+
+var provinceSelect='{$province}';
+var pickerLocation=myApp.picker({input:'#location',rotateEffect:true,toolbarTemplate:'<div class="toolbar">\
+                            <div class="toolbar-inner">\
+                            <div class="left">\
+                            </div>\
+                            <div class="right">\
+                                    <a href="#" class="link close-picker">完成</a>\
+                                </div>\
+                            </div>\
+                        </div>',cols:[{cssClass:'f-s-14',width:'33.33%',textAlign:'left',values:province,
+                        	onChange:function(picker,province){if(picker.cols[1].replaceValues){provinceSelect=province;city=getCity(regions,province);area=getArea(regions,province,city[0]);picker.cols[1].replaceValues(city);if(area.length!==0){picker.cols[2].replaceValues(area);}else{picker.cols[2].replaceValues(city);}}}},{cssClass:'f-s-14',width:'33.33%',textAlign:'center',values:city,onChange:function(picker,city){if(picker.cols[2].replaceValues){area=getArea(regions,provinceSelect,city);if(area.length!==0){picker.cols[2].replaceValues(area);}else{picker.cols[2].replaceValues([city]);}}}},{cssClass:'f-s-14',width:'33.33%',textAlign:'right',values:area,}]});})(window,jQuery);
+
+</script>
+{/if}
+
+<script src="{$publicserver}/public/collection/js/jquery.date.js"></script>
+<script>
+{if $inputs}
+{foreach from = $inputs item=item}
+{if $item.type eq 'datetime'}
+	$.date('#{$item.name}');
+{/if}
+
+
+{if $item.type eq 'selectTwo'}
+var yijiArr{$item.name}={$item.valuespc};
+
+// var yijiArr = [];
+var selid{$item.name} = {$item.name};
+for (var i = 0; i < yijiArr{$item.name}.length; i++) {
+	$(selid{$item.name}).find(".yiji").append("<option value="+yijiArr{$item.name}[i].firstSelect.name+">"+yijiArr{$item.name}[i].firstSelect.name+"</option>");
+}
+ChangeerjiSelect{$item.name}($(selid{$item.name}).find(".yiji").val(),$(selid{$item.name}));
+function ChangeerjiSelect{$item.name}(value,ele)
+{
+	//var yijiArr{$item.name}=JSON.parse($(ele).find('input').val());
+	for (var i = 0; i < yijiArr{$item.name}.length; i++) {
+		if(yijiArr{$item.name}[i].firstSelect.name==value){
+			$(ele).find(".erji option").remove();
+			for (var j = 0; j < yijiArr{$item.name}[i].secondSelect.length; j++) {
+				$(ele).find(".erji").append("<option value="+yijiArr{$item.name}[i].secondSelect[j].name+">"+yijiArr{$item.name}[i].secondSelect[j].name+"</option>");
+			};
+		}
+	}
+}
+{/if}
+
+{/foreach}		
+{/if}		
+</script>
+<!--google文件调用开始-->
+ <script> (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = 'http://file.xdf.cn/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+ </script>
+ <!--google文件调用结束-->
+ <!--百度统计开始-->
+ <script type="text/javascript">
+     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+     document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe010d1faf316a4dbfe8639481a2a3f90' type='text/javascript'%3E%3C/script%3E"));
+ </script>
+ <!--百度统计结束-->
+<script type="text/javascript"
+	src="http://images.xdf.cn/cms20150819/xinbannew/js/xdf_global.min.js?v=2016-02291112"></script>
+<script type="text/javascript">
+        st('default','{}');
+</script>
+</body>
+</html>

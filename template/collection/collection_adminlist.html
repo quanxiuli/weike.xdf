@@ -1,0 +1,120 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2">
+ <div class="CollectionAll">
+                    <!--收集项管理标题栏 开始-->
+                    <div class="Collection_UP">
+                        <p>权限设置</p>
+                        <div class="Collection_UP_R">
+	                        <a href="/collection/adminadd">
+	                            <span class="Collection_UP_R_BG"><img src="{$publicserver}/public/collection/images/CollectionManagement/TJYH_Img.png" alt="">添加用户</span>
+	                        </a>
+                        </div>
+                    </div>
+                    <!--收集项管理标题栏 结束-->
+                    <!--收集项管理搜索栏 开始-->
+                    <form action="" method="GET" id="seach_admin">
+                    <div class="Collection_Middle">
+                        <div class="Collection_Middle_L">
+                            <select name="tId">
+                                <option value="0">请选择用户类别</option>
+                                {foreach from=$adminType key=key item=item}
+                                <option value="{$key}" {if $key eq $tId}selected{/if}>{$item}</option>
+                                {/foreach}
+                            </select>
+                            <select name="schId">
+                                <option value="0">请选择学校</option>
+                                {foreach from=$schools key=key item=item}
+                                <optgroup label="{$key}">
+                                {foreach from=$item key=k item=i}
+                                	<option value="{$k}" {if $k eq $schId}selected{/if}>{$i}</option>
+                                {/foreach}
+                                </optgroup>
+                                {/foreach}
+                            </select>
+                        <select name="sId">
+                        	<option value="0">管理员状态</option>
+                        	{foreach from=$adminStatus key=key item=item}
+                        	<option value="{$key}" {if $key eq $sId}selected{/if}>{$item}</option>
+                        	{/foreach}
+                        </select>
+                        </div>
+                        <div class="Collection_Middle_R">
+                            <input name="email"  value="{$email}" placeholder="请输入用户邮箱" class="Collection_Middle_R_Pr" type="text"><p>@xdf.cn</p><span onclick="check_form();"></span>
+                        </div>
+                    </div>
+                    </form>
+                    <!--收集项管理搜索栏 结束-->
+
+                    <!--收集项管理结果栏 开始-->
+                    <div class="Collection_Down_QXSZ">
+                        <table>
+                            <tbody><tr>
+                                <th>ID</th>
+                                <th>邮箱</th>
+                                <th>姓名</th>
+                                <th>用户类别</th>
+                                <th>学校</th>
+                                <th>创建时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            {foreach from=$adminList item=item}
+                            <tr>
+                                <td>{$item.id}</td>
+                                <td>{$item.email}</td>
+                                <td>{$item.userName}</td>
+                                <td>{$item.superAdminFlag}</td>
+                                <td>{$item.SchoolName}</td>
+                                <td>{$item.createTime}</td>
+                                <td {if $item.isEnabled eq 2}style="color:red;"{/if}>{$item.userStatus}</td>
+                                <td>
+                                {if $item.isSuperAdmin neq 1}
+                                	<a href="/collection/adminmodify?id={$item.id}">修改</a>|
+                                	<a href="javascript:void(0);" onclick="setAdminStatus($(this),{$item.id});">
+                                	{if $item.isEnabled eq 1}停用{else}恢复{/if}
+                                	</a>
+                                	{/if}
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody></table>
+                        <div class="paging">
+                            <div class="paging_center">
+                            	<ul>{$page}</ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--收集项管理结果栏 结束-->
+                </div>
+</div>
+{include file="collection/collection_footer.html"}
+<script  type="text/javascript">
+	function check_form(){
+		$('#seach_admin').submit();
+	}
+	function setAdminStatus(obj,id){
+		var text = obj.text();
+		var email = obj.parent().parent().children(':nth-child(2)').text();
+		var msg = "您确定要"+text+"["+email+"]管理员吗?";
+		CollectionDialogBox.confirm(msg,{icon:3},function(){
+			$.ajax({
+				url:'/collection/ajax_setadminstatus',
+				type:'POST',
+				dataType:'json',
+				data:{id:id},
+				beforeSend:function(){
+					//num = layer.load(2, {time: 10*1000});
+				},
+				success:function(data){
+					if(data.result){
+						CollectionDialogBox.alert(data.message,{icon:6},function(){
+							window.location.reload();
+						});
+					}else{
+						CollectionDialogBox.alert(data.message,{icon:5});	
+					}
+				}
+			});
+		});
+	}
+</script>

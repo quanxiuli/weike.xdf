@@ -1,0 +1,235 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting1">
+                <div class="sectionr">
+                    <!--我的收集项-->
+                    <form action="" method="GET" id="search_collection">
+                    <div class="rc_sjx">
+                        <p class="rc_wdsjx floatL clear">我的收集项</p>
+                        <div class="rc_suk floatR clear">
+
+                           
+                        
+                            <input name="title" id="" value="{$title}" placeholder="请输入收集项名称" class="inp_srk floatL clear" type="text">
+                            <input type="hidden" name="collectSort" value="{$collectionSort}"/>
+                            <input class="btn-sub" id="btntj" type="submit" value="">
+                        </div>
+                    </div>
+                    </form>
+                    <!--我的收集项-->
+
+                    <!-- 新建收集项-->
+                    <div class="rc_xjsj">
+                        <div class="rc_xjsjx floatL clear">
+                        	<a href="new">
+                            <p class="xjsjx"><img src="{$publicserver}/public/collection/images/yygj1/xjsjx.png" alt="">新建收集项</p>
+                        	</a>
+                        </div>
+                        <div class="rc_xjsjp floatR clear">
+                            <p class="rc_px">
+                                <span class="rc_px1 {if $collectionSort eq 1}a{/if}" data=1>收集项新建排序 <img src="{$publicserver}/public/collection/images/yygj1/sjtb.png" alt=""></span>
+                                <span class="rc_px1 {if $collectionSort eq 2}a{/if}" data=2>反馈更新排序显示 <img src="{$publicserver}/public/collection/images/yygj1/sjt.png" alt=""></span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 新建收集项-->
+
+                    <!-- 表格-->
+                    <div class="qxnr">
+                        <p class="qxxz">
+                            <span class="qxxza a">ID</span>
+                            <span class="qxxza b">表单名称</span>
+                            <span class="qxxza c">表单类型</span>
+                            <span class="qxxza d">采集数</span>
+                            <span class="qxxza e">状态</span>
+                            <span class="qxxza f">二维码和网址</span>
+                            <span class="qxxza g">操作</span>
+                        </p>
+                    </div>
+                    <!-- 表格-->
+
+                    <div class="sj_jbgd" style="height: 120px;">
+                        <!--每条数据-->
+                        <div class="sj_cjgs floatL clear">
+
+                            <!--1-->
+                            {foreach from=$collectionList item=item}
+                            <div class="sj_cjg1">
+                                <div class="cj_time">
+                                    <p class="cj_time1 floatL clear"><span class="time">创建时间 : </span> {$item.create_time}</p>
+                                    <p class="cj_time2 floatR clear">
+                                        <span class="time">开始时间 : </span> {$item.begin_time}
+                                        <span class="time a">结束时间 : </span> {$item.end_time}
+                                    </p>
+                                </div>
+                                <div class="cj_timeb">
+                                    <span class="qxxza aa">{$item.id}</span>
+                                    <span class="qxxza bb" title="{$item.title}" onclick="show_collection_preview({$item.id},'{$item.title}');">{$item.short_tile}</span>
+                                    <span class="qxxza cc">{$collectionType.$item.collectiontype}</span>
+                                    <span class="qxxza dd">{$item.collectCount}
+                                    {if $item.newCollCount gt 0 and $item.newCollCount lte 999}
+                                    <span class="wdbj">{$item.newCollCount}</span>
+                                    {elseif $item.newCollCount gt 999}
+									<span class="wdbj">...</span>
+									{/if}
+                                    </span>
+                                    <span class="qxxza ee {$item.statusClass}">{$collectStatus.$item.collectStatus}</span>
+                                    <span class="qxxza ff" {if $item.status eq 1}onclick="showCollectionQRcode({$item.id},{$item.template});"{else}style="color:#999999;"{/if}>查看</span>
+                                    <p class="qxxza gg">
+                                    {if $item.status < 1}
+                                        <a href="edit?id={$item.id}"><img src="{$publicserver}/public/collection/images/yygj1/bj.png" alt=""><span>编辑</span></a>
+                                        <img src="{$publicserver}/public/collection/images/yygj1/fb.png" alt=""><span onclick="publishCollection($(this),'{$item.id}');">发布</span>
+                                    {/if}
+                                    {if $item.status == 1}
+                                        <img src="{$publicserver}/public/collection/images/yygj1/fb.png" alt=""><span style="color:#999999;">已发布</span>
+                                        <a href="/collection/collectionauth?id={$item.id}"><img src="{$publicserver}/public/collection/images/yygj1/bj.png" alt=""><span style="color:green;">授权</span></a>
+                                    {/if}
+                                    {if $item.status >0 and $item.status < 2}
+                                    	<a href="collectionstat?id={$item.id}"><img src="{$publicserver}/public/collection/images/yygj1/sj.png" alt=""><span>数据</span></a>
+                                    {else}
+                                   		<img src="{$publicserver}/public/collection/images/yygj1/sj.png" alt=""><span style="color:#999999;">数据</span>
+                                    {/if}
+                                    </p>
+                                    <span class="qxxza hh">
+                                       <em></em>
+                                        <span class="xlgn">
+                                        	{if $item.collectStatus gte 1 and $item.collectStatus lt 4}
+                                            <a href="javascript:void(0);" onclick="getCollectionCode('{$item.aid}');">调用代码</a>
+                                            {else}
+                                            <a href="#" style="color:#999999;">调用代码</a>
+                                            {/if}
+                                            <a href="javascript:void(0);" onclick="setCollectionNotifyAndDuCheck($(this),'{$item.id}',{$item.notify},{$item.duplicate_check});">反馈设置</a>
+                                            <a href="/collection/setscene?id={$item.id}">渠道设置</a>
+                                            {if $item.enableDelete == 1}
+                                            <a href="javascript:void(0);" onclick="deleteCollection($(this),'{$item.id}');">删除收集项</a>
+                                            {else}
+                                            <a href="javascript:void(0);" style="color:#999999;" onclick="CollectionDialogBox.alert('收集项中含有用户反馈信息，不能删除~',{icon:4});">删除收集项</a>
+                                            {/if}
+                                        </span>
+                 			        </span>
+                                </div>
+                            </div>
+                            {/foreach}
+                        </div>
+                        <!--每条数据-->
+
+                        <!--分页 -->
+                        <div class="paging">
+                        	<div class="paging_center">
+                            	<ul>{$page}</ul>
+                            </div>
+                        </div>
+                        <!--分页 -->
+
+                    </div>
+                </div>
+</div>
+{include file="collection/collection_footer.html"}
+<script  type="text/javascript" src="{$publicserver}/public/collection/js/clipboard.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#btntj').click(function(){
+		$('#search_collection').submit();
+	});
+	$('.rc_px').find('span').click(function(){
+		var span = $(this);
+		$('#search_collection').find('input[name=collectSort]').val(span.attr('data'));
+		$('#search_collection').submit();
+	});
+   var clipboard = new ClipboardJS('.copyCollectionUrl'); 
+   clipboard.on('success', function(e) {
+   		$('#ModalFrame_WXEWM').hide();
+   		CollectionDialogBox.alert('复制成功',{icon:6});
+   });
+   clipboard.on('error', function(e) {
+   		$('#ModalFrame_WXEWM').hide();
+   		CollectionDialogBox.alert('复制失败！请手动复制',{icon:5},function(){
+   			$('#ModalFrame_WXEWM').show();
+   		});
+	});
+});
+function publishCollection(obj,id){
+	var title = obj.parent().parent().find('span').eq(1).text();
+	CollectionDialogBox.confirm('您确定要发布：【<font color="red">'+title+'</font>】吗？<br/><font color="red">发布后您将无法继续修改！</font>',{icon:4},function(){
+		var index = '';
+		$.ajax({
+			url:'/collection/ajax_publishcollection',
+			type:'POST',
+			dataType:'json',
+			data:{id,id},
+			beforeSend:function(){
+				index = CollectionDialogBox.load(1,10);
+			},
+			success:function(data){
+				CollectionDialogBox.close(index);
+				if(data.result){
+					CollectionDialogBox.alert(data.message,{icon:6},function(){
+						window.location.reload();
+					});
+				}else{
+					CollectionDialogBox.alert(data.message,{icon:5});
+				}
+			}
+		});
+	});
+}
+function deleteCollection(obj,id){
+		CollectionDialogBox.confirm('您确定要删除ID为：【<font color="red">'+id+'</font>】的收集项吗？',{icon:3},function(){
+		var index = '';
+		$.ajax({
+			url:'/collection/ajax_deletecollection',
+			type:'POST',
+			dataType:'json',
+			data:{id,id},
+			beforeSend:function(){
+				index = CollectionDialogBox.load(1,10);
+			},
+			success:function(data){
+				CollectionDialogBox.close(index);
+				if(data.result){
+					CollectionDialogBox.alert(data.message,{icon:6},function(){
+						window.location.reload();
+					});
+				}else{
+					CollectionDialogBox.alert(data.message,{icon:5});
+				}
+			}
+		});
+	});
+}
+function setCollectionNotifyAndDuCheck(obj,id,notify,duplicate_check){
+	var title = obj.parent().parent().parent().find('span').eq(1).text();
+	$('#ModalFrame_FKSZInput').find('.title').empty().append(title);
+	var notifyInput = $('#ModalFrame_FKSZInput').find('select[name=notify]');
+	notifyInput.val(notify);
+	var duplicate_check_input = $('#ModalFrame_FKSZInput').find('select[name=duplicate_check]');
+	duplicate_check_input.val(duplicate_check);
+	var submitButton = $('#ModalFrame_FKSZInput').find('input[type=submit]');
+	submitButton.unbind('click');
+	$('#ModalFrame_FKSZInput').show();
+	data = {id,id};
+	submitButton.click(function(){
+		data.notify = notifyInput.val();
+		data.duplicate_check = duplicate_check_input.val();
+		$.ajax({
+			url:'/collection/ajax_collectionupdate',
+			type:'POST',
+			dataType:'json',
+			data:data,
+			beforeSend:function(){
+				$('#ModalFrame_FKSZInput').hide();
+			},
+			success:function(data){
+				if(data.errno > 0){
+					CollectionDialogBox.alert(data.msg,{icon:5},function(){
+						$('#ModalFrame_FKSZInput').show();
+					});
+				}else{
+					CollectionDialogBox.alert(data.msg,{icon:6},function(){
+						window.location.reload();
+					});
+				}
+			}
+		});
+	});
+}
+</script>

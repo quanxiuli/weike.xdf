@@ -1,0 +1,62 @@
+<html lang="zh"><head>
+	<meta charset="UTF-8">
+	<title>运营工具平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/index.css">
+    <script src="{$publicserver}/public/operation/js/common/jquery-1.11.0.min.js"></script>
+    <script src="{$publicserver}/public/operation/js/common/jqPaginator.min.js"></script>
+    <script src="{$publicserver}/public/operation/js/common/p176.js"></script>
+
+    <script src="{$publicserver}/public/operation/js/layer-v2.1/layer/layer.js"></script>
+    <link rel="stylesheet" href="{$publicserver}/public/operation/js/layer-v2.1/layer/skin/layer.css" id="layui_layer_skinlayercss">
+    <script src="{$publicserver}/public/operation/js/laydate-v1.1/laydate/laydate.js"></script>
+    <link type="text/css" rel="stylesheet" href="{$publicserver}/public/operation/js/laydate-v1.1/laydate/need/laydate.css">
+    <link type="text/css" rel="stylesheet" href="{$publicserver}/public/operation/js/laydate-v1.1/laydate/skins/default/laydate.css" id="LayDateSkin">
+
+</head>
+<body>
+
+
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap">
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+                {if $role_id <= 2}
+                <li>
+	                <a href="javascript:void(0);" data-functionid="1"><i class="p176-class-icon"></i><span class="collapse-hide fz18">{if $role_id eq 1}管理员{else}用户{/if}管理</span></a>
+	                <ul class="p176-expand-ul" style="">
+		                <li><a href="/xshow/adminlist"  target="mainFrame" class=""><span class="collapse-hide">{if $role_id eq 1}管理员{else}用户{/if}列表</span></a></li>
+		                <li><a href="/xshow/adminadd"  target="mainFrame" class=""><span class="collapse-hide">添加{if $role_id eq 1}管理员{else}用户{/if}</span></a></li>
+	                </ul>
+                </li>
+                {/if}
+            	<li>
+	            	<a href="javascript:void(0);" data-functionid="1"><i class="p176-class-icon"></i><span class="collapse-hide fz18">模板管理</span></a>
+	                <ul class="p176-expand-ul" style="">
+	                {if $role_id eq 1}
+		                <li><a href="/xshow/scenelist"  target="mainFrame"><span class="collapse-hide">场景模板</span></a></li>
+		                <li><a href="/xshow/scenepagelist"  target="mainFrame"><span class="collapse-hide">单页模板</span></a></li>
+		                <li><a href="/xshow/getepagescenes"  target="mainFrame"><span class="collapse-hide">单页采集模板</span></a></li>
+		                 <li><a href="/xshow/userscenelist"  target="mainFrame"><span class="collapse-hide">用户场景列表</span></a></li>
+	                {/if}
+		                <li><a href="/xshow/reptile"  target="mainFrame"><span class="collapse-hide">采集易企秀</span></a></li>
+		                <li><a href="/xshow/reptile?from=70"  target="mainFrame"><span class="collapse-hide">采集70c</span></a></li>
+	                </ul>
+                </li>
+                <li>
+	                <a href="javascript:void(0);"><i class="p176-class-icon"></i><span class="collapse-hide fz18">用户场景管理</span></a>
+	                <ul class="p176-expand-ul" style="">
+		                <li><a href="/xshow/index"  target="_blank"><span class="collapse-hide">创建场景</span></a></li>
+	                </ul>
+                </li>
+    			</ul>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

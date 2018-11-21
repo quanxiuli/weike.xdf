@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>{$head_title}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta http-equiv="Content-Language" content="zh-CN"/>
+	<link rel="stylesheet" href="{$publicserver}/public/collection/layui/css/layui.css">
+    <script  type="text/javascript" src="{$publicserver}/public/collection/js/jquery.min.js"></script>
+    <script  type="text/javascript" src="{$publicserver}/public/collection/js/clipboard.min.js"></script>
+    <script  type="text/javascript" src="{$publicserver}/public/collection/layui/layui.js"></script>
+    
+</head>
+<body style="width:800px;margin:100px auto;" style="display:none;">
+<div class="layui-row">
+<div class="layui-col-md11">
+<pre class="layui-code" lay-encode="true"><!-- form代码样例，可以按需要更改如添加class等，但必须保留name、action等属性 -->
+<h3 id="title">{$formlabel}</h3><!-- 标题 -->
+<h4>{$formdesc}</h4><!-- 简介 -->
+<form id="clform">
+{if $inputs}
+{foreach from = $inputs item=item}{if $item.type eq 'text'}
+<span>{$item.label} *</span><input type="text " id ="{$item.name}" name="{$item.name}" /><br/>
+{/if}
+{if $item.type eq 'select'}
+<span>{$item.label} *</span><select name="{$item.name}" id="{$item.name}" >
+									            <span style="text-align: center;"></span>
+												<option value="">请选择</option>
+												{foreach from = $item.values item=i}
+												<option value="{$i.value}">{$i.name}</option>
+												{/foreach}
+											</select><br/>
+{/if}
+{if $item.type eq 'radio'}
+<span>{$item.label} *</span> 
+{foreach from = $item.values item=i name=foo}
+<input type="radio" name="{$item.name}"  id="{$item.name}_{$smarty.foreach.foo.index}"  value="{$i.value}">{$i.value}<br/>
+{/foreach}
+{/if}
+{if $item.type eq 'textarea'}
+<span>{$item.label} *</span><textarea name="{$item.name}" rows="" cols=""  ></textarea><br/>
+{/if}
+{if $item.type eq 'checkbox'}
+<span>{$item.label} *</span>
+{foreach from = $item.values item=i}
+<input type="checkbox" name="{$item.name}" value="{$i.name}"/>{$i.name}<br/>
+{/foreach}
+{/if}
+{if $item.type eq 'date'}
+<span>{$item.label} *</span><input type="text " id ="{$item.name}" name="{$item.name}" /><br/>
+{/if}
+{if $item.type eq 'pmc'}
+<span>{$item.label} *</span><input type="text " id ="{$item.name}" name="{$item.name}" /><br/>
+{/if}
+{if $item.type eq 'file'}
+<span>{$item.label} *</span><br/>
+{/if}
+
+{if $item.type eq 'selectTwo'}
+<div id="{$item.name}" >
+<span>{$item.label}{if $item.required}*{/if}</span>
+<select class="yiji twolevellink floatL" onchange="ChangeerjiSelect{$item.name}(this.value,$('#{$item.name}'))"> </select>
+<select class="erji twolevellink floatR" name="{$item.name}" ></select>
+</div>
+{/if}
+
+{if $item.type eq 'score'}
+<div class="">
+<span>{$item.label}{if $item.required}*{/if}</span>
+<p class="score">{$item.describe}</p>
+<input type="hidden" name="{$item.name}" id="{$item.name}">
+<p class="xj_zs">
+	{foreach from = $item.values item=i name=foo}
+	<span class="{$i}"  alt="{$smarty.foreach.foo.index}"></span>
+	{/foreach}
+</p>
+</div>
+{/if}
+{/foreach}
+{/if}
+<input type="hidden" name="scene_id" value="{$sid}" />
+<div id="subBtn" class="login_btn" >提交</div>
+	<div style="color: black;font-size: 12px;"><input id="isRead" type="checkbox" style="margin-right:5px"> 我接受并同意<a href="http://www.xdf.cn/zhuanti/contract-pc/index.html" target="_blank" style="font-size:12px">《用户服务条款》</a>和<a href="http://www.xdf.cn/zhuanti/privacy-pc/index.html" target="_blank" style="font-size:12px">《隐私政策》</a></div>
+</form>
+<!--表单数据提交开始-->
+<style type="text/css">
+.stars_light{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/GlobalSetting_TCC/ping-huang.png) no-repeat center;
+}
+.heart{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai2-hui.png) no-repeat center;
+}
+.heart_light{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai2.png) no-repeat center;
+}
+.good{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai3-hui.png) no-repeat center;
+}
+.good_light{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai3.png) no-repeat center;
+}
+.rose{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai4-hui.png) no-repeat center;
+}
+.rose_light{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai4.png) no-repeat center;
+}
+.xpression{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai5-hui.png) no-repeat center;
+}
+.xpression_light{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background: url({$publicserver}/public/collection/images/QJSZImg/wai5.png) no-repeat center;
+}
+
+    </style>
+<script type="text/javascript" src="http://images.xdf.cn/v4/js/jquery.js"></script>
+<script type="text/javascript">
+{if $inputs}
+{foreach from = $inputs item=item}
+
+
+{if $item.type eq 'score'}
+$('.xj_zs span').click(function(e){
+  	 var score=parseInt($(this).attr("alt"))+1;
+  	 var base=co=cn="";
+  	 base=$(this).attr('class').replace("_light","");
+  	 //base=base.replace(" active-state","");
+  	 $(this).removeClass(base);
+  	 $(this).removeClass(base+"_light");
+  	 $(this).addClass(base+"_light");
+  	 
+		 $(this).prevAll().removeClass(base);
+		 $(this).prevAll().removeClass(base+"_light");
+		 $(this).prevAll().addClass(base+"_light");
+		 
+		 $(this).nextAll().removeClass(base);
+		 $(this).nextAll().removeClass(base+"_light");
+		 $(this).nextAll().addClass(base);
+		 
+		 $("#"+$(this).attr("for")).val(score);
+	 });
+{/if}	 
+{if $item.type eq 'selectTwo'}
+var yijiArr{$item.name}={$item.valuespc};
+var {$item.name}=  $('*[name="{$item.name}"]').val();
+var selid{$item.name} = {$item.name};
+for (var i = 0; i < yijiArr{$item.name}.length; i++) {
+	$('#{$item.name}').find(".yiji").append("<option value="+yijiArr{$item.name}[i].firstSelect.name+">"+yijiArr{$item.name}[i].firstSelect.name+"</option>");
+}
+ChangeerjiSelect{$item.name}($(selid{$item.name}).find(".yiji").val(),$(selid{$item.name}));
+function ChangeerjiSelect{$item.name}(value,ele) {
+
+	for (var i = 0; i < yijiArr{$item.name}.length; i++) {
+		if(yijiArr{$item.name}[i].firstSelect.name==value){
+			$(ele).find(".erji option").remove();
+			for (var j = 0; j < yijiArr{$item.name}[i].secondSelect.length; j++) {
+				$(ele).find(".erji").append("<option value="+yijiArr{$item.name}[i].secondSelect[j].name+">"+yijiArr{$item.name}[i].secondSelect[j].name+"</option>");
+			};
+		}
+	}
+}
+{/if}
+
+{/foreach}
+{/if}
+	var isreadtrue=$('#isRead').attr('checked');
+
+	if(isreadtrue){
+		$('#subBtn').css({
+			'background-color':'#C30D23'
+		})
+	}else{
+		$('#subBtn').css({
+			'background-color':'#d5d5d5'
+		})
+	}
+	$('#subBtn').click(function(){
+		var val=$('#isRead').attr('checked');
+		//用户如果未勾选服务条款不能提交，alert提示用户
+		if(!val){
+			return
+		}
+		var data=new Object();
+   	 	data.id='{$collection.aid}';
+   	 	data.ref=document.referrer;
+{foreach from = $inputs item=item}
+		var {$item.name}=  $('*[name="{$item.name}"]').val();
+	 	data.{$item.name}={$item.name};
+	 	{if $item.required}
+		if({$item.name}==''){
+			alert('{$item.label}'+'不能为空!');
+			return false;
+		}
+		{/if}
+{/foreach}
+		var scene_id = $('input[name=scene_id]').val();
+		if(scene_id > 0)data.scene_id = scene_id;
+		$.post("http://{$domain}/collection/ajax_submit",data).success(function(data){
+		        	if(data.errno!=0){
+		        		alert(data.msg);
+		        	}else{
+		        		alert('提交成功!');
+		        	}
+	    });
+	
+	});
+	$("#isRead").change(function(){
+		var ischeck=$(this).attr('checked');
+		if(ischeck){
+			$("#subBtn").css({
+				"background-color":"#C30D23"
+			})
+		}else{
+			$("#subBtn").css({
+				"background-color":"#d5d5d5"
+			})
+		}
+	})
+</script>
+<!--表单数据提交结束-->
+</pre>
+</div>
+<div class="layui-col-md1"><button id="closeFrame" style="cursor:pointer;padding:  0;width:  20px;height: 20px;line-height:20px;text-align:center;right: 30px;position: relative;top: 15px;border: none;">X</button>
+<button id="copyCollectionCode" data-clipboard-target=".layui-code-ol" style="cursor:pointer;padding:  0;width:  70px;height: 20px;line-height:20px;text-align:center;right: 120px;position: relative;top: -8px;border: none;">复制代码</button>
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use('code', function(){ //加载code模块
+	  layui.code({
+	  	title:$('#title').text()+'-调用代码'
+	  	,height:'600px'
+	  	,encode:true
+	  	,about:false
+	  }); //引用code方法
+	});
+	$('body').show();
+    var clipboard = new ClipboardJS('#copyCollectionCode'); 
+	clipboard.on('success', function(e) {
+		layui.use('layer', function(){
+			layer = layui.layer;
+			layer.msg('复制成功',{icon:6});
+		});
+	});
+	clipboard.on('error', function(e) {
+		layui.use('layer', function(){
+			layer = layui.layer;
+			layer.msg('复制失败！请手动复制',{icon:5});
+		});
+	});
+</script>
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>购课订单</title>
+    <link rel="stylesheet" type="text/css" href="{$publicserver}/public/gouke/app/style/goukebase.css" />
+    <link rel="stylesheet" type="text/css" href="{$publicserver}/public/gouke/app/style/allOrder.css"/>    
+    <link rel="stylesheet" type="text/css" href="{$publicserver}/public/gouke/app/style/swiper.min.css"/>
+	<style type="text/css">
+	.choose_arrow2{
+    width: 0.47rem;
+    height: 0.75rem;
+    position: absolute;
+    top: 30%;
+    left: 0.64rem;
+    background-image: url({$publicserver}/public/gouke/app/images/head_top.png);
+    background-size: 0.45rem 0.77rem;
+    background-repeat: no-repeat;
+    background-position: 5% center;
+    padding-right: 3rem;
+    padding-top: 0.9rem;
+}
+	.time_icon {
+    height: 0.55rem;
+    width: 0.55rem;
+    background-image: url({$publicserver}/public/gouke/app/images/time.png);
+    background-position: left center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 0.45rem;
+}
+	.adress_icon {
+    height: 0.6rem;
+    width: 0.55rem;
+    background-image: url({$publicserver}/public/gouke/app/images/adress.png);
+    background-position: left center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 0.8rem;
+}
+	
+	</style>
+</head>
+<body>
+    <div>
+        <!--遮罩层S-->
+        <div id='allCityOrderBg' class="order_mask" style="display: none;"></div>
+        <!--遮罩层E-->
+        <!--第一块S-->
+        <div>
+            <!--头部S-->
+            <div class="choose_top2">
+                <a href="javascript:history.go(-1)" class="choose_arrow2"></a>
+                <span id='allCityOrder' isExpand=0  class="title_arrow ">所有订单</span>
+            </div>            
+            
+            <!--订单下拉框S-->
+            <div id='allCityList' class="order_showbox" style="display: none;">
+            	<div class="clearfix orderDiv">
+            		
+                        <a href="javascript:void(0);" class="fl mt30">所有订单</a>
+                </div>
+            </div>
+            <!--订单下拉框E-->
+        </div>
+        <!--第一块E-->
+        <!--第二块导航栏S-->
+        <div class="nav_box" id='swiper-container'>
+        	<i class="mohu_icon"></i>
+            <div class="clearfix nav_tittle swiper-wrapper">
+                <a href="javascript:void(0);" class="fl swiper-slide nav_boxhover">全部</a>
+            </div>
+        </div>        
+        <!--第二块导航栏E-->
+        <!--第三块学校S-->
+            <!--内容S-->
+        {if !$orderlist}
+	    <div class="content_box" style="display:block;">
+	        <p class="order_notip">您还没有相关的订单哦!</p>
+	        
+	    </div>
+	    {else}
+	    {foreach from=$orderlist item=item}
+		<!--内容E-->
+        <div class="school_bigbox">
+            <h2 class="clearfix school_titllebox">                
+                <span select='select' class="fl school_icon_off" schoolid="1" ordercode="" style="display: none;"></span>
+                <i class="fl">{$item.name}</i>
+                <em class="fr pay_over" style="display:none;">已支付</em>
+            </h2>
+            <div class="order_detailbox" ordercode="R0017223230">
+                <h2 class="oldorder_titlebox">{$item.nameafter}</h2>
+                <p class="places">{$item.classcode}</p>
+                <p class="oldorder_money"><span>￥</span>{$item.price}</p>
+                <p class="clearfix">
+                    <span class="fl adress_icon"></span>
+                    <span class="fl adress_word">{$item.learnplace}</span>
+                </p>
+                <p class="clearfix">
+                    <span class="fl time_icon"></span>
+                    <span class="fl time-word">{$item.startdate}到{$item.enddate}，{$item.learntime}</span>
+                </p>
+            </div>
+            <div class="real_paybigbox">
+                <div class="real_paybox">
+                    实付款：<span class="real_paymoney">￥{$item.paidmoney}</span>
+                </div>
+            </div>
+            <div class="cancel_orderbox" id='butList' style="display: block ;">
+            </div>           
+        </div>
+        {/foreach}
+        {/if}
+    </div>
+    <!--空白块S-->
+    <!--空白块E-->
+
+
+</body>
+
+<!--自适应布局JS-->
+<script>
+	    (function (win, doc) {
+	        function change() {
+	            doc.documentElement.style.fontSize = doc.documentElement.clientWidth / 320 * 20 + 'px';
+	        }
+
+	        change();
+	        win.addEventListener('resize', change, false);
+	    })(window, document);
+</script>
+<!--自适应布局JS-->
+</html>

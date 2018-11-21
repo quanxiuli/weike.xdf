@@ -1,0 +1,469 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2 GlobalSetting3">
+                 <div class="sectionr">
+                 	<div class="wxs_fx">
+                   <!--面包屑-->
+		                   <p class="mbx">当前位置： <span>我的收集项 ></span> 数据 > {$collection.title}</p>
+		                   <!--面包屑-->
+		                  
+		                   <!--我的收集项-->
+		                   <div class="rc_sjx" {if !$showAnalysis}style="display:none;"{/if}>
+		                   	  <p class="rc_wdsjx floatL clear">数据统计</p>                   	  
+		                   </div>
+		                 <!--我的收集项-->
+                   <!--2-->
+                   
+                     <div class="xs_fx">
+                     	
+                     <div {if !$showAnalysis}style="display:none;"{/if}>
+	                  	  <ul class="ul_sjfx">
+	                  	  	<li class="li_sjfx1 active"><span class="shuju">今日数据</span><span class="sjl">{$today_num}</span></li>
+	                  	  	<li class="li_sjfx2"><span class="shuju">昨日数据</span><span class="sjl">{$yesterday_num}</span></li>
+	                  	  	<li class="li_sjfx3"><span class="shuju">总数据</span><span class="sjl">{$total_num}</span></li>
+	                  	  </ul>
+                  	     
+                  	     	<div class="3k_qh">
+                  	        	<div class="3k_qh1">
+		                  	     	<!--时间段-->
+		                  	     	<div class="sjtjx_mc" style="display: none;">
+			                  		<span class="sjtjx_mc1">时间段 :</span>
+			                  		<input type="date" name="" id="stat_start" value="{$default_start}" class="datet"/>
+			                  		——
+			                  		<input type="date" name="" id="stat_end" value="{$default_end}" class="datet a"/>
+			                  		<input type="button" name="" id="statrefesh" value=""  style="width: 30px;height: 34px;border: none;background: url({$publicserver}/public/collection/images/shujuimg/xan.jpg) no-repeat center;
+    float: right;"/>
+		                  			</div>
+		                  			<!--时间段-->
+		                  			<div class="sj_bg" style="margin-left:-30px;">
+		                  				<div id="clstat_daily" style="width: 1050px;height:233px;"></div>
+		                  				<!--  <img src="{$publicserver}/public/collection/images/shujuimg/sjqx.jpg" alt="" /> -->
+		                  				
+		                  			</div>
+	                  			</div>
+	                  			
+	                  			
+                  			</div>
+                  			{if $percentage}
+                  			<!--采集项占比 class="active"-->
+                  			<p class="fkz a"><span class="fkza"></span>采集项占比</p>
+                  			<div class="cjx_zb">
+                  				<div class="hddh">
+                  					<p class="left_a"><span></span></p>
+                  					<p class="right_a"><span></span></p>
+                  					<ul class="hddha">
+                  						{foreach  from=$percentage item=item}
+                  						<li {if $item.active} class="active" {/if} onclick="userAggregation('{$item.key}')" id="li_{$item.key}"><span></span>{$item.name}</li>
+                  						{/foreach}
+                  						
+                  					</ul>
+                  				</div>
+                  				<div class="hddh_b clearfix">
+                  					<div class="hddhb1">
+                  					    <div id="clstat_aggregation" style="width: 700px;height:320px; margin:auto"></div>
+									</div>
+                  					
+                  				</div>
+                  				
+                  			</div>
+                  			<!--采集项占比-->
+                  			{/if}
+                  			</div>
+                  			<!--数据详情-->
+                  			<div class="sjxq">
+                  						<p class="sjxq1 floatL clear">数据详情</p>
+                  						<p class="sjxq2 floatR clear">
+                  							<a href="/collection/downloadcollectiondata?id={$collection.id}{if $cityName neq ''}&city={$cityName}{/if}" class="xzsj" id="downloadCollectionData">下载数据</a>
+                  							<a href="javascript:void(0);" class="tzts" data-attr="{$collection.is_push}" onclick="setPushStatus($(this),'{$collection.id}');">{if $collection.is_push eq 1}关闭{else}开启{/if}推送</a>
+                  						</p>
+                  						<p class="sjxq2 floatR clear" style="width:450px;padding-right:20px;">
+                  						<button class="layui-btn" style="height:26px;line-height:26px;float:right;" id="selectCollectionData">查询</button>
+                  						 <input type="text" style="display:inline-block;width:150px;line-height:20px;height:20px;border:1px solid #d8d8d8;color:#666;font-size:12px;padding:2px;margin-right:10px;float:right;" id="beginAndEndTime" placeholder="请选择搜索时间段">
+                  						{if $showCity || $showScene}
+													{if $showScene}
+													<select name="scene" style="display:inline-block;width:100px;line-height:28px;height:28px;border:1px solid #d8d8d8;color:#666;font-size:14px;margin-right:10px;float:right;" id="sceneName">
+														<option value="">请选择渠道</option>
+														{foreach from=$collectionScenes key=key item=item}
+														<option value="{$key}">{$item}</option>
+														{/foreach}
+														<option value="0">其他</option>
+													</select>
+													{/if}
+													{if $showCity}
+													<select name="city" style="display:inline-block;width:100px;line-height:28px;height:28px;border:1px solid #d8d8d8;color:#666;font-size:14px;margin-right:10px;float:right;" {if $cityName neq ''}disabled{/if} id="cityName">
+														<option value="">请选择城市</option>
+														{foreach from=$fxSchools item=item}
+															{foreach from=$item key=k item=i}
+														<option value="{$i}" {if $cityName eq $i}selected{/if}>{$i}</option>
+															{/foreach}
+														{/foreach}
+													</select>
+													{/if}
+										{/if}
+									   <div style="clear:both;"></div>
+										
+                  						</p>
+                  						
+                  					</div>
+                  			<table id="collectionData"></table>
+                  			<!--数据详情-->
+                  	     </div>
+                  	      </div>
+                  	     <!--2-->
+                  
+                 
+                  
+                  
+                  
+                
+                   
+            	 </div>
+            	 </div>
+{include file="collection/collection_footer.html"}
+<script type="text/javascript" src="{$publicserver}/public/collection/layui/layui.js"></script>
+<script>
+layui.use(['laydate','table'], function(){
+  var laydate = layui.laydate;
+  var table = layui.table;
+  laydate.render({
+    elem: '#beginAndEndTime'
+    ,theme: 'molv'
+    ,type: 'date'
+    ,format: 'yyyy/MM/dd'
+    ,range: true
+    ,done: function(value, date, endDate){
+	getCollectionDownloadUrl(value);
+  }
+  });
+  var cols = [];
+  {foreach from=$collectionFields key=key item=item}
+  	cols.push({field:'{$item}', title: '{$key}',width: 120});
+  {/foreach}
+  cols[0].sort = true;
+  var colLength = cols.length;
+//  if(colLength >= 9){
+//  	cols[colLength-1].fixed = 'right';
+//  }
+  if(colLength > 2)colLength = 2;
+  if(colLength > 0)
+  for(var i=0;i<colLength;i++){
+  	cols[i].fixed = 'left';
+  }
+  var citySelectObj = $('#cityName'),cityName='';
+  if(citySelectObj.size() > 0){
+	  	cityName = citySelectObj.val();
+  }
+  var id = '{$cid}';
+  table.render({
+    elem: '#collectionData'
+    ,url:'/collection/ajax_getcollectiondata'
+    ,method:'get'
+    ,where:{id:id,city:cityName}
+    ,cols: [cols]
+    ,loading:true
+    ,page: true
+  });
+  $('#selectCollectionData').click(function(){
+  	 var data = {id:id};
+	  if(citySelectObj.size() > 0){
+		  	cityName = citySelectObj.val();
+		  	data.city = cityName;
+	  }
+	  var sceneSelectObj = $('#sceneName');
+	  if(sceneSelectObj.size() > 0){
+		var sceneId = sceneSelectObj.val();
+		if(sceneId != '')
+			data.sceneId = sceneId;
+	  }
+	  var beginAndEndTime = $('#beginAndEndTime').val();
+	  if(beginAndEndTime != ''){
+	  	data.bae = beginAndEndTime;
+	  }
+	  table.render({
+	    elem: '#collectionData'
+	    ,url:'/collection/ajax_getcollectiondata'
+	    ,method:'get'
+	    ,where:data
+	    ,cols: [cols]
+	    ,loading:true
+	    ,page: true
+	  });
+  });
+});
+function getCollectionDownloadUrl(date){
+	var downloadUrl = '/collection/downloadcollectiondata?id={$collection.id}';
+	var citySelectObj = $('#cityName'),cityName='';
+	var sceneSelectObj = $('#sceneName'),sceneId = 0;
+	if(citySelectObj.size() > 0){
+	  	cityName = citySelectObj.val();
+	  	downloadUrl += '&city='+cityName;
+	}
+	var sceneSelectObj = $('#sceneName');
+	if(sceneSelectObj.size() > 0){
+	var sceneId = sceneSelectObj.val();
+	if(sceneId != '')
+		downloadUrl += '&sid='+sceneId;
+	}
+	var beginAndEndTime = '';
+	if(typeof date == 'undefined'){
+		beginAndEndTime = $('#beginAndEndTime').val();
+	}else{
+		beginAndEndTime = date;
+	}
+	if(beginAndEndTime != ''){
+		downloadUrl += '&bae='+encodeURIComponent(beginAndEndTime);
+	}
+	$('#downloadCollectionData').attr('href',downloadUrl);
+}
+$(function(){
+	$('#sceneName').change(getCollectionDownloadUrl);
+	$('#cityName').change(getCollectionDownloadUrl);
+	//$('#selectCollectionData').click(getCollectionDownloadUrl);
+});
+function setPushStatus(obj,id){
+	var pushText = obj.text();
+	var msg = '您确定要为该收集项'+pushText+'吗？';
+	CollectionDialogBox.confirm(msg,{icon:3},function(){
+		var index = '';
+		$.ajax({
+			url:'/collection/ajax_setcollpushstatus',
+			type:'POST',
+			dataType:'json',
+			data:{id:id},
+			beforeSend:function(){
+				index = CollectionDialogBox.load(1,10);
+			},
+			success:function(data){
+				CollectionDialogBox.close(index);
+				if(data.result){
+					CollectionDialogBox.alert(data.message,{icon:6},function(){
+						obj.empty().append(data.aText);
+					});
+				}else{
+					CollectionDialogBox.alert(data.message,{icon:5});
+				}
+			}
+		});
+	});
+}
+</script>
+<script type="text/javascript" src="{$publicserver}/public/collection/js/echarts.common.min.js"></script>
+<script type="text/javascript">
+var id='{$collection.id}';
+var start=0;
+var end=0;
+var originStart = $('#stat_start').val();
+var originEnd = $('#stat_end').val();
+var index=0;
+var column='';
+
+var clstat_daily = echarts.init(document.getElementById('clstat_daily'));	      
+{if $percentage}
+var clstat_aggregation = echarts.init(document.getElementById('clstat_aggregation'));
+{/if}
+$(function() {
+		//jQuery(".cjx_zb").slide({ titCell: ".hddha li", mainCell: ".hddh_b", defaultPlay: false, titOnClassName: "active", prevCell: ".left_a", nextCell: ".right_a" });
+		//jQuery(".hddha").slide({ mainCell: " ul", vis: 7, effect: "leftLoop", defaultPlay: false, prevCell: ".left_a", nextCell: ".right_a" });
+});      
+
+$('.ul_sjfx li').click(function(e){
+	   	$(this).addClass('active').siblings().removeClass('active');
+	   	
+});
+
+$('.ul_sjfx li').click(function(f){
+   	    f.preventDefault()
+     	index = $(this).index();    
+   	    $('.3k_qh>div').eq(index).show().siblings().hide();	
+   	    
+   	    if(index==2){
+   	    	$('.sjtjx_mc').show();	
+   	    }else{
+   	    	$('.sjtjx_mc').hide();	
+   	    }
+   	    updateStat();
+});
+
+$('#statrefesh').click(function(f){
+	start=$('#stat_start').val();    	
+	end=$('#stat_end').val();
+	var flag = false;
+	var msg = '';
+	if(start > end){
+		flag = true;
+		msg = '开始时间不能大于结束时间';
+	}else{
+		var endAttr = end.split('-');
+		endAttr[0] = endAttr[0]-3;
+		var miniStart = endAttr.join('-');
+		if(start < miniStart){
+			flag = true;
+			msg = '您选择的时间间隔不能超过3年';
+			
+		}
+	}
+	if(flag){
+		CollectionDialogBox.alert(msg,{icon:4},function(){
+			$('#stat_start').val(originStart);
+			$('#stat_end').val(originEnd);
+			start = originStart;
+			end = originEnd;
+		});
+	}
+	else updateStat();
+});
+
+
+
+$(document).ready(function(){
+	updateStat();
+	
+	$(".hddha li").click(function () {
+		$("li[class='active']").removeAttr("class");
+		$(this).addClass("active");
+	});
+	
+	{if $percentage}
+	userAggregation("grade");
+	{/if}
+})
+
+function userAggregation(column){
+	
+	clstat_aggregation.setOption({
+		color: ['#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
+            '#ff69b4','#ffa500','#40e0d0',
+            '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
+            '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'],
+
+		title: {
+	        text: ''
+	    },
+	    tooltip: {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b}: {d}%"
+	    },
+	    legend: {
+	        orient: 'vertical',
+	        top: '0%',
+	        width: '20%',
+	        x: 'right',
+	        data:[]
+	    },
+	    series: [
+	        {
+	            name:'总人数',
+	            type:'pie',
+	            radius: ['50%', '70%'],
+	            //radius : '80%',
+	            avoidLabelOverlap: false,
+	            center: ['50%', '50%'],
+	            //roseType: 'radius',
+	            label: {
+	            	offset:[30, 40],
+	                normal: {
+	                    show: true,
+	                    position:'outer',  
+	                    //position: 'center'
+	                },
+	                emphasis: {
+	                    show: true,
+	                    textStyle: {
+	                        fontSize: '30',
+	                        fontWeight: 'bold'
+	                    }
+	                }
+	            },
+	            labelLine: {
+	                normal: {
+	                    show: true
+	                }
+	            },
+	            data:[]
+	        }
+	    ]
+		});
+		$.post("ajax_useraggregation",{id:id,column:column},function(data){
+			// 填入数据
+			clstat_aggregation.setOption({
+				legend:{data: data.categories},
+		        series: {data:data.series,name:data.xaxis}
+		    });
+		}, "json");	
+	
+}
+
+function updateStat(){
+		clstat_daily.setOption({
+			color: ['#3CDCD7'],
+			title: {
+		        text: ''
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		    	top: '8%',
+		        left: '5%',
+		        data:['']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {}
+		        },
+		        right:"5%"
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: []
+		    },
+		    yAxis: {
+		    	axisTick :{                 //坐标轴刻度相关设置
+		            show:false,              //是否显示坐标轴刻度。
+		       },
+		        
+		        type: 'value',
+	        	splitLine: {  
+                    show: true,
+                    lineStyle: {  
+                    	type:"dashed",               //坐标轴线线的类型，solid，dashed，dotted
+                        color: ['#E7E7E7']  
+                    }  
+                }
+		    },
+		    series: []
+		});
+
+		$.post("ajax_collectionstat",{id:id,start:start,end:end,type:index},function(data){
+				if(data.error > 0){
+					CollectionDialogBox.alert(data.msg,{icon:4},function(){
+						if(data.error == 5){
+							if(originStart > 0 && originEnd > 0){
+								$('#stat_start').val(originStart);
+								$('#stat_end').val(originEnd);
+							}
+						}
+					});
+					return false;
+				}
+				if(index == 2 && start > '0'){
+					originStart = start;
+					originEnd = end;
+				}
+				// 填入数据
+				//console.log(data);
+				clstat_daily.setOption({
+					legend:{data: data.categories},
+			        xAxis: {data: data.xaxis},
+			        series: data.series
+			    });
+		}, "json");
+	
+}
+</script>

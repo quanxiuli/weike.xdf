@@ -1,0 +1,94 @@
+{include file="activity/common_header.html"}
+
+<div class="clearfix">
+	<div class="we7-padding-bottom clearfix">
+		<div class="pull-left">
+			<a href="/activity/adminadd" class="btn btn-primary we7-padding-horizontal">添加管理员</a>
+		</div>
+	</div>
+	<table class="table we7-table" style="width:600px;">
+		<tbody>
+			<tr>
+				<td>邮箱</td>
+				<td>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="email" placeholder="请输入新东方邮箱">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>功能管理</td>
+				<td>
+					<ul id="functionTree" class="tree"></ul>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button class="btn btn-primary" onclick="check_admin_add();">添加</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+function getModules(){
+	$.ajax({
+		url:'/activity/ajax_getmodules',
+		type:'POST',
+		dataType:'json',
+		success:function(data){
+			if(data.code==1){
+				//将权限列表放入ul
+                $("#functionTree").tree({
+                    data: data.modules,
+                    checkbox: true,
+                    cascadeCheck:true
+                });
+			}else{
+				layer.alert(data.message,{icon:5});
+			}
+		}
+	});
+}
+function check_admin_add(){
+	var email = $('#email').val();
+	if(!GLOBAL.reg_email.test(email)){
+		layer.alert('请输入正确的公司邮箱',{icon:5});
+		$('#email').focus();
+		return false;
+	}
+	var treeCheckedList = $("#functionTree").tree('getChecked', ['checked', 'indeterminate']);
+	if(treeCheckedList.length ==0){
+		layer.alert('请为管理员分配权限',{icon:5});
+		return false;
+	}
+	var modules = [];
+	for(var i in treeCheckedList){
+		modules.push(treeCheckedList[i].id);
+	}
+	var index = '';
+	$.ajax({
+		url:'/activity/ajax_adminadd',
+		type:'POST',
+		dataType:'json',
+		data:{email:email,modules:modules},
+		beforeSend:function(){
+			index = layer.load(2);
+		},
+		success:function(data){
+			console.log(data);
+			layer.close(index);
+			if(data.code == 1){
+				layer.msg(data.message,{icon:6});
+				window.location.href = '/activity/adminlist';
+			}else{
+				layer.msg(data.message,{icon:5});
+			}
+		}
+	});
+}
+$(function(){
+	getModules();
+});
+</script>
+{include file="activity/common_footer.html"}

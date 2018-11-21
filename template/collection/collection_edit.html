@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>全局设置</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta http-equiv="Content-Language" content="zh-CN"/>
+
+
+    <!--公共css样式-->
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/publicCss.css">
+    <!--全局设置页面样式-->
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/GlobalSetting.css"/>
+
+    <!--公共jquery库-->
+    <script src="{$publicserver}/public/collection/js/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        var globalOpt={
+            id:'{$collection.id}',
+            enable_image:"{$enable_image}",
+            enable_attachment:"{$enable_attachment}",
+            schoolid:"{$collection.schoolid}",
+            schoolidtest:"{$current_schoolid}",
+            current_schoolid:"{$collection.schoolid}",
+            publicserver:"{$publicserver}",//static静态服务器地址
+            domain:"{$domain}"//接口api地址
+        }
+    </script>
+    <!--[if IE 6]>
+    <script src="{$publicserver}/public/collection/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div');
+    </script>
+    <![endif]-->
+
+    <!--<script src="{$publicserver}/public/collection/js/public-form.js"></script>-->
+</head>
+<body>
+<!--banner S-->
+
+<div id="app"></div>
+
+
+
+<!--banner E-->
+
+<script src="{$publicserver}/public/collection/js/vuewebsrc/dist/build.js"></script>
+
+<script type="text/javascript" src="http://images.xdf.cn/cms20150819/xinbannew/js/xdf_global.min.js"></script>
+<script type="text/javascript">
+    //st('default', '{}');
+</script>
+
+
+
+
+</body>
+</html>

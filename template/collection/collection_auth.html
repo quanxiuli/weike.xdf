@@ -1,0 +1,97 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2">
+ <div class="CollectionAll">
+                    <!--收集项管理标题栏 开始-->
+                    <div class="Collection_UP">
+                 		<p>收集项授权<{$collection.title}></p>
+                        <div class="Collection_UP_R"></div>
+                    </div>
+                    <!--收集项管理标题栏 结束-->
+                    <!--收集项管理搜索栏 开始-->
+                    <form action="" method="GET" id="seach_admin">
+                    <div class="Collection_Middle">
+                        <div class="Collection_Middle_L">
+                        	<input type="hidden" name="id" value="{$collection.id}" />
+                            <select name="sid" {if !$selectCity}disabled{/if}>
+                                <option value="0">请选择学校</option>
+                                {foreach from=$schools key=key item=item}
+                                <optgroup label="{$key}">
+                                {foreach from=$item key=k item=i}
+                                	<option value="{$k}" {if $k eq $schId}selected{/if}>{$i}</option>
+                                {/foreach}
+                                </optgroup>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="Collection_Middle_R">
+                        <button {if !$selectCity}class="layui-btn layui-btn-primary" disabled{else}class="layui-btn"{/if}>查询</button>
+                        </div>
+                    </div>
+                    </form>
+                    <!--收集项管理搜索栏 结束-->
+
+                    <!--收集项管理结果栏 开始-->
+                    <div class="Collection_Down_QXSZ">
+                    	
+                            {foreach from=$adminList key=key item=item}
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+							 	<legend style="font-size:15px;">{$adminType.$key}</legend>
+							</fieldset>
+							<div class="layui-row">
+							{foreach from=$item item=i}
+								<div class="layui-col-md3" style="margin-bottom:5px;">
+								   <button class="layui-btn {if $i.is_auth eq 0}layui-btn-primary{/if} admin-email" data-id="{$i.id}">{$i.email}</button>
+								</div>
+							{/foreach}
+							</div>
+                            {/foreach}
+                         	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;"></fieldset>
+                  			<div class="layui-row">
+                  				<button class="layui-btn" onclick="authCollection('{$collection.id}');">授权</button>
+                  				<button class="layui-btn layui-btn-primary" onclick="window.location.reload();">重置</button>
+                  			</div>
+                    </div>
+                    <!--收集项管理结果栏 结束-->
+                </div>
+</div>
+{include file="collection/collection_footer.html"}
+<script type="text/javascript">
+$(function(){
+	$('.admin-email').click(function(){
+		var button = $(this);
+		if(button.hasClass('layui-btn-primary'))button.removeClass('layui-btn-primary');
+		else button.addClass('layui-btn-primary');
+	});
+});
+function authCollection(id){
+	var adminIds = [];
+	var cancelAdminIds = [];
+	$('.admin-email').each(function(){
+		var button = $(this);
+		if(!button.hasClass('layui-btn-primary'))adminIds.push(button.attr('data-id'));
+		else cancelAdminIds.push(button.attr('data-id'));
+	});
+	CollectionDialogBox.confirm('您确定要进行这次授权吗？',{icon:3},function(){
+			var index = '';
+			$.ajax({
+				url:'/collection/ajax_collectionauth',
+				type:'POST',
+				dataType:'JSON',
+				data:{id:id,aIds:adminIds,caIds:cancelAdminIds},
+				beforeSend:function(){
+					index = CollectionDialogBox.load(1,10);
+				},
+				success:function(data){
+					CollectionDialogBox.close(index);
+					if(data.result){
+						CollectionDialogBox.alert(data.message,{icon:6},function(){
+							window.location.reload();
+						});
+					}else{
+						CollectionDialogBox.alert(data.message,{icon:5});
+					}
+				}
+			});
+	});
+}
+</script>

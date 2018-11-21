@@ -1,0 +1,54 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2">
+                <div class="CollectionAll">
+                    <!--收集项管理标题栏 开始-->
+                    <div class="Collection_UP">
+                        <p>关键词管理</p>
+                        <form action="" method="GET" id="keyword_form">
+                        <div class="Collection_Middle_R Collection_Middle_R_UP">
+                            <input placeholder="请输入关键词" type="text" name="keyword" value="{$keyword}"><span onclick="$('#keyword_form').submit()"></span>
+                        </div>
+                        </form>
+                    </div>
+                    <!--收集项管理标题栏 结束-->
+                    {if $keywordCount gt 0}
+                    <!--收集项管理结果栏 开始-->
+                    <div class="Collection_Down_GJC" style="height: 270px;">
+                        <table>
+                            <tbody><tr>
+                                <th>排序</th>
+                                <th>关键字</th>
+                                <th>引用次数</th>
+                                <th>最后引用</th>
+                                <th>查看次数</th>
+                                <th>最后访问</th>
+                                <th>管理操作</th>
+                            </tr>
+                            {foreach from=$keywordList item=item}
+                            <tr>
+                                <td>{$item.id}</td>
+                                <td>{$item.keyword}</td>
+                                <td>{$item.query_count}</td>
+                                <td>{$item.last_querytime}</td>
+                                <td>{$item.query_count}</td>
+                                <td>{$item.last_addtime}</td>
+                                <td></td>
+                            </tr>
+                            {/foreach}
+                        </tbody></table>
+                        <div class="paging">
+                            <div class="paging_center">
+                                <ul>
+                                {$page}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--收集项管理结果栏 结束-->
+                    {else}
+                    <div class="Collection_Down_WNR"></div>
+                    {/if}
+                </div>
+                </div>
+
+{include file="collection/collection_footer.html"}

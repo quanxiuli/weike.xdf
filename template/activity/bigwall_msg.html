@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>		
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <title>我要发言</title>
+	    <link rel="stylesheet" href="{$publicserver}/public/activity/css/style.css" type="text/css"/>   
+		<script src="http://file.xdf.cn/diy/public/js/jquery.1.7.2.min.js"></script>
+		<script src="{$publicserver}/public/gouke/app/js/layer/layer.js" type="text/javascript"></script>
+    	<link rel="stylesheet" href="{$publicserver}/public/gouke/app/js/layer/skin/layer.css">
+		
+		<style>
+		.warp{
+			max-width: 750px;
+			margin: 0 auto;
+			min-width:320px;
+			background: url({if $activity.qdPagePicture neq '' }{$activity.qdPagePicture}{else}{$publicserver}/public/activity/images/bodybg1.jpg{/if}) no-repeat;
+		  	-webkit-background-size: 100% 100%;/*cover;*/
+		  	-moz-background-size: cover;
+		  	-o-background-size: cover;
+		  	background-size: cover;
+		}
+		</style>
+	</head>
+	<body class="warp">
+		<div>
+			<div class="part">
+				<div class="part1">
+				<textarea name="content" rows="" cols="" id="content" class="username" placeholder="" ></textarea>
+				<p class="wzxz"><span id="result">0</span>/25</p>
+				<p class="tj" id="post">提交</p>
+												
+				</div>
+			</div>
+		</div>
+   			<script type="text/javascript">				
+				     $("#content").bind('input',function(){
+				        var bb=$('#content').val();//
+				        var cc=bb.substring(0,25);//
+				        $('#content').val(cc);//该三行写在“input”函数外面也可以
+				        var aa=$(this).val().length;
+				        if(aa<25){
+				          $('#result').html($(this).val().length);  
+				      }else{
+				        $('#result').html("25");
+				      }   
+				    })		 
+				    $("#post").bind('click',function(){
+				    	 if($('#post').hasClass('on')){
+				    		 	return false
+				         }
+				    	 $('#post').addClass('on');
+				    	 $('#post').css("background",'grey');  
+				    	 $('#post').css("color",'#fff');  
+				        var bb=$('#content').val();//
+				        $.post("ajax_bigwalladdmsg",{id:'{$activity.id}',content:bb}).success(function(data){
+				        	if(data.errno!=0){
+				        		layer.msg(data.msg);
+				        		
+				        	}else{
+				        		layer.msg('留言成功!');
+				        		$('#content').val("");
+				        		$('#result').html("0");
+				        	}
+	                	});
+				        setTimeout(function() {
+				        	$('#post').removeClass('on');
+				        	$('#post').css("background",'#f1d255');  
+				        	$('#post').css("color",'#914b00');  
+                        },{$activity.msg_send_interval}*1000)
+				    })	
+			</script>
+		
+	</body>
+</html>

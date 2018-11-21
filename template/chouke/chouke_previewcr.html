@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$activity.crName}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta itemprop="name" content="123"/>
+    <meta itemprop="description" name="description"  content="321"/>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/style/style.css">
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/style/countdown.css">
+    <script src="{$publicserver}/public/gouke/app/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="{$publicserver}/public/gouke/app/js/jquery.countdown.js" type="text/javascript"></script>
+    <script src="{$publicserver}/public/gouke/app/js/layer/layer.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/js/layer/skin/layer.css">
+</head>
+<body>
+
+<section style="background:url('{$publicserver}/public/gouke/app/images/page_bg@1x.png');">
+    <div class="page-container">
+    	<header style="height:240px;background:url('{$publicserver}/public/gouke/app/images/banner_bg@1x.png') repeat-x;">
+    	<div style="max-height:230px;overflow:hidden;"><img src="{$activity.crTitleImg}" style="width:100%;height:auto;"></div>
+    	</header>
+    	
+    	<div style="min-height:250px;overflow:hidden;">
+    	{if $activity.crSubTitleImg neq ''}
+    	<p style="color:#f89882;font-size:1rem;margin-top:1.5rem;text-align:center;font-weight:bold;"></p>
+    	<div style="height:200px;overflow:hidden;"><img src="{$activity.crSubTitleImg}" style="width:100%;height:auto;"></div>
+    	{/if}
+    	<p style="color:#f1705c;font-size:1rem;margin-top:1.5rem;line-height:2rem;text-align:center;font-weight:bold;">{$countdownlabel}</p>
+    	<div>
+    		<div id="countdown" style="margin:auto;width:350px;height:115px;background:url({$publicserver}/public/gouke/app/images/countdown_bg.png) no-repeat;background-size: cover">
+	    		<div style="padding-top:43px;width:270px;margin:auto;">
+	    			<time>{$countdown}</time></div>
+	    		</div>
+    		</div>
+    	</div>
+    	</div>
+    	{if $activity.videoUrl neq ""}
+    	<iframe id="vframe" src='{$activity.videoUrl}' frameborder=0 'allowfullscreen' width="100%" onload="javascript:SetCwinHeight();"></iframe>
+        {/if}
+        
+        <!-- 课程信息区 -->
+        <div class="xsck-wrap" style="min-height:220px;margin-top:-5px;background:url({$publicserver}/public/gouke/app/images/red_bg@1x.png) repeat-x;">
+    	    <div class="xsck-info-wrap">
+                
+                <div class="xsck-content">
+					<p class="text1 color1">{$activity.crName}<a class="share-bg f12" id="askFriend"><img src="{$publicserver}/public/gouke/app/images/share_bg.png" />告诉朋友</a></p>
+					<div class="course-tag">
+					{if $labels} {foreach from=$labels item=label}
+						<i>{$label}</i>
+                    {/foreach} {/if}    
+					</div>
+                    <p class="text3 color3">
+                        {$activity.crLabelIntro}
+                        <p class="text3 color3">适用人群：{$activity.rewardFitPerson}</p>
+                    <p class="text3 color3">活动时间：{$activity.startTime}至{$activity.endTime}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="min-height:500px;">
+        	{if $activity.teachPrograme neq ''}
+	        <p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:1rem;">
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+	        	教学大纲
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+	        </p>
+	        <div style="min-height:175px;padding-top:10px;"><img src="{$activity.teachPrograme}" style="width:100%;height:auto;"></div>
+        	{/if}
+        
+        	<p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:1rem;">
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+	        	活动说明
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+	        </p>
+	        <div style="" id="overheight1">
+	        <div class="text-detail1">
+                            <p>
+                                {$activity.activityIntro}
+                            </p>
+                        </div>
+                        <p class="details-btn details-btn-zhan1"><a style="background:url({$publicserver}/public/gouke/app/images/details_bg.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">展开</a></p>
+                        <p class="details-btn details-btn-shou1" style="display:none;"><a style="background:url({$publicserver}/public/gouke/app/images/details_bgs.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">收起</a></p>
+                   
+	        </div>
+	        
+	        <p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:2rem;">
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+		        课程说明
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+		     </p>
+		     <div style="" id="overheight2">
+		     		<div class="text-detail2">
+                            <p>
+                                {$activity.courseIntro}
+                            </p>
+                        </div>
+                        <p class="details-btn details-btn-zhan2"><a style="background:url({$publicserver}/public/gouke/app/images/details_bg.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">展开</a></p>
+                        <p class="details-btn details-btn-shou2" style="display:none;"><a style="background:url({$publicserver}/public/gouke/app/images/details_bgs.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">收起</a></p>
+		     </div>
+        
+	        <p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:2rem;">
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+		       官方客服
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+		     </p>
+		     <div style="min-height:175px;">
+		     <p style="font-size:1rem;color:#8c4b17;font-weight:bold;text-align:center;margin-top:1rem;">{$activity.honourRewardContact}</p>
+		     <div style="padding:45px;padding-bottom:80px;">
+		     <div style="border:2px dashed #a6a094;border-radius:5px">
+		     	<div style="padding:8px;">
+		     		<div style="background:#fec356;min-height:190px;border-radius:5px;">
+		     			<p style="font-size:1.1rem;color:#fff;font-weight:bold;text-align:center;padding-top:1rem;">长按-识别图中二维码-并关注</p>
+		     			<p style="font-size:1rem;color:#fff;font-weight:bold;text-align:center;padding-top:1rem;">{$activity.wechatName}</p>
+		     			<p style="text-align:center;min-height: 80px;padding:20px;"><img style="height:80px;width:80px;" src="{$activity.ercode}"  alt=""/></p>
+		     		</div>
+		     	</div>
+		     </div>
+		     </div>
+		     </div>
+        </div>
+</section>
+
+<div class="fixed fixed-b">
+    <div class="start-btn start-btngray">
+        
+        <button class="f16 red" id="startLaunch"><span class="font-big">立即购课</span></button>
+        <button class="f16 green" id="recommend"><span class="font-big">推荐有礼</span></button>
+    </div>
+</div>
+<!--index end-->
+
+<!--告诉朋友弹框-->
+<div class="mask"></div>
+<section class="mask-fq" id="tan1">
+    <img src="{$publicserver}/public/gouke/app/images/askfriend0.png" class="img-askfriend" />
+</section>
+
+<!--输入手机号，参与活动弹框-->
+<div class="tan-chouke-launch">
+    <h1>输入手机号，马上参加活动！
+        <span class="close"><img src="{$publicserver}/public/gouke/app/images/close1.png" /></span>
+    </h1>
+    <div class="name-box">
+        <ul class="list1">
+            <li><input type="text" class="inp tel" placeholder="请输入手机号码" /></li>
+            <li>
+                <input type="text" class="inp sms" placeholder="请输入短信码" />
+                <span class="yanzm2">发送验证码</span>
+            </li>
+        </ul>
+        <p class="error-red"></p>
+        <input type="button" value="确定" class="button-ok" />
+        <p class="text-tips">
+            请录入您的手机号号码作为中奖凭证提交，您的信息仅作为新东方本次活动登记信息使用，并全程保密。
+        </p>
+    </div>
+</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- 
+<script src="{$publicserver}/public/gouke/app/js/common.js"></script>
+ -->
+<script>
+
+	var PREFIX_URL = "http://{$domain}/chouke/";
+	var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+	
+	var Global = {
+			id:'{$activity.id}',
+			//openid:'{$openid}',
+			nickname:'{$nickname}',
+			headimgurl:'{$headimgurl}',
+			sc:'{$sc}',
+			userId:'{$userId}',
+			mobile:'{$mobile}'
+	}
+	
+	window.jQuery(function ($) {
+		"use strict";
+	
+		$('time').countDown({
+			with_separators: false
+		});
+		
+	});
+
+	function SetCwinHeight(){
+		var vframe=document.getElementById("vframe"); //iframe id
+		if (window.orientation){
+			//vframe.height = window.innerWidth*9/16+30;
+			//vframe.width =  window.innerWidth;
+			vframe.width="100%";
+		}else{
+			//vframe.height = window.innerWidth*9/16+30;
+			//vframe.width =  window.innerWidth;
+			vframe.width="100%";
+		}
+		if(vframe.height>250)
+			vframe.height=250;
+		//window.location.reload(true);
+	}
+	window.onorientationchange=function(){  
+		SetCwinHeight();
+	};
+</script>
+</body>
+</html>

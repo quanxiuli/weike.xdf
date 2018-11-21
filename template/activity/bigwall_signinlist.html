@@ -1,0 +1,141 @@
+{include file="activity/common_header.html"}
+<div class="clearfix">
+	<div class="we7-padding-bottom clearfix">
+	<div class="pull-left">
+		<form class="form-inline" action="" method="GET" onsubmit="return search_activity_user();">
+		  <div class="form-group">
+		    <label for="email">姓名</label>
+		    <div class="input-group" style="width:100px;">
+		      <input type="text" name='name' class="form-control" id="name" placeholder="姓名" value="{$name}"/>
+		    </div>
+		    <label>微信昵称</label>
+		    <div class="input-group" style="width:120px;">
+		      <input type="text" name='nickname' class="form-control" placeholder="微信昵称" value="{$nickname}"/>
+		    </div>
+    	    <label>邮箱</label>
+		    <div class="input-group"  style="width:170px;">
+		      <input type="text" name='email' class="form-control" placeholder="邮箱" value="{$email}"/>
+		    </div>
+		      <label>手机</label>
+		    <div class="input-group" style="width:140px;">
+		      <input type="text" name='mobile' class="form-control" placeholder="手机号" value="{$mobile}"/>
+		    </div>
+    	    <label>状态</label>
+		    <div class="input-group">
+		     <select name="status">
+		     	<option value="-1">请选择</option>
+		     	{foreach from=$activityUserStatus key=k item=item}
+		     	<option value="{$k}" {if $k eq $status}selected{/if}>{$item}</option>
+		     	{/foreach}
+		     </select>
+		    </div>
+		  </div>
+		  <input type="hidden" name="id" value="{$id}" />
+		  <button type="submit" class="btn btn-success" onclick="change_action();">查询</button>
+		</form>
+		</div>
+		<div class="pull-right">
+			<button class="btn btn-primary" data-functionid="1" style="display:none;" onclick="download_signin_list();">下载</button>
+		</div>
+	</div>
+	<table class="table we7-table table-hover">
+	<caption style="color:black;">活动名称：{$activityTitle} 签到总数：{$activityUserCount}</caption>
+		<thead class="navbar-inner">
+		<tr>
+			<th class="text-center">编号</th>
+			{foreach from=$field_var item=field}
+			<th class="text-center">{$field}</th>
+			{/foreach}
+			<th class="text-center">微信昵称</th>
+			<th class="text-center">状态</th>
+			<th class="text-center">操作</th>
+			
+		</tr>
+		</thead>
+		<tbody>
+		{if $activityUserList|@count neq 0}
+		{foreach from=$activityUserList item=item}
+			<tr>
+				<td class="text-center">{$item.sortNum}</td>
+				{foreach from=$fields_name item=i}
+				<td class="text-center">{if $item.$i}{$item.$i}{else}--{/if}</td>
+				{/foreach}
+				<td class="text-center">
+				{if $item['avatar']}
+				<img src="{$item.avatar}" width="40" height="40" class="img-circle"/>
+				{/if}
+				{if $item.nickname}{$item.nickname}{else}--{/if}
+				</td>
+				<td class="text-center">{$activityUserStatus.$item.status}</td>
+				<td class="text-center link-group">
+				{if $item.status neq 1 and $item.status neq 3}
+						<a href="javascript:void(0);" data-functionid="102" onclick="activityUserModify($(this),'{$item.id}','{$item.aid}',2);return false;" style="display:none;">
+						{if $item.status eq 0}禁止中奖{else}恢复资格{/if}
+						</a>
+						<a href="javascript:void(0);" class="del" data-functionid="102" onclick="activityUserModify($(this),'{$item.id}','{$item.aid}',3);return false;" style="display:none;">删除</a>
+				{/if}
+				</td>
+			</tr>
+		{/foreach}
+		{else}
+		<tr>
+			<td colspan="{$tdColumnCount}" class="text-center">暂无数据</td>
+		</tr>
+		{/if}
+		</tbody>
+	</table>
+	<div style="text-align:right;">
+		<nav aria-label="Page navigation">
+			<ul class="pagination">{$page}</ul>
+		</nav>
+	</div>
+</div>
+{include file="activity/common_footer.html"}
+<script type="text/javascript">
+function activityUserModify(obj,id,aid,status){
+	var index = 0;
+	var num = 0;
+	var msg = obj.text();
+	index = layer.confirm('您确认将该用户设为为['+msg+']吗？',{icon: 3, title:'提示'}, function(index){
+		$.ajax({
+			url:'/activity/ajax_activityusermodify',
+			type:'POST',
+			dataType:'json',
+			data:{id:id,aid:aid,status:status},
+			beforeSend:function(){
+				layer.close(index);
+				num = layer.load(2, {time: 10*1000});
+			},
+			success:function(data){
+				layer.close(num);
+				if(data.code == 1){
+					layer.alert(data.message,{icon:6},function(){
+						window.location.reload();
+					});
+				}else{
+					layer.alert(data.message,{icon:5});
+				}
+			}
+		});
+	});
+}
+function search_activity_user(){
+	var mobile = $('input[name=mobile]').val();
+	if(mobile != ''){
+		if(!GLOBAL.reg_mobile.test(mobile)){
+			layer.msg('手机格式不正确',{icon:5});
+			return false;
+		}
+	}
+}
+function download_signin_list(){
+	var form = $('form').eq(0);
+	form.attr('action','/activity/signinexcel');
+	form.submit();
+	
+}
+function change_action(){
+	var form = $('form').eq(0);
+	form.attr('action','');
+}
+</script>

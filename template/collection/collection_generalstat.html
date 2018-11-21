@@ -1,0 +1,204 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2 GlobalSetting3">
+                 <div class="sectionr">
+                 	<div class="wxs_fx">
+                   <!--面包屑-->
+		                   <!--面包屑-->
+		                   <!--我的收集项-->
+		                   <div class="rc_sjx">
+		                   	  <p class="rc_wdsjx floatL clear">线上数据分析</p>                   	  
+		                   </div>
+		                 <!--我的收集项-->
+                   <!--2-->
+                   
+                     <div class="xs_fx">
+                     	
+	                  	  <ul class="ul_sjfx">
+	                  	  	<li class="li_sjfx1 active"><span class="shuju">今日数据</span><span class="sjl">{$today_num}</span></li>
+	                  	  	<li class="li_sjfx2"><span class="shuju">昨日数据</span><span class="sjl">{$yesterday_num}</span></li>
+	                  	  	<li class="li_sjfx3"><span class="shuju">总数据</span><span class="sjl">{$total_num}</span></li>
+	                  	  </ul>
+                  	     
+                  	     	<div class="3k_qh">
+                  	        	<div class="3k_qh1">
+		                  	     	<!--时间段-->
+		                  	     	<div class="sjtjx_mc" style="display: none;">
+			                  		<span class="sjtjx_mc1">时间段 :</span>
+			                  		<input type="date" name="" id="stat_start" value="{$default_start}" class="datet"/>
+			                  		——
+			                  		<input type="date" name="" id="stat_end" value="{$default_end}" class="datet a"/>
+			                  		<input type="button" name="" id="statrefesh" value=""  style="width: 30px;height: 26px;border: none;background: url({$publicserver}/public/collection/images/shujuimg/xan.jpg)no-repeat;
+    float: right;"/>
+		                  			</div>
+		                  			<!--时间段-->
+		                  			<div class="sj_bg" style="margin-left:-30px;">
+		                  				<div id="clstat_daily" style="width: 1050px;height:233px;"></div>
+		                  				<!--  <img src="{$publicserver}/public/collection/images/shujuimg/sjqx.jpg" alt="" /> -->
+		                  				
+		                  			</div>
+	                  			</div>
+	                  			
+	                  			
+                  			</div>
+                  			
+                  			
+                  	     </div>
+                  	      </div>
+                  	     <!--2-->
+                  
+                 
+                  
+                  
+                  
+                
+                   
+            	 </div>
+            	 </div>
+{include file="collection/collection_footer.html"}
+
+<script type="text/javascript" src="{$publicserver}/public/collection/js/echarts.common.min.js"></script>
+<script type="text/javascript">
+
+var start=0;
+var end=0;
+var originStart = $('#stat_start').val();
+var originEnd = $('#stat_end').val();
+var index=0;
+var column='';
+
+var clstat_daily = echarts.init(document.getElementById('clstat_daily'));	      
+
+$(function() {
+		//jQuery(".cjx_zb").slide({ titCell: ".hddha li", mainCell: ".hddh_b", defaultPlay: false, titOnClassName: "active", prevCell: ".left_a", nextCell: ".right_a" });
+		//jQuery(".hddha").slide({ mainCell: " ul", vis: 7, effect: "leftLoop", defaultPlay: false, prevCell: ".left_a", nextCell: ".right_a" });
+});      
+
+$('.ul_sjfx li').click(function(e){
+	   	$(this).addClass('active').siblings().removeClass('active');
+	   	
+});
+
+$('.ul_sjfx li').click(function(f){
+   	    f.preventDefault()
+     	index = $(this).index();    
+   	    $('.3k_qh>div').eq(index).show().siblings().hide();	
+   	    
+   	    if(index==2){
+   	    	$('.sjtjx_mc').show();	
+   	    }else{
+   	    	$('.sjtjx_mc').hide();	
+   	    }
+   	    updateStat();
+});
+
+$('#statrefesh').click(function(f){
+	start=$('#stat_start').val();    	
+	end=$('#stat_end').val();
+	var flag = false;
+	var msg = '';
+	if(start > end){
+		flag = true;
+		msg = '开始时间不能大于结束时间';
+	}else{
+		var endAttr = end.split('-');
+		endAttr[0] = endAttr[0]-3;
+		var miniStart = endAttr.join('-');
+		if(start < miniStart){
+			flag = true;
+			msg = '您选择的时间间隔不能超过3年';
+		}
+	}
+	if(flag){
+		CollectionDialogBox.alert(msg,{icon:4},function(){
+			$('#stat_start').val(originStart);
+			$('#stat_end').val(originEnd);
+			start = originStart;
+			end = originEnd;
+		});	
+	}
+	else updateStat();
+});
+
+
+
+$(document).ready(function(){
+	updateStat();
+	
+})
+
+
+function updateStat(){
+		clstat_daily.setOption({
+			color: ['#3CDCD7'],
+			title: {
+		        text: ''
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		    	top: '8%',
+		        left: '5%',
+		        data:['']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {}
+		        },
+		        right:"5%"
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        
+		        data: []
+		    },
+		    yAxis: {
+		    	axisTick :{                 //坐标轴刻度相关设置
+		            show:false,              //是否显示坐标轴刻度。
+		       },
+		        
+		        type: 'value',
+		        	splitLine: {  
+	                    show: true,
+	                    lineStyle: {  
+	                    	type:"dashed",               //坐标轴线线的类型，solid，dashed，dotted
+	                        color: ['#E7E7E7']  
+	                    }  
+	                },  
+		    },
+		    series: []
+		});
+
+		$.post("ajax_totalstatbyuser",{start:start,end:end,type:index},function(data){
+				if(data.error > 0){
+					CollectionDialogBox.alert(data.msg,{icon:4},function(){
+						if(data.error == 3){
+							if(originStart > 0 && originEnd > 0){
+								$('#stat_start').val(originStart);
+								$('#stat_end').val(originEnd);
+							}
+						}
+					});
+					return false;
+				}
+				if(index == 2 && start > '0'){
+					originStart = start;
+					originEnd = end;
+				}
+				// 填入数据
+				clstat_daily.setOption({
+					legend:{data: data.categories},
+			        xAxis: {data: data.xaxis},
+			        series: data.series
+			    });
+		}, "json");
+	
+}
+</script>

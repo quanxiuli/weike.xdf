@@ -1,0 +1,54 @@
+<html lang="zh"><head>
+	<meta charset="UTF-8">
+	<title>筹课</title>
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/index.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/js/layer-v2.1/layer/skin/layer.css" id="layui_layer_skinlayercss">
+	<script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+	<script src="{$publicserver}/public/chouke/js/util.js"></script>
+	<script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+</head>
+<body>
+
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap">
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+                {foreach from=$functionList key=k item=item}
+                {if $item.checked}
+                	<li>
+                		<a href='javascript:void(0);' title='{$item.name}' data-functionId='{$item.id}'>
+	           				<i class='p176-class-icon {$item.className}'></i>
+	            			<span class='collapse-hide fz18'>{$item.name}</span>
+           				</a>
+           				{if $item.children|count gt 0}
+           				<ul class='p176-expand-ul' style=''>
+           					{foreach from=$item.children item=funChild}
+           					{if $funChild.checked}
+           						<li>
+           						{if $funChild.id == $item.id}
+                            		<a href='#' title='{$funChild.name}' class='on' data-functionId='{$funChild.id}' onclick='changeMenu(this)' data-url='{$funChild.url}'>
+                        		{else}
+                            		<a href='#' title='{$funChild.name}' class='' data-functionId='{$funChild.id}' onclick='changeMenu(this)' data-url='{$funChild.url}'>
+                            	{/if}
+                        		<span class='collapse-hide' >{$funChild.name}</span>
+                        		</a>
+                        	</li>
+           					{/if}
+           					{/foreach}
+           				</ul>
+           				{/if}
+           			</li>
+                {/if}
+                {/foreach}
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

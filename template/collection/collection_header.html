@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>{$head_title}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta http-equiv="Content-Language" content="zh-CN"/>
+
+    <!--公共css样式-->
+    <link rel="stylesheet" href="{$publicserver}/public/collection/css/publicCss.css">
+	<link rel="stylesheet" href="{$publicserver}/public/collection/css/GlobalSetting1234.css">
+	<link rel="stylesheet" href="{$publicserver}/public/collection/css/CollectionManagement.css">
+	<link rel="stylesheet" href="{$publicserver}/public/collection/css/shujutongji.css">
+	<link rel="stylesheet" href="{$publicserver}/public/collection/layui/css/layui.css">
+    <!--全局设置页面样式-->
+    <!--公共jquery库-->
+    <script  type="text/javascript" src="{$publicserver}/public/collection/js/jquery.min.js"></script>
+    <script  type="text/javascript" src="{$publicserver}/public/collection/js/jquery.form.js"></script>
+    <script  type="text/javascript" src="{$publicserver}/public/collection/js/loginStatus.js"></script>
+    <script  type="text/javascript" src="{$publicserver}/public/collection/js/DialogBox.js"></script>
+    <script  type="text/javascript" src="{$publicserver}/public/collection/layui/layui.js"></script>
+    <!--全局设置页面脚本-->
+    <script src="{$publicserver}/public/collection/js/GlobalSetting.js"></script>
+    <!--[if IE 6]>
+    <script src="{$publicserver}/public/collection/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div');
+    </script>
+    <![endif]-->
+    	<script type="text/javascript">
+		var GLOBAL = {
+						functionIds:'{$functionIds}',
+						reg_email:/^([a-zA-Z0-9]+[_|\_|\.\-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
+						reg_uuid:/^[a-z0-9A-Z]{32}$/,
+						reg_email_prefix:/^([a-zA-Z0-9]+[_|\_|\.\-]?)*[a-zA-Z0-9]+$/,
+						reg_image_suffix:new RegExp("^(jpg|jpeg|png|bmp|gif)$","i"),
+						reg_music_suffix:new RegExp('^(mp3)$','i'),
+						reg_int:new RegExp("^[1-9]\\d*$"),
+						reg_mobile:new RegExp("^1[3|4|5|8|7][0-9]\\d{4,8}$"),
+						reg_organizer_name:/^[0-9a-zA-Z\u0391-\uFFE5]+$/,
+						reg_time:/^20[\d][\d]-[\d]{2}-[\d]{2}((\s[\d]{2}:[\d]{2})?(:[\d]{2})?)?$/
+		};
+	</script>
+</head>
+<body>
+<div class="GlobalSettingBox">
+   <div class="GlobalSettingContent">
+        <div class="section">
+            <div class="sectionL floatL scroll">
+            {if $smarty.session.coll_isSuperAdmin gt 1}
+               <P class="sectionL_PP_Click" data-click=2 title="点击选择您想访问的学校">
+               {$coll_schools.$smarty.session.coll_current_schoolid}
+               </P>
+               {else}
+               <P class="sectionL_PP_Click" data-click=1 title="点击选择您想访问的学校">
+               {if $smarty.session.coll_current_schoolid eq 0}
+				选择校区
+               {else}
+                {$coll_schools.$smarty.session.coll_current_schoolid}
+               {/if}
+               </P>
+               {/if}
+                <ul class="zc_ul">
+                    <li {if $currenttab eq "mycollection"}class="active"{/if}> <a href="/collection/mycollection"><img src="{$publicserver}/public/collection/images/sjx1.png" alt="">我的收集项</a></li>
+                    <li {if $currenttab eq "analysis"}class="active"{/if}><a href="/collection/analysis"><img src="{$publicserver}/public/collection/images/sjx2.png" alt="">数据分析</a></li>
+                    <li {if $currenttab eq "collectionlist"}class="active"{/if}><a href="/collection/collectionlist"><img src="{$publicserver}/public/collection/images/sjx3.png" alt="">收集项管理</a></li>
+                    {if $coll_isSuperAdmin < 4}
+                    <li {if $currenttab eq "adminlist"}class="active"{/if}><a href="/collection/adminlist"><img src="{$publicserver}/public/collection/images/sjx4.png" alt="">权限设置</a></li>
+                    {/if}
+                    {if $coll_isSuperAdmin eq 1}
+                    <li {if $currenttab eq "keyword"}class="active"{/if}><a href="/collection/keyword"><img src="{$publicserver}/public/collection/images/sjx5.png" alt="">关键词管理</a></li>
+                    {/if}
+                </ul>
+            </div>
+            <script>
+                var offsetW = document.body.offsetWidth;
+                var zixunW = $('.GlobalSettingContent').width();
+                if(offsetW>zixunW){
+                    var leftnum = (offsetW-zixunW)/2;
+                    $('.sectionL').css("left", leftnum+"px");
+                }else{
+
+                    $('.sectionL').css("left", "0");
+                }
+
+                window.onresize = function(){
+                    var offsetW = document.body.offsetWidth;
+                    var zixunW = $('.GlobalSettingContent').width();
+                    var leftnum = (offsetW-1420)/2;
+                    if(offsetW<1420){
+                        // console.log('in');
+                        $('.sectionL').css("left", "0");
+                    }else {
+                        $('.sectionL').css("left", leftnum+"px");
+                    }
+                }
+
+            </script>
+
+            <div class="sectionR floatL">
+     

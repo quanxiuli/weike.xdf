@@ -1,0 +1,88 @@
+<html lang="zh"><head>
+	<meta charset="UTF-8">
+	<title>运营工具平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/operation/css/index.css">
+    <script src="{$publicserver}/public/operation/js/common/jquery-1.11.0.min.js"></script>
+    
+    <link rel="stylesheet" href="{$publicserver}/public/operation/js/layer-v2.1/layer/skin/layer.css" id="layui_layer_skinlayercss">
+    
+</head>
+<body>
+<script>
+
+function switchto(to,link,menu){
+	window.parent.mainFrame.location=link+'?r='+Math.random();
+	if(menu==''){
+		window.parent.frameBody.cols="0,*";
+	}else{
+		window.parent.frameBody.cols="180,*";
+		window.parent.menuFrame.location=menu+'?r='+Math.random();
+	}
+}
+
+$( document ).ready(function() {
+	var firstApp = [];
+	var defaultAdd = false;
+	var hasPriviledge = false;
+	{foreach from=$navs item=nav}
+	$.ajax({  
+        url: '/{$nav.url}/{$nav.priviledge_check_action}',  
+        async:false,
+        type: 'GET',  
+        dataType: 'json',  
+        timeout: 1000,  
+        cache: false,  
+        success: succFunction //成功执行方法    
+    });
+	{/foreach}
+	if(firstApp.length == 0){
+		window.parent.mainFrame.location="/operation/msg";
+	}else{
+		for(var i in firstApp){
+			var data = firstApp[i];
+			var node=document.createElement("a"); 
+    		node.href="javascript:switchto('"+data.url+"','"+data.link+"','"+data.menu+"');";
+    		node.setAttribute("class","p176-nav-usename js-userName");
+    		node.innerHTML = data.name; 
+    		//<a href="javascript:void(0);" onclick="javascript:switchto('{$nav.url}','{$nav.link}');"  class="p176-nav-usename js-userName">{$nav.name} &nbsp;</a>
+    	    document.getElementById("navlist").insertBefore(node,document.getElementById("navlist").childNodes[0]); 
+//    	    if(!defaultAdd){
+//    			if(data.menu==''){
+//    				window.parent.frameBody.cols="0,*";
+//    				window.parent.mainFrame.location=data.link;
+//    			}else{
+//    				window.parent.frameBody.cols="180,*";
+//            		window.parent.menuFrame.location=data.menu;
+//        			window.parent.mainFrame.location=data.link;
+//    			}
+//        		defaultAdd=true;
+            //}
+		}
+		switchto(firstApp[0].url,firstApp[0].link,firstApp[0].menu);
+	}
+    function succFunction(data) {  
+    	if(data.code==1){
+    		firstApp.push(data);
+        }
+    }  
+	
+	
+});
+
+</script>
+<div class="p176-nav clearfix">
+    <div class="p176-logo-left"><a href="#" class="p176-logo">发布管理平台</a></div>
+    <div class="p176-nav-right">
+        <ul>
+            <li id="navlist">
+              
+                <a href="/operation/logout" class="" >&nbsp; 退出登录</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

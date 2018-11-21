@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$activity.crName}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta itemprop="name" content="123"/>
+    <meta itemprop="description" name="description"  content="321"/>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/style/style.css">
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/style/countdown.css">
+    <script src="{$publicserver}/public/gouke/app/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="{$publicserver}/public/gouke/app/js/jquery.countdown2.js" type="text/javascript"></script>
+    <script src="{$publicserver}/public/gouke/app/js/layer/layer.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="{$publicserver}/public/gouke/app/js/layer/skin/layer.css">
+
+	<script type="text/javascript" src="{$publicserver}/public/gouke/app/js/underscore.js"></script>
+	<script type="text/javascript" src="{$publicserver}/public/gouke/app/js/pinchzoom.js"></script>
+	
+    <style type="text/css">
+    	.mc{
+			max-width: 750px;
+		    width: 100%;
+		   	height:100%;
+		    background-color: rgba(0,0,0,.4);
+		    position: fixed;
+	   		top: 0;
+		}
+		.popbox{
+			width: 100%;
+			min-height:500px;
+			padding-bottom:1rem;	
+			margin: 0 auto;
+			margin-top:20%;
+		}
+
+		.mcgb{
+			width: 1.25rem;
+			height: auto;
+			margin: 0 auto;
+			margin-top: .3rem;
+		}
+		.mcgb img{
+			width:100%;
+			height:100%;
+			display:block;
+		}
+		div.pinch-zoom,
+		div.pinch-zoom img{
+			width: 100%;
+			height:500px;
+			-webkit-user-drag: none;
+		}
+	</style>
+    
+</head>
+<body>
+<section style="background:url('{$publicserver}/public/gouke/app/images/page_bg@1x.png');">
+    <div class="page-container">
+    	<header style="min-height:240px;">
+    	<div style="min-height:230px;"><img src="{$activity.crTitleImg}" style="width:100%;height:auto;"></div>
+    	</header>
+    	
+    	<div style="min-height:250px;overflow:hidden;">
+    	{if $activity.crSubTitleImg neq ''}
+    	<p style="color:#f89882;font-size:1rem;margin-top:1.5rem;text-align:center;font-weight:bold;"></p>
+    	<div style="min-height:200px;"><img src="{$activity.crSubTitleImg}" style="width:100%;height:auto;"></div>
+    	{/if}
+    	{if $activity.switchTimeDown eq 1}
+    	<p style="color:#f1705c;font-size:1rem;margin-top:1.5rem;line-height:2rem;text-align:center;font-weight:bold;">{$countdownlabel}</p>
+    	{/if}
+    	<div {if $activity.switchTimeDown eq 0}style="display:none;"{/if}>
+    		<div id="countdown" style="margin:auto;width:370px;height:115px;background:url({$publicserver}/public/gouke/app/images/countdown_bg1.png) no-repeat;background-size: cover">
+	    		<div style="padding-top:40px;width:270px;margin:auto;overflow:hidden;">
+	    			<time>{$countdown}</time></div>
+	    		</div>
+    		</div>
+    	</div>
+    	</div>
+    	{if $activity.videoUrl neq ""}
+    	<iframe id="vframe" src='{$activity.videoUrl}' frameborder=0 'allowfullscreen' width="100%" onload="javascript:SetCwinHeight();"></iframe>
+        {/if}
+        
+        <!-- 课程信息区 -->
+        <div class="xsck-wrap" style="min-height:220px;height:auto;margin-top:10px;">
+    	    <div class="xsck-info-wrap" style="background:#f1705c;">
+                <div class="xsck-content">
+					<p class="text1 color1">{$activity.crName}<a class="share-bg f12" id="askFriend"><img src="{$publicserver}/public/gouke/app/images/share_bg.png" />告诉朋友</a></p>
+					<div class="course-tag">
+					{if $labels} {foreach from=$labels item=label}
+						<i>{$label}</i>
+                    {/foreach} {/if}    
+					</div>
+                    <p class="text3 color3">
+                        {$activity.crLabelIntro}
+                        <p class="text3 color3">适用人群：{$activity.rewardFitPerson}</p>
+                    <p class="text3 color3">活动时间：{$activity.startTime}至{$activity.endTime}</p>
+                </div>
+            </div>
+            <div style="height:4px;background:url({$publicserver}/public/gouke/app/images/red_bg2@1x.png) repeat-x;"></div>
+        </div>
+        
+        <div style="min-height:500px;">
+        	{if $activity.teachPrograme neq ''}
+	        <p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:1rem;">
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+	        	教学大纲
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+	        </p>
+	        <div id="overheight3">
+		        <div class="text-detail3" style="height:75px;margin-top:10px;overflow:hidden;">
+			        <img class="pro"  src="{$activity.teachPrograme}" style="width:100%;height:auto;">
+		        </div>
+	        </div>
+	        <p class="details-btn details-btn-zhan3" id="details-btn-zhan3"><a style="background:url({$publicserver}/public/gouke/app/images/details_bg.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">展开</a></p>
+             <p class="details-btn details-btn-shou3"  id="details-btn-shou3" style="display:none;"><a style="background:url({$publicserver}/public/gouke/app/images/details_bgs.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">收起</a></p>
+                   
+        	{/if}
+        
+        	<p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:3rem;">
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+	        	活动说明
+	        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+	        </p>
+	        <div style="" id="overheight1">
+	        <div class="text-detail1" style="padding: 0 20px 0 20px;margin-top:10px;margin-bottom:10px;">
+                            <p>
+                                {$activity.activityIntro}
+                            </p>
+                        </div>
+                        <p class="details-btn details-btn-zhan1"><a style="background:url({$publicserver}/public/gouke/app/images/details_bg.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">展开</a></p>
+                        <p class="details-btn details-btn-shou1" style="display:none;"><a style="background:url({$publicserver}/public/gouke/app/images/details_bgs.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">收起</a></p>
+                   
+	        </div>
+	        
+	        <p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:4rem;">
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+		        课程说明
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+		     </p>
+		     <div style="" id="overheight2">
+		     		<div class="text-detail2" style="padding: 0 20px 0 20px;margin-top:10px;margin-bottom:10px;">
+                            <p>
+                                {$activity.courseIntro}
+                            </p>
+                        </div>
+                        <p class="details-btn details-btn-zhan2"><a style="background:url({$publicserver}/public/gouke/app/images/details_bg.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">展开</a></p>
+                        <p class="details-btn details-btn-shou2" style="display:none;"><a style="background:url({$publicserver}/public/gouke/app/images/details_bgs.png) right center no-repeat;padding-right: 10px;-webkit-background-size: 10px 10px;background-size: 10px 10px;">收起</a></p>
+		     </div>
+        
+	        <p style="font-size:1.5rem;color:#f1705c;font-weight:bold;text-align:center;margin-top:4rem;">
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/left_dot.png"  alt=""/>
+		       官方客服
+		        <img style="width:39px;height:6px;margin-top:-3px;" src="{$publicserver}/public/gouke/app/images/right_dot.png"  alt=""/><br>
+		     </p>
+		     <div style="min-height:175px;">
+		     <p style="font-size:1rem;color:#8c4b17;font-weight:bold;text-align:center;margin-top:1rem;">{$activity.honourRewardContact}</p>
+		     <div style="padding:45px;padding-bottom:80px;">
+		     <div style="border:2px dashed #a6a094;border-radius:5px">
+		     	<div style="padding:8px;">
+		     		<div style="background:#fec356;min-height:190px;border-radius:5px;">
+		     			<p style="font-size:1.1rem;color:#fff;font-weight:bold;text-align:center;padding-top:1rem;">长按-识别图中二维码-并关注</p>
+		     			<p style="font-size:1rem;color:#fff;font-weight:bold;text-align:center;padding-top:1rem;">{$activity.wechatName}</p>
+		     			<p style="text-align:center;min-height: 80px;padding:20px;"><img style="height:80px;width:80px;" src="{$activity.ercode}"  alt=""/></p>
+		     		</div>
+		     	</div>
+		     </div>
+		     <div style="height:50px;margin:auto;line-height:40px;margin-top:20px;">
+		     <p>
+		     	{if $activity.switchTestStatus eq 1}
+		     	<a href="javascript:testgo();">
+		     	<span style="text-align:center;display:block;width:49%;float:left;font-size:1rem;background:#fec356;line-height:2rem;color:#303030;margin-right:1%;">查询预约测试</span>
+		     	</a>
+		     	{/if}
+		     	<a href="goukeorder?id={$activity.id}&sc={$sc}">
+		     	<span style="text-align:center;display:block;width:49%;float:left;font-size:1rem;background:#fec356;line-height:2rem;color:#303030;margin-left:1%;">查询购课信息</span>
+		     	</a>
+		     </p>
+		     </div>
+		     </div>
+		     
+		     </div>
+        </div>
+</section>
+
+<div class="fixed fixed-b">
+    <div class="start-btn start-btngray">
+        
+        <button class="f16 red" id="startLaunch"><span class="font-big">立即购课</span></button>
+        <button class="f16 green" id="recommend"><span class="font-big">推荐有礼</span></button>
+    </div>
+</div>
+<!--index end-->
+
+<!--告诉朋友弹框-->
+<div class="mask"></div>
+<section class="mask-fq" id="tan1">
+    <img src="{$publicserver}/public/gouke/app/images/askfriend0.png" class="img-askfriend" />
+</section>
+
+<!--输入手机号，参与活动弹框-->
+<div class="tan-chouke-launch">
+    <h1>输入手机号，马上参加活动！
+        <span class="close"><img src="{$publicserver}/public/gouke/app/images/close1.png" /></span>
+    </h1>
+    <div class="name-box">
+        <ul class="list1">
+            <li><input type="text" class="inp tel" placeholder="请输入手机号码" /></li>
+            <li style="margin-top:5px;border-top:1px solid #d9d9d9;">
+                <input type="text" class="inp sms" style="width:120px;" placeholder="请输入短信码" />
+                &nbsp;<span class="yanzm2">发送验证码</span>
+            </li>
+        </ul>
+        <p class="error-red"></p>
+        <input type="button" value="确定" class="button-ok" />
+        <p class="text-tips">
+            请录入您的手机号号码作为活动凭证提交，您的信息仅作为新东方本次活动登记信息使用，并全程保密。
+            <br/><span style="color:red">*请确保在后续相关报名过程中填写相同的手机号</span>
+        </p>
+    </div>
+</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- 
+<script src="{$publicserver}/public/gouke/app/js/common.js"></script>
+ -->
+<script>
+
+	var PREFIX_URL = "http://{$domain}/chouke/";
+	var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+	
+	var Global = {
+			id:'{$activity.id}',
+			openid:'{$openid}',
+			nickname:'{$nickname}',
+			headimgurl:'{$headimgurl}',
+			sc:'{$sc}',
+			userId:'{$userId}',
+			mobile:'{$mobile}'
+	}
+	
+	window.jQuery(function ($) {
+		"use strict";
+	
+		$('time').countDown({
+			with_separators: false
+		});
+		
+	});
+
+	function SetCwinHeight(){
+		var vframe=document.getElementById("vframe"); //iframe id
+		if (window.orientation){
+			//vframe.height = window.innerWidth*9/16+30;
+			//vframe.width =  window.innerWidth;
+			vframe.width="100%";
+		}else{
+			//vframe.height = window.innerWidth*9/16+30;
+			//vframe.width =  window.innerWidth;
+			vframe.width="100%";
+		}
+		if(vframe.height>250)
+			vframe.height=250;
+		//window.location.reload(true);
+	}
+	window.onorientationchange=function(){  
+		SetCwinHeight();
+	}; 
+
+	wx.config({
+	    debug: false,
+	    appId: '{$signPackage.appId}',
+	    timestamp: '{$signPackage.timestamp}',
+	    nonceStr: '{$signPackage.nonceStr}',
+	    signature: '{$signPackage.signature}',
+	    jsApiList: [
+	        // 所有要调用的 API 都要加到这个列表中
+	        'onMenuShareQQ',
+	        'onMenuShareAppMessage',
+	        'onMenuShareTimeline',
+	        'getLocation',
+	    ]
+	});
+	
+	wx.ready(function () {
+	     wx.onMenuShareTimeline({
+	        title:  '{$activity.crName}',
+	        desc:  '{$activity.activityIntro1}',
+	        link:  'http://{$domain}/chouke/goukeindex?share={$activity.id}:{$openid}',
+	        imgUrl:  '{$activity.wxSmallImg}',
+	        type: 'link', // 分享类型,music、video或link，不填默认为link
+	        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	        success: function () {
+	        	var businessP = {"id":Global.id};
+	            jQuery.ajax({
+	                 type: "POST",
+	                 url: 'ajax_goukeaddfwd',
+	                 async: true,
+	                 dataType: 'json',
+	                 data: JSON.stringify(businessP),
+	                 success: function (json) {
+	                	 
+	                 }
+	             });
+	        },
+	        cancel: function () {
+	            // 用户取消分享后执行的回调函数
+	        }
+	    });
+	    // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+	
+	    wx.onMenuShareAppMessage({
+	    	title:  '{$activity.crName}',
+	        desc:  '{$activity.activityIntro1}',
+	        link:  'http://{$domain}/chouke/goukeindex?share={$activity.id}:{$openid}',
+	        imgUrl:  '{$activity.wxSmallImg}',
+	        type: 'link', // 分享类型,music、video或link，不填默认为link
+	        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	        success: function () {
+	            // 用户确认分享后执行的回调函数
+	        	var businessP = {"id":Global.id};
+	            jQuery.ajax({
+	                 type: "POST",
+	                 url: 'ajax_goukeaddfwd',
+	                 async: true,
+	                 dataType: 'json',
+	                 data: JSON.stringify(businessP),
+	                 success: function (json) {
+	                	 
+	                 }
+	             });
+	        },
+	        cancel: function () {
+	            // 用户取消分享后执行的回调函数
+	        }
+	    });
+	    wx.onMenuShareQQ({
+	    	title:  '{$activity.crName}',
+	        desc:  '{$activity.activityIntro1}',
+	        link:  'http://{$domain}/chouke/goukeindex?share={$activity.id}:{$openid}',
+	        imgUrl:  '{$activity.wxSmallImg}',
+	        type: 'link', // 分享类型,music、video或link，不填默认为link
+	        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	        success: function () {
+	            // 用户确认分享后执行的回调函数
+	        	var businessP = {"id":Global.id};
+	            jQuery.ajax({
+	                 type: "POST",
+	                 url: 'ajax_goukeaddfwd',
+	                 async: true,
+	                 dataType: 'json',
+	                 data: JSON.stringify(businessP),
+	                 success: function (json) {
+	                	 
+	                 }
+	             });
+	        },
+	        cancel: function () {
+	            // 用户取消分享后执行的回调函数
+	        }
+	    });
+	    
+	});
+  
+	
+	
+		//这个是调用微信图片浏览器的函数
+		function imagePreview(curSrc, srcList) {
+		  if (!curSrc || !srcList || srcList.length == 0) {
+		    return;
+		  }
+		  WeixinJSBridge.invoke('imagePreview', {
+		    'current': curSrc,
+		    'urls': srcList
+		  });
+		};
+		(function ($) {
+		  var aa = [];
+		  var i = 0;
+		  var src = [];
+		  var json = null;
+		  aa = $(".pro");
+		  
+		  for (i = 0; i < aa.length; i++) {
+			src[i] = aa[i].src;  //把所有的src存到数组里
+		  }
+		  
+		  //var srcList = arrayToJson(src); //转换成json并赋值给srcList
+		  $('.pro').click(function () {
+		    imagePreview(this.src, src);
+		  });
+		})(jQuery);
+	
+	
+	
+$(document).on('touchend','#startLaunch',function(){
+	preCheck('goukeclasslist'); 
+});
+
+$(document).on('touchend','#recommend',function(){
+	preCheck('goukerecommend');
+});
+
+$(document).on('touchend','#askFriend',function(){
+	$(".mask").show();
+    $(".mask-fq").show();
+    return false
+});
+
+$(document).on('touchend','#tan1',function(){
+	$(".mask").hide();
+	$(".mask-fq").hide();
+    return false
+});
+
+$(document).on('touchend','.close',function(){
+	$(".mask").hide();
+	var $this = $(this);
+    if($this.hasClass('on')){
+    	$this.removeClass('on');
+    }
+	$('.tan-chouke-launch').hide();
+});
+
+$(document).on('touchend','.details-btn-zhan1',function(){
+	var theight1 = $("#overheight1").find(".text-detail1 p").height();
+	if(theight1>75){
+		$("#overheight1").find(".details-btn-zhan1").hide();
+        $("#overheight1").find(".details-btn-shou1").show();
+        $(".text-detail1").height('auto');
+	}
+});
+$(document).on('touchend','.details-btn-shou1',function(){
+	var theight1 = $("#overheight1").find(".text-detail1 p").height();
+	if(theight1>75){
+       $("#overheight1").find(".details-btn-zhan1").show();
+        $("#overheight1").find(".details-btn-shou1").hide();
+        $(".text-detail1").height('75');
+    }
+});
+$(document).on('touchend','.details-btn-zhan2',function(){
+	var theight2 = $("#overheight2").find(".text-detail2 p").height();
+	if(theight2>75){
+		$("#overheight2").find(".details-btn-zhan2").hide();
+        $("#overheight2").find(".details-btn-shou2").show();
+        $(".text-detail2").height('auto');
+	}
+});
+$(document).on('touchend','.details-btn-shou2',function(){
+	var theight2 = $("#overheight2").find(".text-detail2 p").height();
+	if(theight2>75){
+       $("#overheight2").find(".details-btn-zhan2").show();
+        $("#overheight2").find(".details-btn-shou2").hide();
+        $(".text-detail2").height('75');
+    }
+});
+
+$(document).on('touchend','.details-btn-zhan3',function(){
+	var theight3 = $("#overheight3").find(".text-detail3").height();
+	
+	if(theight3>=75){
+		$("#details-btn-zhan3").hide();
+		$("#details-btn-shou3").show();
+		
+		//$("#overheight3").find(".details-btn-zhan3").hide();
+        //$("#overheight3").find(".details-btn-shou3").show();
+        $(".text-detail3").height('auto');
+	}
+});
+$(document).on('touchend','.details-btn-shou3',function(){
+	var theight3 = $("#overheight3").find(".text-detail3").height();
+	
+	if(theight3>75){
+		$("#details-btn-zhan3").show();
+		$("#details-btn-shou3").hide();
+		
+        //$("#overheight3").find(".details-btn-zhan3").show();
+        //$("#overheight3").find(".details-btn-shou3").hide();
+        $(".text-detail3").height('75');
+    }
+});
+function testgo(){
+	{if $tested eq 1}
+		location.href='goukesurvey?id={$activity.id}&sc={$sc}';
+	{else}
+		layer.msg('您暂未预约测试');
+		
+	{/if}
+}
+
+function preCheck(loginto){
+	var d = {"id":Global.id};
+	jQuery.ajax({
+        type: "POST",
+        url: 'ajax_goukesurveycheck',
+        async: true,
+        dataType: 'json',
+        data: JSON.stringify(d),
+        success: function (json) {
+            if(json.result==true){
+            	if((json.errno==1 ||  json.errno==2 || json.errno==0) && loginto=='goukerecommend'){
+            		login(loginto);
+            	}else if(json.errno==0){//成功 开始发起
+                	
+                	if(json.survey==1){ // && json.tested==0
+                    	loginto="goukesurvey";
+                	}
+                    login(loginto);
+                }else{
+                	layer.msg(json.msg,{
+                	    time: 4000, //4s后自动关闭
+                	    btn: [ '知道了']
+                	  });
+                }
+            }else{
+            	layer.msg(json.msg,{
+            	    time: 4000, //4s后自动关闭
+            	    btn: [ '知道了']
+            	  });
+            }
+            //$this.removeClass('on');
+        },error:function(){
+            layer.msg('网络不给力，换个姿势再试一下');
+            //$this.removeClass('on');
+        }
+    })
+}
+
+function login(loginto){
+	if(Global.mobile==''){
+		$(".mask").show();
+        $(".tan-chouke-launch").animate({ 'bottom': '0px' });
+        //点击确定
+        $('.tan-chouke-launch').show();
+        $('.yanzm2').removeClass('on');
+        $('.tan-chouke-launch .button-ok').on('touchend',function(){
+            var $this = $(this);
+            if($this.hasClass('on')){
+                return false
+            }
+            
+            $this.addClass('on');
+            var mobile = $('.tan-chouke-launch .tel').val();
+            var smsCode = $('.tan-chouke-launch .sms').val();
+            //判断
+            if(mobile==''){
+                $('.error-red').html('手机号不能为空');
+                $this.removeClass('on');
+                return false
+            }else if(smsCode==''){
+                $('.error-red').html('验证码不能为空');
+                $this.removeClass('on');
+                return false
+            }else if(!/^[1][3578][0-9]{9}$/.test(mobile)){
+                $('.error-red').html('手机号格式不正确');
+                $this.removeClass('on');
+                return false
+            }
+
+            var businessP = {"mobile":mobile,"smsCode":smsCode,"aid":Global.id};
+            var d = businessP;//constructionParams(rsaEncryptedString(businessP), "8172fa7d2057476480ffb9525ed59b9f");
+            jQuery.ajax({
+                type: "POST",
+                url: 'ajax_goukesmslogin',
+                async: true,
+                dataType: 'json',
+                data: JSON.stringify(d),
+                success: function (json) {
+                    if(json.result==true){
+                        if(json.data.Status==1){//成功 开始发起
+                            Global.userId = json.data.UserId;
+                            Global.mobile = json.data.Mobile;
+                            location.href=loginto+'?id='+Global.id+"&sc="+Global.sc;
+                        }else{
+                            $('.error-red').html(json.data.Message);
+                        }
+                    }else{
+                        $('.error-red').html(json.data.Message);
+                    }
+                    $this.removeClass('on');
+                },error:function(){
+                    layer.msg('网络不给力，换个姿势再试一下');
+                    $this.removeClass('on');
+                }
+            })
+        })
+		
+	}else{
+		location.href=loginto+'?id='+Global.id+"&sc="+Global.sc;
+	}
+}    
+
+//获取验证码
+/*
+$('.yanzm2').on('touchend',function(){
+    var $this = $(this);
+    verifySMS($this);
+})
+$('.yanzm2').on('tap',function(){
+    var $this = $(this);
+    verifySMS($this);
+})
+*/
+
+$('.yanzm2').click(function(){
+	document.querySelector('input.inp').blur();  
+	
+    var $this = $(this);
+    verifySMS($this);
+})
+
+
+
+function verifySMS($this){
+	if($this.hasClass('on')){
+        return false
+    }
+    $this.addClass('on');
+    var mobile = $('.tan-chouke-launch .tel').val();
+    //判断
+    if(mobile==''){
+        $('.error-red').html('手机号不能为空');
+        $this.removeClass('on');
+        return false
+    }else if(!/^[1][3578][0-9]{9}$/.test(mobile)){
+        $('.error-red').html('手机号格式不正确');
+        $this.removeClass('on');
+        return false
+    }
+
+    var businessP = {"mobile":mobile};
+    var d = businessP;//constructionParams(rsaEncryptedString(businessP), "d635a10fc14a4a64a8cbfd143eeff79b");
+    jQuery.ajax({
+        type: "POST",
+        url: 'ajax_goukesendsms',
+        async: true,
+        dataType: 'json',
+        data: JSON.stringify(d),
+        success: function (json) {
+            if(json.result==true){
+                if(json.data.Status==1){
+                    layer.msg('验证码发送成功！');
+                    var countdown=60;
+                    function settimeFn() {
+                        var cdDom=$('.yanzm2');
+                        if (countdown == 0) {
+                            cdDom.html("发送验证码");
+                            countdown = 60;
+                            cdDom.removeClass('on');
+                            return;
+                        } else {
+                            cdDom.addClass('on');
+                            cdDom.html('重新发送(' + countdown + ')')
+                            countdown--;
+                        }
+                        setTimeout(function() {
+                            settimeFn();
+                        },1000)
+                    }
+                    settimeFn();
+                }else{
+                    $('.error-red').html(JSON.parse(json.data).Message);
+                    $this.removeClass('on');
+                }
+            }else{
+                $('.error-red').html(JSON.parse(json.data).Message);
+                $this.removeClass('on');
+            }
+        }
+    })
+}
+</script>
+</body>
+</html>

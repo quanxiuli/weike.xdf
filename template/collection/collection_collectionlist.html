@@ -1,0 +1,358 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2">
+                <div class="CollectionAll">
+                    <!--收集项管理标题栏 开始-->
+                    <div class="Collection_UP">
+                        <p>收集项管理</p>
+                       
+                        <div class="Collection_UP_R">
+                         {if $isSuperAdmin eq 1}
+                        	<span class="Collection_UP_R_BO" id="exportData2">仅导入数据</span>
+                         {/if}
+                            <span class="Collection_UP_R_BO" id="exportData">导入数据</span>
+                            <span class="Collection_UP_R_BG" onclick="window.location.href='{$publicserver}/public/collection/fileS/data-templates.csv';">下载模板</span>
+                        </div>
+                       
+                    </div>
+                    <!--收集项管理标题栏 结束-->
+                    <!--收集项管理搜索栏 开始-->
+                    <form action="" method="GET" id="coll_form">
+                    <div class="Collection_Middle">
+                        <div class="Collection_Middle_L">
+                            <select name="sid" {if !$enableSelectSchool}disabled{/if}>
+                                <option value="0">选择学校</option>
+                                {foreach from=$allShoools key=key item=item}
+                                <optgroup label="{$key}">
+	                                {foreach from=$item key=k item=i}
+	                                <option value="{$k}" {if $k eq $schoolId}selected{/if}>{$i}</option>
+	                                {/foreach}
+                                </optgroup>
+                                {/foreach}
+                            </select>
+                            <select name="ct">
+                                <option value="0">选择类型</option>
+                                {foreach from=$collectionType key=key item=item}
+                                <option value="{$key}" {if $key eq $ct}selected{/if}>{$item}</option>
+                                {/foreach}
+                            </select>
+                            <select name="co">
+                                <option value="0">选择来源</option>
+                                {foreach from=$collectionOriginal key=key item=item}
+                                <option value="{$key}" {if $key eq $co}selected{/if}>{$item}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="Collection_Middle_R">
+                            <input name="title" placeholder="请输入收集项名称或用户邮箱" type="text" value="{$title}"><span onclick="search_collect();"></span>
+                        </div>
+                    </div>
+                    </form>
+                    <!--收集项管理搜索栏 结束-->
+                    {if $collectionCount gt 0}
+                    	<div class="Collection_Down" style="height: 270px;">
+                        <table>
+                            <tbody><tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>数据量</th>
+                                <th>类型</th>
+                                <th>类别</th>
+                                <th>创建时间</th>
+                                <th>学校</th>
+                                <th>创建人</th>
+                                <th>操作</th>
+                            </tr>
+                            {foreach from=$collectionList item=item}
+                            <tr>
+                                <td>{$item.id}</td>
+                                <td title="{$item.title}" {if $item.collectionOriginal eq 1}onclick="show_collection_preview({$item.id});" style=" cursor:pointer;"{/if}>{$item.short_tile}</td>
+                                <td>{$item.collectCount}</td>
+                                <td>{$collectionType.$item.collectiontype}</td>
+                                <td>{$collectionOriginal.$item.collectionOriginal}</td>
+                                <td>{$item.create_time}</td>
+                                <td>{$item.shcoolName}</td>
+                                <td style="color:#777;">{$item.operator}</td>
+                                <td><!--
+                                {if $item.collectionOriginal eq 1 and $item.status eq 0}
+                                 <a href="/collection/edit?id={$item.id}">编辑</a>|
+                                 {/if}-->
+                                <a href="/collection/collectionstat?id={$item.id}">查看数据</a>
+                                {if $item.is_push eq 1}
+                                <a href="javascript:void(0);" data-attr="{$item.is_push}" onclick="setPushStatus($(this),'{$item.id}');">关闭推送</a>
+                                {else}
+                                <a href="javascript:void(0);" data-attr="{$item.is_push}" onclick="setPushStatus($(this),'{$item.id}');">开启推送</a>
+                                {/if}
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody></table>
+                        <div class="paging">
+                            <div class="paging_center">
+                                <ul>
+                                {$page}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {else}
+                    <!--收集项管理结果栏 开始-->
+                    <div class="Collection_Down_WNR">
+
+                    </div>
+                    <!--收集项管理结果栏 结束-->
+                    {/if}
+                </div>
+           
+</div>
+{include file="collection/collection_footer.html"}
+<script type="text/javascript">
+$(function(){
+	
+});
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  laydate.render({
+    elem: '#collectBeginTime'
+    ,format: 'yyyy-MM-dd'
+    ,theme: 'molv'
+  });
+laydate.render({
+    elem: '#collectEndTime'
+    ,format: 'yyyy-MM-dd'
+    ,theme: 'molv'
+  });
+});
+function search_collect(){
+	$('#coll_form').submit();
+}
+function setPushStatus(obj,id){
+	var pushStatus = obj.attr('data-attr');
+	var msg = '您确定要'+(pushStatus==1?'关闭':'开启')+'ID为：【'+id+'】的收集项的数据推送吗？';
+	CollectionDialogBox.confirm(msg,{icon:3},function(){
+		var index = '';
+		$.ajax({
+			url:'/collection/ajax_setcollpushstatus',
+			type:'POST',
+			dataType:'json',
+			data:{id,id},
+			beforeSend:function(){
+				index = CollectionDialogBox.load(1,10);
+			},
+			success:function(data){
+				CollectionDialogBox.close(index);
+				if(data.result){
+					CollectionDialogBox.alert(data.message,{icon:6},function(){
+						window.location.reload();
+					});
+				}else{
+					CollectionDialogBox.alert(data.message,{icon:5});
+				}
+			}
+		});
+	});
+}
+
+function checkImgType(file) {
+    if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|JPEG|PNG|BMP)$/.test(file)) {
+        return false;
+    }
+    return true;
+}
+function checkFileType(file){
+	 if (!/\.(csv|CSV)$/.test(file)) {
+        return false;
+    }
+    return true;
+}
+function lengthValidate(inputId, spanId, validLength) {
+    inputId = "#" + inputId;
+    spanId = "#" + spanId;
+    $(inputId).bind('input propertychange', function () {
+        var currentLength = $(inputId).val().length;
+        $(spanId).text(currentLength);
+        if (currentLength > validLength) {
+            $(spanId).css("color", "red");
+            return false;
+        } else {
+            $(spanId).css("color", "#D7D7D7");
+        }
+    });
+}
+function CreateDownCollection(createDiv,closeDiv,progressDiv){
+	this.createDiv = createDiv;
+	this.closeDiv = closeDiv;
+	this.progressDiv = progressDiv;
+	this.title = this.createDiv.find('input[name=title]');
+	this.span = this.createDiv.find('#result');
+	this.collectionType = this.createDiv.find('select[name=collectionType]');
+	this.beginTime = this.createDiv.find('input[name=beginTime]');
+	this.endTime = this.createDiv.find('input[name=endTime]');
+	this.upfile = this.createDiv.find('input[type=file]');
+}
+CreateDownCollection.prototype = {
+	constructor:CreateDownCollection,
+	lengthValidate:function(validLength,input, span){
+		if(typeof input == 'undefined')input = this.title;
+		if(typeof span == 'undefined') span = this.span;
+	    input.bind('input propertychange', function () {
+	        var currentLength = input.val().length;
+	        span.text(currentLength);
+	        if (currentLength > validLength) {
+	            span.css("color", "red");
+	            return false;
+	        }else {
+	            span.css("color", "#D7D7D7");
+	        }
+	    });
+	},
+	show:function(){
+		this.title.val('');
+		this.collectionType.val(0);
+		this.beginTime.val('');
+		this.endTime.val('');
+		this.createDiv.show();
+	},
+	close:function(){
+		this.createDiv.hide();
+	},
+	
+	onlyImportCollection:function(){
+		var createDiv = this.createDiv;
+		var upfile = this.upfile.val();
+		if(upfile == ''){
+			createDiv.hide();
+			CollectionDialogBox.alert('请选择要上传的数据文件',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}
+		//判定上传文件的格式
+		if(!checkFileType(upfile)){
+			createDiv.hide();
+			CollectionDialogBox.alert("数据文件需后缀为csv，CSV的csv文件", {icon: 4},function(){
+				createDiv.show();
+			});
+            return false;
+		}
+		return true;
+	},
+	addDownCollection:function(){
+		var title = this.title.val();
+		var createDiv = this.createDiv;
+		if(title == ''){
+			createDiv.hide();
+			CollectionDialogBox.alert('请输入收集项名称',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}else{
+			if(title.length > 25){
+				createDiv.hide();
+				CollectionDialogBox.alert('收集项名称不能超过25个字符',{icon:4},function(){
+					createDiv.show();
+				});
+				return false;
+			}
+		}
+		var collectionType = this.collectionType.val();
+		if(collectionType == 0){
+			createDiv.hide();
+			CollectionDialogBox.alert('请选择收集项类型',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}
+		var beginTime = this.beginTime.val();
+		if(!GLOBAL.reg_time.test(beginTime)){
+			createDiv.hide();
+			CollectionDialogBox.alert('请输入正确的开始时间',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}
+		var endTime = this.endTime.val();
+		if(!GLOBAL.reg_time.test(endTime)){
+			createDiv.hide();
+			CollectionDialogBox.alert('请输入正确的结束时间',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}
+		if(beginTime >= endTime){
+			createDiv.hide();
+			CollectionDialogBox.alert('结束时间不能小于等于开始时间',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}
+		var upfile = this.upfile.val();
+		if(upfile == ''){
+			createDiv.hide();
+			CollectionDialogBox.alert('请选择要上传的excel文件',{icon:4},function(){
+				createDiv.show();
+			});
+			return false;
+		}
+		//判定上传文件的格式
+		if(!checkFileType(upfile)){
+			createDiv.hide();
+			CollectionDialogBox.alert("数据文件需后缀为csv，CSV的csv文件", {icon: 4},function(){
+				createDiv.show();
+			});
+            return false;
+		}
+		return true;
+	}
+}
+var createDownCollection = new CreateDownCollection($('#ModalFrame_DRSJInput'),$('#ModalFrame_DRSJInput_Close'),$('#ModalFrameBox5_DRSJInput'));
+$('#exportData').click(function(){createDownCollection.show();});
+createDownCollection.closeDiv.click(function(){createDownCollection.close();});
+createDownCollection.lengthValidate(25);
+$('#downCollectionForm').ajaxForm({
+	dataType:'json',
+	beforeSubmit:function(){
+		var result = createDownCollection.addDownCollection();
+		if(result)$('.ModalFrameBox3_DRSJInput').val('数据上传中...').prop('disabled',true);
+		return result;
+	},
+	success:function(data){
+		createDownCollection.createDiv.hide();
+		if(data.result){
+			CollectionDialogBox.alert(data.message,{icon:6},function(){
+				window.location.reload();
+			});
+		}else{
+			$('.ModalFrameBox3_DRSJInput').val('上传数据').prop('disabled',false);
+			CollectionDialogBox.alert(data.message,{icon:5},function(){
+				createDownCollection.createDiv.show();
+			});
+		}
+	}
+});
+
+var importCollection = new CreateDownCollection($('#ModalFrame_DRSJImport'),$('#ModalFrame_DRSJImport_Close'),$('#ModalFrameBox5_DRSJ'));
+$('#exportData2').click(function(){importCollection.show();});
+importCollection.closeDiv.click(function(){importCollection.close();});
+$('#importCollectionForm').ajaxForm({
+	dataType:'json',
+	beforeSubmit:function(){
+		var result = importCollection.onlyImportCollection();
+		if(result)$('.ModalFrameBox3_DRSJInput').val('数据上传中...').prop('disabled',true);
+		return result;
+	},
+	success:function(data){
+		importCollection.createDiv.hide();
+		if(data.result){
+			CollectionDialogBox.alert(data.message,{icon:6},function(){
+				window.location.reload();
+			});
+		}else{
+			$('.ModalFrameBox3_DRSJInput').val('上传数据').prop('disabled',false);
+			CollectionDialogBox.alert(data.message,{icon:5},function(){
+				importCollection.createDiv.show();
+			});
+		}
+	}
+});
+
+</script>

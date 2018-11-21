@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>发布管理平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/easyUi/easyui.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/easyUi/icon.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/index.css" />
+    <script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/p176.js"></script>
+    <script src="{$publicserver}/public/chouke/js/layer-v2.1/layer/layer.js"></script>
+    <script src="{$publicserver}/public/chouke/js/laydate-v1.1/laydate/laydate.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jqPaginator.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jquery.easyui.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/zh-cn.js"></script>
+    <script type="text/javascript">
+		var PREFIX_URL = "http://{$domain}/chouke/";
+		var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+		var Global = {
+			    actionURL:PREFIX_URL+"ajax_service",
+			    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			    previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+			    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+			    cartID:"opt",
+			    buyDomain:"http://bm.xdf.cn"//正式
+		};
+	</script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+    <script src="{$publicserver}/public/chouke/js/util.js"></script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/user.js"></script>
+    <script src="{$publicserver}/public/chouke/js/loginStatus.js"></script>
+</head>
+<body onload="initMainPage('501');">
+<input type="text" id="loginId" hidden>
+<input type="text" id="userId" hidden>
+<input type="text" id="tokenId" hidden>
+<input type="text" id="schoolIdFinal" hidden>
+<input type="text" id="areaIdFinal" hidden>
+<input type="text" id="deptIdFinal" hidden>
+<!-- <div class="p176-nav clearfix">
+    <div class="p176-logo-left"><a href="#" class="p176-logo">发布管理平台</a></div>
+    <div class="p176-nav-left" id="schoolAuthority" style="display: none">
+        <ul>
+            <li class="dropdown js-ads-drop">
+                <a href="#" id="schoolName1" hidden>城市<i class="dropdown-white"></i></a>
+                <ul class="b-sub-menu" id="schoolName"></ul>
+            </li>
+            <li class="dropdown js-area-drop">
+                <a href="#" hidden id="areaName1">校区<i class="dropdown-white"></i></a>
+                <ul class="a-sub-menu" id="areaName"></ul>
+            </li>
+            <li class="dropdown js-item-drop">
+                <a href="#" hidden id="deptName1">部门<i class="dropdown-white"></i></a>
+                <ul class="p-sub-menu" id="deptName"></ul>
+            </li>
+        </ul>
+    </div>
+    <div class="p176-nav-right">
+        <ul>
+            <li>
+                <a href="#" class="p176-nav-usename js-userName"></a>
+                <div class="p176-usename-menu js-userName-menu" style="z-index: 1000;">
+                    <ul>
+                        <li><a href="#" onclick="/chouke/logout" class="">退出登录</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div> -->
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap" style="position:relative;width:100%;min-height:100%;padding-bottom:50px;">
+        <div class="p176-main">
+            <div class="inner">
+                <h2 class="p176-tit pdRight20 clearfix"><span class="fz14"><a href="javascript:;"
+                                                                              onclick="changeCenter('./userList')">账户管理
+                    > </a>账号列表</span>
+                </h2>
+
+                <!--search-->
+                <div class="clearfix hot-search">
+                    <div class="fl search-box">
+                        <form action="javascript:searchByKey();">
+                        <i class="ico-search"></i>
+                        <input type="search" id="searchKey" placeholder="搜索账号" class="inp-s"
+                               style="margin-right: -5px;height: 30px;" />
+                        <input type="button" value="搜索" class="search" onclick="searchByKey()" />
+                        </form>
+                    </div>
+                    <div class="fr">
+                        <a href="#" class="newSet" onclick="addExhibitionUser()"><i class="ico-add-new"></i>新建账户</a>
+                    </div>
+                </div>
+                <!--分类-->
+                <div class="hot-classes">
+                    <ul class="list1">
+                        <li>
+                            <span class="tit">地区：</span>
+                            <span class="xian-wid">
+                            </span>
+                            <span>
+                                <em class="open">展开<i class="ico-open"></i></em>
+                                <em class="shou">收起<i class="ico-shou"></i></em>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="tit">校区：</span>
+                            <span class="xian-wid2">
+                            </span>
+                            <span>
+                                <em class="open2">展开<i class="ico-open"></i></em>
+                                <em class="shou2">收起<i class="ico-shou"></i></em>
+                            </span>
+                        </li>
+                        <li class="last">
+                            <span class="tit">部门：</span>
+                            <span class="xian-wid3">
+                            </span>
+                            <span>
+                                <em class="open3">展开<i class="ico-open"></i></em>
+                                <em class="shou3">收起<i class="ico-shou"></i></em>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="botton" id="m1"></div>
+                </div>
+                <div class="p176-table-wrap">
+                    <table class="p176-table p176-table02 p176-table04 fz14">
+                        <thead>
+                        <tr>
+                            <th style="width:55px;display:none;">账号</th>
+                            <th width="8%">用户名</th>
+                            <th width="15%">邮箱</th>
+                            <th width="12%">地区</th>
+                            <th width="30%">校区</th>
+                            <th width="15%">部门</th>
+                            <th width="20%">设置</th>
+                        </tr>
+                        </thead>
+                        <tbody id="userTbody">
+                        </tbody>
+                    </table>
+                    <!--<div class="mtop20"><a href="#" id="addUser" onclick="javascript:addExhibitionUser();" class="p176-adduserBtn"><i class="p176-adduserImg"></i>新增用户</a></div>-->
+                    <div class="PublicPage" id="publicPage"></div>
+                </div>
+            </div>
+        </div>
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

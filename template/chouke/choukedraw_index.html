@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>筹课活动</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta itemprop="name" content="筹课"/>
+    <meta itemprop="description" name="description"  content="筹课"/>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/draw/css/raiseClass/style.css">
+    
+    <script src="{$publicserver}/public/chouke/app/js/rsa/jsbn.js"></script>
+    <script src="{$publicserver}/public/chouke/app/js/rsa/prng4.js"></script>
+    <script src="{$publicserver}/public/chouke/app/js/rsa/rng.js"></script>
+    <script src="{$publicserver}/public/chouke/app/js/rsa/rsa.js"></script>
+    
+    <script>
+  var PREFIX_URL = "http://{$domain}/chouke/";
+  var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+  
+  var Global = {
+		    //rsa_key : "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQChTJiIJhxAdNPob/F2Cj6uJdsWHaC2fqkQptR/bkzhCCWAUFSqc0kwtve6aEFOFXWCvIuEDQKw5QYcyOCpImIobss+rHVRlVRNO2ARuZfpMx3KZ+BNnI0OnZvztRr5sJIdiP/VRTGAkwHgcnKV236jC62ga/pGI9cenqPcuZXfeQIDAQAB-----END PUBLIC KEY-----",
+			rsa_key : "A14C9888261C4074D3E86FF1760A3EAE25DB161DA0B67EA910A6D47F6E4CE10825805054AA734930B6F7BA68414E157582BC8B840D02B0E5061CC8E0A92262286ECB3EAC755195544D3B6011B997E9331DCA67E04D9C8D0E9D9BF3B51AF9B0921D88FFD54531809301E0727295DB7EA30BADA06BFA4623D71E9EA3DCB995DF79",
+			encryption : "10001",
+		    decryption : "10001",
+		    appId : "d2bff756072b40e0ba7951284169ec1f",
+		    actionURL:PREFIX_URL+"ajax_service",
+		    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+		    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+		    cartID:"opt",
+		    //buyDomain:"http://online.bm.staff.xdf.cn"//测试
+		    buyDomain:"http://bm.xdf.cn"//正式
+	};
+
+  
+  Global.headImgurl='{$publicserver}/public/chouke/app/images/raiseClass/photo_default.png';//取app的头像
+  Global.domain_uh='http://my.xdf.cn/API_Avatar/img';//
+  //Global.wechatUrl = 'http://apphome.xdf.cn/xdfhome/';//正式
+  Global.wechatUrl = PREFIX_URL;//测试
+  Global.appid='';
+  Global.secret='';
+  Global.redirect_uri="http://{$domain}/chouke/";
+  Global.openappid='';
+
+  Global.openid = '{$openid}';
+  Global.nickname = '{$nickname}';
+  Global.headimgurl = '{$headimgurl}';
+
+  Global.userId = '{$userId}';
+  Global.mobile = '{$mobile}';
+  	</script>
+  	
+</head>
+<body>
+
+<div class="raiseTitle">
+    <span class="back"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/xsckBack.png" />返回</span>
+    <h3>筹课活动</h3>
+</div>
+
+<section class="page page-animation page-green">
+    <div class="page-container">
+        <header class="page-bg page-bg-large">
+            <div class="boat-bg"></div>
+            <div class="ck-head">
+                 <div class="t-logo"></div>
+                 <div class="ck-count-down">
+                     <span></span>
+                     <span id="timeunit"><i>0</i><i>0</i><span style="display: none"></span><i style="display: none">0</i><i style="display: none">0</i></span>
+                     <span id="timename"></span>
+                 </div>
+                 <div class="one"></div>
+                 <div class="circle"></div>
+                 <div class="gong unreverse"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/gong.png" class="img-responsive" alt=""></div>
+                 <div class="gong reverse"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/gong.png" class="img-responsive" alt=""></div>
+                 <div class="left-ball"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/left-airballoon.png" class="img-responsive" alt=""></div>
+                 <div class="right-ball"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/xsck_success_bg1_pre.png" class="img-responsive" alt=""></div>
+                 <div class="xsck-bgactivity">
+                     <!--<div class="text3"><em>50<b>万</b></em>课程福利大放送</div>-->
+                     <div class="text4"></div>
+                 </div>
+                 <div class="shake-boat"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/shake-boat.png" class="img-responsive" alt=""></div>
+            </div>
+        </header>
+        <!-- 课程信息区 -->
+        <div class="xsck-wrap">
+            <div class="xsck-info-wrap">
+                <div class="xsck-bg">
+                    <div class="xsck-bgl"></div>
+                    <div class="xsck-bgs"></div>
+                </div>
+                <div class="xsck-content">
+                    <p class="text1 color1"><span></span><a class="share-bg f12"><img src="images/raiseClass/share_bg.png" />告诉朋友</a></p>
+                   <p class="text2 color2"></p>
+                   <div class="text4">
+                       <p class="color4"><span class="inPersonNum"></span>人正在参与</p>
+                       <p class="color4 fitPerson"></p>
+                    </div>
+                    <p class="text3 color3"></p>
+                </div>
+            </div>
+            <div class="xsck-border-wrap">
+                <div class="xsck-circle"></div>
+            </div>
+        </div>
+        <!--筹课list-->
+        <div class="">
+            <!-- 活动说明-zsj -->
+            <div class="xsck-remark">
+                <div class="remark-text1 f18">活动说明</div>
+                <div class="remark-text2">
+                    <div class="lines">
+                        <p class="text-title"><span>1</span>新生筹课规则</p>
+                        <p class="text-remark"></p>
+                        <div class="text-detail">
+                            <p class="new">
+                        	</p>
+                        </div>
+                        <p class="details-btn details-btn-zhan"><a class="look_detail">查看详情</a></p>
+                        <p class="details-btn details-btn-shou" style="display:none;"><a class="look_detail">收起</a></p>
+                    </div>
+                    <div>
+                        <p class="text-title"><span>2</span>老生抽奖规则</p>
+                        <p class="text-remark"></p>
+                        <div class="text-detail">
+                            <p class="old">
+                            </p>
+                        </div>
+                        <p class="details-btn details-btn-zhan"><a class="look_detail">查看详情</a></p>
+                        <p class="details-btn details-btn-shou" style="display:none;"><a class="look_detail">收起</a></p>
+                    </div>
+                </div>
+                <div class="remark-text3">
+                    <p class="tel-title">官方客服</p>
+                    <p class="tel-text serviceCall"></p>
+                </div>
+            </div>
+            <!-- 关注公众号-zsj -->
+            <div class="QR-code public-number pnfix">
+                <p class="hint f14 text-center">扫描 - 识别图中二维码 - 并关注</p>
+                <p class="hint2 text-center f12">北京优能中学官方公众账号</p>
+                <div class="icon-img">
+                    <img class="weixin mR25" src="{$publicserver}/public/chouke/draw/images/raiseClass/xsck_gzh1.png"  alt=""/>
+                </div>
+            </div>
+        </div>
+        <!--筹课list end-->
+    </div>
+    <div class="fixed fixed-b">
+        <div class="start-btn start-btngray">
+            <div class="bg1 hint-help"><a class="bg1 close" href="javascript:void(0);"></a></div>  <!--提示层-->
+            <button class="f16 green old"><span class="font-big">老生去抽奖</span><br/><span class="font-small"></span></button>
+            <button class="f16 red new"><span class="font-big">新生去筹课</span><br/><span class="font-small"></span></button>
+        </div>
+    </div>
+</section>
+<!--index end-->
+
+<!--微信弹框-->
+<div class="tan-box tan-weixin">
+	<div class="tan"></div>
+    <div class="con"><img src="{$publicserver}/public/chouke/draw/images/raiseClass/xsck_gzh1.png"  alt=""/></div>
+</div>
+<!--活动结束/未开始弹框 通用-->
+<div class="mask"></div>
+<section class="popup pop1">
+    <a class="close" href="javascript:void(0)"></a>
+    <div class="head popupBg"></div>
+    <div class="cont-bg"></div>
+    <div class="cont">
+        <div class="end">该活动结束啦</div>
+    </div>
+</section>
+
+
+<script src="{$publicserver}/public/chouke/draw/js/common/jquery-1.11.0.min.js"></script>
+<!-- 
+<script src="js/rsa/Barrett.js"></script>
+<script src="js/rsa/BigInt.js"></script>
+<script src="js/rsa/RSA.js"></script>
+<script src="js/rsa/Base64.js"></script>
+<script src="js/util.js"></script>
+<script src="js/layer/layer.js"></script>
+ -->
+<script src="{$publicserver}/public/chouke/app/js/rsa/RSAUtil.js"></script>
+<script src="{$publicserver}/public/chouke/app/js/common/md5Util.js"></script>
+<script src="{$publicserver}/public/chouke/draw/js/raiseClass/common.js"></script>
+
+<script>
+//    if(typeof(Course)!='undefined'){Course.loadStatus(true)}//隐藏loading图标
+//    layer.msg('暂时无法在应用中查看筹课活动相关内容', {
+//        anim:0
+//    }, function(){
+//        backBtnApp();
+//    });
+
+    $(function(){
+        indexFn();
+        //展开收起
+        $(".details-btn-zhan").click(function(){
+            $(this).prev().css("height","auto");
+            $(this).hide();
+            $(this).next().show();
+        });
+        $(".details-btn-shou").click(function(){
+            $(this).prev().prev().css("height","75px");
+            $(this).hide();
+            $(this).prev().show();
+        });
+        //微信弹层
+        $(".weixin").click(function(){
+            $(".tan-weixin").show();
+        });
+        $(".tan-weixin .tan").click(function(){
+            $(".tan-weixin").hide();
+        });
+        //活动结束关闭
+        $(document).on('touchend','.pop1 .close',function(){
+            $(".mask").hide();
+            $(".popup").hide();
+        });
+        //下载关闭
+        $(document).on('touchend','.down-close',function(){
+            $(".app-download-fixed").hide();
+            $(".page-animation").css("margin-top","0");
+        });
+        //判断是否在app中 反回true在 false不在
+        function inAppIn() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf('zsxdf') > -1) {//在app内
+                return true
+            } else {
+                return false
+            }
+        }
+        //通用区分app 微信
+        if(inAppIn()){
+            $('.app-download-fixed').hide();
+        }else{
+            $('.app-download-fixed').show();
+        }
+        //下载app关闭
+        $(document).on('touchend','.down-close',function(){
+            $(".app-download-fixed").hide();
+        });
+
+    })
+
+</script>
+
+</body>
+</html>

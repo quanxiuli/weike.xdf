@@ -1,0 +1,15 @@
+{include file="activity/common_header.html"}
+{$message}<span style="color:red;" id="second">3</span>秒后 <a href="{$url}"  class="btn btn-primary we7-padding-horizontal">返回</a>
+{include file="activity/common_footer.html"}
+<script type="text/javascript">
+	var second = 3;
+	var id = setInterval(function(){
+		if(second==0){
+			clearInterval(id);
+			window.location.href = '{$url}';
+		}else{
+			--second;
+			if(second > 1)$('#second').html(--second);
+		}
+	},1000);
+</script>

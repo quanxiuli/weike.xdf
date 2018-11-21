@@ -1,0 +1,183 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2 GlobalSetting3">
+                 <div class="sectionr">
+                 	<div class="wxs_fx">
+						<p class="mbx">当前位置： <span>我的收集项 ></span> 设置渠道 > {$collection.title}</p>
+						<br/>
+                  	</div>
+                  			<!--数据详情-->
+                  			<div class="sjxq" style="width:100%;">
+                  						<p class="sjxq2 floatL clear" style="width:300px;">
+                  							<a href="javascript:void(0);" class="xzsj" id="xzsj" collectionId='{$collection.aid}' style="margin-right:10px;">增加渠道</a>
+                  						<!--	<a href="javascript:void(0);" class="xzsj" collectionId='{$collection.aid}' style="width:100px;margin-right:10px;" onclick="showCollectionQRcode({$collection.id},{$collection.template});">二维码与网址</a>
+                  							<a href="javascript:void(0);" class="xzsj" onclick="getCollectionCode('{$collection.aid}');" style="margin-right:10px;">调用代码</a>-->
+                  						</p>
+                  					</div>
+                  			<!--<table id="collectionSceneData">-->
+                  				<table class="layui-table" lay-data="{url:'/collection/ajax_getcollectionscenes?id={$collection.id}', page:true,id:'collectionSceneData'}" lay-filter="scenes">
+								  <thead>
+								    <tr>
+								      <th lay-data="{field:'id', width:80}">ID</th>
+								      <th lay-data="{field:'name'}">渠道名称</th>
+								      <th lay-data="{field:'source'}">来源</th>
+								      <th lay-data="{field:'medium'}">媒介</th>
+								      <th lay-data="{width:120,align:'center',toolbar: '#ercode'}">二维码与网址</th>
+								      <th lay-data="{width:100,align:'center',toolbar: '#adErcode'}">渠道监测</th>
+								      <!--<th lay-data="{width:100,align:'center',toolbar: '#collectionCode'}">调用代码</th>-->
+								      <th lay-data="{width:80,align:'center',toolbar: '#bar'}">操作</th>
+								    </tr>
+								  </thead>
+								</table>
+                  			<!--</table>-->
+                  			<!--数据详情-->
+                  	     </div>
+                  	      </div>
+                  	     <!--2-->
+            	 </div>
+            	 </div>
+{include file="collection/collection_footer.html"}
+<script type="text/html" id="ercode">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showErcode">查看</a>
+</script>
+<script type="text/html" id="adErcode">
+  <a class="layui-btn layui-btn-xs" lay-event="showAdErcode">查看</a>
+</script>
+<script type="text/html" id="collectionCode">
+ <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showCollCode">查看</a>
+</script>
+<script type="text/html" id="bar">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script  type="text/javascript" src="{$publicserver}/public/collection/js/clipboard.min.js"></script>
+<script type="text/javascript">
+$(function(){
+   var clipboard = new ClipboardJS('.copyCollectionUrl'); 
+   clipboard.on('success', function(e) {
+   		$('#ModalFrame_WXEWM').hide();
+   		CollectionDialogBox.alert('复制成功',{icon:6},function(){
+   			$('#ModalFrame_WXEWM').show();
+   		});
+   });
+   clipboard.on('error', function(e) {
+   		$('#ModalFrame_WXEWM').hide();
+   		CollectionDialogBox.alert('复制失败！请手动复制',{icon:5},function(){
+   			$('#ModalFrame_WXEWM').show();
+   		});
+	});
+	$('#xzsj').click(function(){
+		$('#ModalFrame_QDSZInput').find('input[type=text]').val('');
+		$('#ModalFrame_QDSZInput').show();
+	});
+});
+lengthValidate('name_QDSZ', 'result_QDSZ', 15);
+layui.use(['layer','table'], function(){
+  var table = layui.table;
+  var layer = layui.layer;
+  //监听单元格编辑
+  table.on('tool(scenes)', function(obj){
+  	var index=0,data = obj.data //得到所在行所有键值
+  	if(obj.event == 'del'){
+  		CollectionDialogBox.confirm('您确认要删除<'+data.name+">吗?",{icon:3},function(){
+  			$.ajax({
+  				url:'/collection/ajax_delcollectionscene',
+  				type:'POST',
+  				dataType:'json',
+  				data:{id:data.id,aid:data.aid},
+  				beforeSend:function(){
+  					index = layer.load(2, {time: 10*1000});
+  				},
+  				success:function(data){
+  					layer.close(index);
+  					if(data.result){
+  						CollectionDialogBox.alert(data.msg,{icon:6},function(){
+  							table.reload('collectionSceneData');
+  						});
+  					}else{
+  						CollectionDialogBox.alert(data.msg,{icon:5});
+  					}
+  				}
+  			});
+  		});
+  	}else if(obj.event == 'showErcode' || obj.event == 'showAdErcode'){
+  		var params = {id:data.cid,sid:data.id};
+  		if(obj.event == 'showAdErcode')params.ad = 1;
+		$.ajax({
+			url:'/collection/ajax_getcollectionercode',
+			type:'POST',
+			dataType:'json',
+			data:params,
+			beforeSend:function(){
+				index = layer.load(2, {time: 10*1000});
+			},
+			success:function(data){
+				layer.close(index);
+				if(data.result){
+						$('#ModalFrame_WXEWM').find('input').val(data.url);
+						$('#ModalFrame_WXEWM').find('input').attr('title',data.url);
+						$('#ModalFrame_WXEWM').find('img').attr('src',data.imageUrl);
+						$('#ModalFrame_WXEWM').find('a').eq(1).attr('href',data.imageUrl);
+						$('#ModalFrame_WXEWM').find('a').eq(1).attr('download',data.fileName);
+						$('#ModalFrame_WXEWM').show();
+				}else{
+					CollectionDialogBox.alert(data.message,{icon:5});
+				}
+			}
+		});
+  	}else if(obj.event == 'showCollCode'){
+  		var aid = $('#xzsj').attr('collectionId');
+  		getCollectionCode(aid,parseInt(data.id));
+  	}
+  });
+  $('#ModalFrame_QDSZInput').find('input[type=submit]').click(function(){
+		var index = 0;
+		var aid = $('#xzsj').attr('collectionId');
+		var name = $('#ModalFrame_QDSZInput').find('input[name=name]').val();
+		var source = $('#ModalFrame_QDSZInput').find('input[name=source]').val();
+		var medium = $('#ModalFrame_QDSZInput').find('input[name=medium]').val();
+		if(name.length == 0){
+			$('#ModalFrame_QDSZInput').hide();
+			CollectionDialogBox.alert('请输入渠道名称',{icon:5},function(){
+				$('#ModalFrame_QDSZInput').show();
+			});
+			return false;
+		}
+		if(name.length > 15){
+			$('#ModalFrame_QDSZInput').hide();
+			CollectionDialogBox.alert('渠道名称不能大于15个字符',{icon:5},function(){
+				$('#ModalFrame_QDSZInput').show();
+			});
+			return false;
+		}
+		$.ajax({
+			url:'/collection/ajax_addcollectionscene',
+			type:'POST',
+			dataType:'json',
+			data:{aid:aid,name:name,source:source,medium:medium},
+			beforeSend:function(){
+				$('#ModalFrame_QDSZInput').hide();
+				index = layer.load(2, {time: 10*1000});
+			},
+			success:function(data){
+				console.log(data);
+				layer.close(index);
+				if(data.result){
+					CollectionDialogBox.alert(data.msg,{icon:6},function(){
+						table.reload('collectionSceneData');
+					});
+				}else{
+					CollectionDialogBox.alert(data.msg,{icon:5},function(){
+						$('#ModalFrame_QDSZInput').show();
+					});
+				}
+			}
+		});
+	});
+    //监听单元格编辑
+  table.on('edit(test3)', function(obj){
+    var value = obj.value //得到修改后的值
+    ,data = obj.data //得到所在行所有键值
+    ,field = obj.field; //得到字段
+    layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+  });
+});
+</script>

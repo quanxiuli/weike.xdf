@@ -1,0 +1,152 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+  <div class="row-fluid">
+
+					<div class="span12 blog-page">
+
+						<!-- BEGIN STYLE CUSTOMIZER --><!-- END BEGIN STYLE CUSTOMIZER -->  
+
+						<h4 class="page-title">
+							{if $role_id ==1}管理员{else}用户{/if}管理
+					    </h4>
+
+						<ul class="breadcrumb">
+
+							<li>
+
+								<i class="icon-home"></i>
+
+								<a href="/xshow/Index">管理首页</a> 
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li>
+
+								<a href="/xshow/adminlist">{if $role_id ==1}管理员{else}用户{/if}管理</a>
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li><a href="javascript:void(0);">添加{if $role_id ==1}管理员{else}用户{/if}</a></li>
+
+						</ul>
+
+	</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+                
+   
+                            
+               <div class="tabbable tabbable-custom tabbable-full-width">
+							<ul class="nav nav-tabs">
+			 <li class="{$ui.sys_admin}"> <a href="/xshow/adminlist">{if $role_id ==1}管理员{else}用户{/if}管理</a> </li>
+		        <li class="{$ui.sys_add}"> <a href="/xshow/adminadd">添加{if $role_id ==1}管理员{else}用户{/if}</a> </li>
+							</ul>
+                        
+                </div>
+<hr />
+						
+        	<div class="row-fluid">
+					<div class="span12 ">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+							<div class="portlet-body">
+                            
+				
+				<!-- END PAGE HEADER-->
+
+			<!-- BEGIN PAGE CONTENT-->          
+			
+                            
+                            
+                            <div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+				<input name="ctl00$ContentPlaceHolder1$txt" type="hidden" id="ctl00_ContentPlaceHolder1_txt" />
+                <form action="" class="form-horizontal" method="post" id="add_admin">
+
+                            
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								
+
+									<div class="control-group">
+
+										<label class="control-label">登录名</label>
+
+										<div class="controls">
+            <input name="username" type="text"   class="m-wrapt" style="width: 200px;" value="" id="username" placeholder="邮箱"/>
+
+							
+
+											<span class="help-inline"></span>
+
+										</div>
+
+									</div>
+									
+                                	<div class="control-group">
+													<label class="control-label">类别</label>
+													<div class="controls">
+													<select class="form-control" name="role" id="role">
+														<option value="0">请选择</option>
+														{foreach from=$roles key=k item=vo}
+														  <option value="{$k}">{$vo}</option>
+														{/foreach}
+													</select>
+													</div>
+												</div>									
+									<div class="form-actions">
+										<button type="submit" class="btn blue">确定提交</button>                
+
+									</div>
+
+								</form>
+
+								<!-- END FORM-->       
+
+							</div>
+
+						</div>
+
+						<!-- END SAMPLE FORM PORTLET-->
+
+					</div>
+
+				</div>
+
+		
+
+						<!-- END EXTRAS PORTLET-->
+
+					</div>
+
+			<!-- END PAGE CONTENT--><!-- END PAGE CONTAINER-->
+{include file="xshow/xshow_footer.html"}
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+			jQuery('#add_admin').submit(function(){
+				var username = jQuery('#username').val();
+				if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@xdf\.cn$/.test(username)){
+					layer.alert('请输入正确格式的公司邮箱',{icon:5});
+					return false;
+				}
+				var role = jQuery('#role').val();
+				if(role == 0){
+					layer.alert('请选择用户类别',{icon:5});
+					return false;
+				}
+			});
+	});
+</script>

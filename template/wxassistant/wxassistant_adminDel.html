@@ -1,0 +1,13 @@
+{include file="wxassistant/wxassistant_header.html"}
+<form action="ajax_admindel" method="post" enctype="multipart/form-data">
+    <label for="">编号:</label><input type="text" value="{$usr.id}" name="id"><br/>
+    <label for="">唯一识别码:</label><input type="text" value="{$usr.loginId}"><br/>
+    <label for="">昵称:</label><input type="text" value="{$usr.userName}"><br/>
+    <label for="">邮箱:</label><input type="text" value="{$usr.email}"><br/>
+    <label for="">级别:</label><input type="text" value="{$usr.isSuperAdmin}"><br/>
+    <label for="">创建时间:</label><input type="text" value="{$usr.createTime}"><br/>
+    <label for="">最后一次登陆时间:</label><input type="text" value="{$usr.loginTime}"><br/>
+    <label for="">状态:</label><input type="text" value="{$usr.status1}"><br/>
+    <input type="submit" value="提交">
+</form>
+{include file="wxassistant/wxassistant_footer.html"}

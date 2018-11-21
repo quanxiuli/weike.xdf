@@ -1,0 +1,60 @@
+{include file="xshow/xshow_header.html"}
+<style>
+		.team_box{
+			width: 80%;
+			height: 80%;
+			position: fixed;
+			text-align: center;
+		}
+		
+		.team_icon{
+			width: 30rem;
+			background-size: 3.73rem;
+			margin: auto;
+			margin-top: 2rem;
+		}
+		
+		.team_word{
+			font-size: 0.64rem;
+			margin-top: 1.37rem;	
+		}
+        .erweima1 {
+            width: 4.3rem;
+            height: 4.3rem;
+            position: absolute;
+            top: -0.8rem;
+            left: -0.2rem;
+            padding: 10rem 5rem;
+        }
+	</style>
+<div class="team_box">
+		<div class="team_icon">
+		<table cellpadding=0 cellspacing=0>
+			<tr>
+				<td height='3'  class="topTd" ></td>
+			</tr>
+			<tr class="row" >
+				<th class="tCenter space">{$msgTitle}</th>
+			</tr>
+			<tr class="row">
+				<td style="color:red">{$msg}</td>
+			</tr>
+			<tr class="row">
+				<td>系统将在 <span id="wait" style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动跳转,如果不想等待,直接点击 <a id="href" href="{$url}">这里</a> 跳转</td>
+			</tr>
+			<tr>
+				<td height='3' class="bottomTd"></td>
+			</tr>
+		</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		(function(){
+		var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+		var interval = setInterval(function(){
+			var time = --wait.innerHTML;
+			(time == 0) && (location.href = href);
+		}, 1000);	
+		})();
+	</script>
+{include file="xshow/xshow_footer.html"}

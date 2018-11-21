@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>筹课活动</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta itemprop="name" content="筹课"/>
+    <meta itemprop="description" name="description"  content="筹课"/>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/raiseClass/style.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/js/layer/skin/layer.css">
+    <script src="{$publicserver}/public/chouke/js/rsa/jsbn.js"></script>
+    <script src="{$publicserver}/public/chouke/js/rsa/prng4.js"></script>
+    <script src="{$publicserver}/public/chouke/js/rsa/rng.js"></script>
+    <script src="{$publicserver}/public/chouke/js/rsa/rsa.js"></script>
+     <script>
+  var PREFIX_URL = "http://{$domain}/chouke/";
+  var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+  var Global = {
+		    //rsa_key : "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQChTJiIJhxAdNPob/F2Cj6uJdsWHaC2fqkQptR/bkzhCCWAUFSqc0kwtve6aEFOFXWCvIuEDQKw5QYcyOCpImIobss+rHVRlVRNO2ARuZfpMx3KZ+BNnI0OnZvztRr5sJIdiP/VRTGAkwHgcnKV236jC62ga/pGI9cenqPcuZXfeQIDAQAB-----END PUBLIC KEY-----",
+			rsa_key : "A14C9888261C4074D3E86FF1760A3EAE25DB161DA0B67EA910A6D47F6E4CE10825805054AA734930B6F7BA68414E157582BC8B840D02B0E5061CC8E0A92262286ECB3EAC755195544D3B6011B997E9331DCA67E04D9C8D0E9D9BF3B51AF9B0921D88FFD54531809301E0727295DB7EA30BADA06BFA4623D71E9EA3DCB995DF79",
+			encryption : "10001",
+		    decryption : "10001",
+		    appId : "d2bff756072b40e0ba7951284169ec1f",
+		    actionURL:PREFIX_URL+"ajax_service",
+		    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+		    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+		    cartID:"iPocketXDFApp",
+		    //buyDomain:"http://online.bm.staff.xdf.cn"//测试
+		    buyDomain:"http://bm.xdf.cn"//正式
+	};
+  Global.headImgurl='./images/raiseClass/photo_default.png';//取app的头像
+  Global.domain_uh='http://my.xdf.cn/API_Avatar/img';//
+  //Global.wechatUrl = 'http://apphome.xdf.cn/xdfhome/';//正式
+  Global.wechatUrl = 'http://apphome.staff.xdf.cn/xdfhome/';//测试
+  Global.appid='';
+  Global.secret='';
+  Global.redirect_uri="http://{$domain}/chouke/"
+  Global.openappid='';
+
+  Global.openid = '{$openid}';
+  Global.nickname = '{$nickname}';
+  Global.headimgurl = '{$headimgurl}';
+
+  Global.userId = '{$userId}';
+  Global.mobile = '{$mobile}';
+  	</script>
+</head>
+<body>
+
+<div class="raiseTitle">
+    <span class="back"><img src="{$publicserver}/public/chouke/images/raiseClass/xsckBack.png" />返回</span>
+    <h3>筹课活动</h3>
+</div>
+<section class="page page-animation page-yellow page_height" style="padding-bottom:40px;">
+    <div class="page-container pb54">
+        <header class="page-cow6">
+            <img src="{$publicserver}/public/chouke/images/raiseClass/radiation-small7.jpg" />
+        </header>
+
+        <div class="ck-result ck-resultfq" style="top:-25px;">
+            <div>
+                <p class="text-center">恭喜</p>
+                <p class="text-center subtitle"></p>
+            </div>
+        </div>
+        {if $activity.helpWealSwitch eq 1}
+        <div style="padding:20px;">
+		<div style="background:#33cd99;">
+			<div style="padding:20px;font-size:0.9rem;line-height:1.1rem;">
+				{$activity.wealBootIntro}
+				<p style="margin-top:10px;line-height:40px;text-align:center;"><a href="apphelpbenefit?activityId={$activityId}&userId={$touserid}">
+            		<span style="background:#f15220;color:#fff;font-size:0.9rem;line-height:1.1rem;padding:4px;border-radius:3px;"> 我要看看！</span></a></p>
+			</div>
+		</div>
+		</div>
+		{/if}
+    </div>
+
+    <div class="fixed fixed-b">
+        <div class="container-fluid white footer-select ybc_footer-select">
+            <p class="text-center fl" id="iBegin" style="width: 100%">我也要发起</p>
+            <!--p class="text-center fl" id="askFriend">帮他筹课</p-->
+        </div>
+    </div>
+</section>
+
+<!--告诉朋友弹框-->
+<div class="mask"></div>
+<section class="mask-fq" id="tan1">
+    <img src="{$publicserver}/public/chouke/images/raiseClass/askfriend.png" class="img-askfriend" />
+</section>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="{$publicserver}/public/chouke/app/js/require.js" data-main="{$publicserver}/public/chouke/app/js/requireConfig.js"></script>
+<script src="{$publicserver}/public/chouke/app/js/requireConfig.js"></script>
+<script>
+    require(['jquery'], function() {
+        //require(['Barrett','BigInt','RSA','Base64','Jsbn','RSAUtil','util','md5Util','layer'], function() {
+        require(['RSAUtil','util','md5Util','layer'], function() { //'Barrett','BigInt','RSA','Base64',	
+            require(['config'], function() {
+                require(['common'], function() {
+                    helpRaiseSuccess();
+                    //找朋友帮忙
+                    $(document).on('touchend','#askFriend',function(){
+                        window.location.href='apphelpraise?activityId='+getRequest()["activityId"]+'&userId='+getRequest()["userId"];
+                    });
+                    //关闭
+                    $(document).on('touchend','#iBegin',function(){
+                        window.location.href='appindex?activityId='+getRequest()["activityId"];
+                    });
+                    //weChat分享数据
+                    weChatMsg={
+                        titleVal: '标题',
+                        descVal:'描述',
+                        linkVal: window.location.href,
+                        imgUrlVal:'图片路径'
+                    }
+                    weChatData()
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

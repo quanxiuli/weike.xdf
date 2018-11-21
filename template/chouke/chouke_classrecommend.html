@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>发布管理平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/index.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/easyUi/easyui.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/easyUi/icon.css">
+    <script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/layer-v2.1/layer/layer.js"></script>
+    <script src="{$publicserver}/public/chouke/js/laydate-v1.1/laydate/laydate.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/p131_plugins.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jquery-form.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jquery.easyui.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/p176.js"></script>
+ 	<script type="text/javascript">
+		var PREFIX_URL = "http://{$domain}/chouke/";
+		var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+		var Global = {
+			    actionURL:PREFIX_URL+"ajax_service",
+			    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			    previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+			    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+			    cartID:"opt",
+			    buyDomain:"http://bm.xdf.cn"//正式
+		};
+	</script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+    <script src="{$publicserver}/public/chouke/js/util.js"></script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/cradd.js"></script>
+    <script src="{$publicserver}/public/chouke/js/loginStatus.js"></script>
+</head>
+<body onload="initMainPage('102');">
+<input type="text" id="loginId" hidden>
+<input type="text" id="userId" hidden>
+<input type="text" id="tokenId" hidden>
+<input type="text" id="schoolIdFinal" hidden>
+<input type="text" id="areaIdFinal" hidden>
+<input type="text" id="deptIdFinal" hidden>
+<input type="text" id="currentType" hidden>
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap" style="position:relative;width:100%;min-height:100%;">
+        <div class="p176-main">
+            <div class="inner">
+
+                <input type="hidden" id="ckId">
+                <input type="hidden" id="statusId">
+                <!--第一阶段-->
+                <div id="first">
+                    <h2 class="p176-tit pdRight20 clearfix">
+                        <span class="fz14"><a href="javascript:void(0);">筹课平台 > </a>新建购课推荐信息</span>
+                    </h2>
+                    <div class="qipao">
+                        <b class="orgBotCor first">◆</b>
+                        <p class="pClass"><img src="{$publicserver}/public/chouke/images/dp.jpg" />
+                            设置活动页面上的相关显示内容。
+                        </p>
+                    </div>
+                    
+                    
+                    <div class="p176-setInfo-wrap clearfix">
+                    <div class="p176-setInfo-main mtop20 mLeft13">
+                     <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel"><font color="red">*</font>题图</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <dl style="margin-left:25px;">
+                                        <dt><img id="crTitleImg" src="{$publicserver}/public/chouke/images/upfile-icon.png" style="width:86px;height:52px;" alt=""></dt>
+                                        <dd>
+                                            <p>题图建议上传尺寸750*400</p>
+                                            <form action='/chouke/uploadfile' method='post' id="submit-1" enctype="multipart/form-data">
+                                                <div class="uploader white">
+                                                    <input type="text" class="filename" value="请选择图片..."/>
+                                                    <input type="file" name="file" id="first1" class="p176-uplodingBtn" />
+                                                    <input type="hidden" id="hidden1">
+                                                    <!-- 
+                                                    <input type="hidden" name="width" value="750">
+                                                    <input type="hidden" name="height" value="450">
+                                                    -->
+                                                </div>
+                                                <div style="float:right;margin: 10px 10px 0px;">
+                                                    <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up1"/>
+                                                <span class="p176-count01">
+                                                    <span id="m1" style="color:red"></span>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </dd>
+                                    </dl>
+                                </div>
+                         
+                                <div class="p176-Slabel">副题图</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <dl style="margin-left:12px;">
+                                        <dt><img id="crSubTitleImg" src="{$publicserver}/public/chouke/images/upfile-icon.png" style="width:86px;height:52px;" alt=""></dt>
+                                        <dd>
+                                            <p>副题图建议上传尺寸750*400</p>
+                                            <form action='/chouke/uploadfile' method='post' id="submit-2" enctype="multipart/form-data">
+                                                <div class="uploader white">
+                                                    <input type="text" class="filename" value="请选择图片..."/>
+                                                    <input type="file" name="file" id="first2" class="p176-uplodingBtn" />
+                                                    <input type="hidden" id="hidden2">
+                                                    <!-- 
+                                                    <input type="hidden" name="width" value="750">
+                                                    <input type="hidden" name="height" value="450">
+                                                     -->
+                                                </div>
+                                                <div style="float:right;margin: 10px 10px 0px;">
+                                                    <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up2"/>
+                                                <span class="p176-count01">
+                                                    <span id="m2" style="color:red"></span>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                
+                            </div>
+                            
+                    		<div class="p176-setInfoCon clearfix">
+                    		
+                    		  <div class="p176-Slabel">教学大纲</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <dl style="margin-left:0px;">
+                                        <dt><img id="teachPrograme" src="{$publicserver}/public/chouke/images/upfile-icon.png" style="width:86px;height:52px;" alt=""></dt>
+                                        <dd>
+                                            <p>教学大纲上传尺寸</p>
+                                            <form action='/chouke/uploadfile' method='post' id="submit-3" enctype="multipart/form-data">
+                                                <div class="uploader white">
+                                                    <input type="text" class="filename" value="请选择图片..."/>
+                                                    <input type="file" name="file" id="first3" class="p176-uplodingBtn" />
+                                                    <input type="hidden" id="hidden3">
+                                                </div>
+                                                <div style="float:right;margin: 10px 10px 0px;">
+                                                    <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up3"/>
+                                                <span class="p176-count01">
+                                                    <span id="m3" style="color:red"></span>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </dd>
+                                    </dl>
+                                </div>
+                               
+                            <div class="p176-Slabel"><font color="red">*</font>班级列表</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <dl style="margin-left:12px;">
+                                        <dd>
+                                        	<p>上传班级列表EXCEL文件</p>
+                                            <form action='/chouke/uploadexcelfile' method='post' id="submit-4" enctype="multipart/form-data">
+                                                <div class="uploader white">
+                                                    <input type="text" class="filename" value="请选择excel文件..."/>
+                                                    <input type="file" name="file" id="first4" class="p176-uplodingBtn" />
+                                                    <input type="hidden" id="hidden4">
+                                                </div>
+                                                <div style="float:right;margin: 10px 10px 0px;">
+                                                    <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up4"/>
+                                                <span class="p176-count01">
+                                                    <span id="m4" style="color:red"></span>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </dd>
+                                    </dl>
+                                </div>
+                      		</div>
+                      		
+                            <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel"><span>视频地址</span></div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                    <input type="text" class="p176-Sminput chouke-input" id="videoUrl">
+                                </div>
+                            </div>
+                      		
+                            <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel"><span style="margin-right:22px;"><font color="red">*</font>标题</span></div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                    <input type="text" class="p176-Sminput chouke-input" id="crName" maxlength="12">
+                                        <span class="p176-count01">
+                                            <span id="explainInformCnt1">0</span>/<span id="explainMaxCnt2">12</span>
+                                        </span>
+                                </div>
+                            </div>
+                    
+                          
+                            <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel mRight13"><span style="margin-right:28px;">标签</span></div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                    <input type="text" class="p176-Sminput chouke-input" id="crLabel"
+                                           maxlength="55"  placeholder="(每个标签8个字以内，最多6个标签)">
+                                        <span class="p176-count01">
+                                            <span id="explainInformCnt2">0</span>/<span id="explainMaxCnt2">55</span>
+                                        </span>
+                                </div>
+                            </div>
+                          
+                            <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel">标签说明</div>
+                                <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+                                    <textarea class="p176-textarea" id="cRLabelIntroduce"></textarea>
+                                        <span class="p176-count">
+                                            <span id="explainInformCnt3">0</span>/<span id="explainMaxCnt3">200</span>
+                                        </span>
+                                </div>
+                            </div>
+                            
+                            <div class="p176-setInfoCon clearfix">
+			                    <div class="p176-Slabel">购课弹窗提示</div>
+			                    <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+			                       <input id="buyCourseTip" class="p176-Sminput chouke-input" maxlength="20" placeholder="购课时的弹窗提示，不填写则无提示" type="text" style="width:500px;">
+			                            <span class="p176-count">
+			                                <span id="explainInformCnt12">0</span>/<span id="explainMaxCnt5">20</span>
+			                            </span>
+			                    </div>
+			                </div>
+                            
+                            
+                         <div class="p176-setInfoCon clearfix">
+                            <div class="p176-label-b"><font color="red">*</font>活动时间</div>
+                            <div class="p176-data-con">
+                                <div class="p176-label">开始时间：</div>
+                                <div class="p176-filed-b">
+                                    <div class="p176-Input-wrap">
+                                        <input id="startDate" type="text" class="p176-Input" placeholder="2017-01-20" onclick="laydate()"
+                                               autocomplete="off">
+                                        <i class="p176-input-data"></i>
+                                    </div>
+                                    <div class="p176-input-wrap">
+                                        <input id="startTime" type="text" class="p176-Hinput" placeholder="00:00" onclick="ModuleTimeMenu.init(this);" autocomplete="off">
+                                        <i class="p176-input-hour"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p176-data-con">
+                                <div class="p176-label">结束时间：</div>
+                                <div class="p176-filed-b">
+                                    <div class="p176-Input-wrap">
+                                        <input id="endDate" type="text" class="p176-Input"
+                                               placeholder="2017-01-20" onclick="laydate()" autocomplete="off">
+                                        <i class="p176-input-data"></i>
+                                    </div>
+                                    <div class="p176-input-wrap">
+                                        <input id="endTime" type="text" class="p176-Hinput" placeholder="00:00"
+                                               onclick="ModuleTimeMenu.init(this);" autocomplete="off">
+                                        <i class="p176-input-hour"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                           
+		                <div class="p176-setInfoCon clearfix">
+		                    <div class="p176-Slabel"><font color="red">*</font>活动说明</div>
+		                    <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+		                        <textarea class="p176-textarea" id="activityIntroduce"></textarea>
+		                            <span class="p176-count">
+		                                <span id="explainInformCnt4">0</span>/<span id="explainMaxCnt4">200</span>
+		                            </span>
+		                    </div>
+		                </div>
+		                
+		                <div class="p176-setInfoCon clearfix">
+		                    <div class="p176-Slabel"><font color="red">*</font>课程说明</div>
+		                    <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+		                        <textarea class="p176-textarea" id="courseIntroduce"></textarea>
+		                            <span class="p176-count">
+		                                <span id="explainInformCnt5">0</span>/<span id="explainMaxCnt5">200</span>
+		                            </span>
+		                    </div>
+		                </div>
+                			
+                             <div class="p176-setInfoCon clearfix" style="margin-top:0;">
+                      
+                            <div class="p176-setInfoCon">
+                                <div class="p176-Slabel"><font color="red">*</font>适用人群</div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                    <input type="text" class="p176-Sminput chouke-input" id="rewardFitPerson"
+                                           maxlength="15" placeholder="适用人群">
+                                    <span class="p176-count01">
+                                        <span id="explainInformCnt6">0</span>/<span id="explainMaxCnt6">15</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                             <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel"><font color="red">*</font>官方客服</div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                  <input id="honourRewardContact" type="text" class="p176-Sminput chouke-input"
+                                           maxlength="15" placeholder="可输入联系电话，QQ群号等，例，QQ:100000" >
+                                    <span class="p176-count" style="right:5px;bottom:4px;">
+                                            <span id="explainInformCnt7">0</span>/<span id="explainMaxCnt7">15</span>
+                                        </span>
+                                </div>
+                              </div>
+                              
+       					</div> 
+                           
+                             <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel"><font color="red">*</font>公众号名称</div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                  <input id="wechatName" type="text" class="p176-Sminput chouke-input"
+                                           maxlength="15" placeholder="公众号名称" >
+                                    <span class="p176-count" style="right:5px;bottom:4px;">
+                                            <span id="explainInformCnt8">0</span>/<span id="explainMaxCnt8">15</span>
+                                        </span>
+                                </div>
+                              </div>
+                            
+                            <div class="p176-setInfoCon clearfix">
+                      			<div class="p176-Slabel" ><font color="red">*</font>公众号二维码</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <div class="p176-Sfiled clearfix" style="margin-left:24px;">
+                                        <dl>
+                                            <dt><img id="ercodept" src="{$publicserver}/public/chouke/images/wxcode.png" style="width:52px;height:52px;"
+                                                     alt=""></dt>
+                                            <dd>
+                                                <p>公众号二维码尺寸160*160</p>
+                                                <!--<a href="javascript:;" class="p176-uplodingBtn">上传</a>-->
+                                                <form action='/chouke/uploadfile' method='post' id="submit-5"
+                                                      enctype="multipart/form-data">
+                                                    <div class="uploader white">
+                                                        <input type="text" class="filename" value="请选择图片..."/>
+                                                        <input id="first5" type="file" name="file" class="p176-uplodingBtn"/>
+                                                        <input type="hidden" id="hidden5">
+                                                        <input type="hidden" name="width" value="160">
+                                                        <input type="hidden" name="height" value="160">
+                                                    </div>
+                                                    <div style="float:right;margin: 10px 0px;">
+                                                        <input type="button" name="file" class="p176-uplodingBtn" value="上传"
+                                                               id="up5"/>
+                                                    <span class="p176-count01">
+                                                        <span id="m5" style="color:red"></span>
+                                                    </span>
+                                                    </div>
+                                                </form>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                
+                                
+                             
+                      			<div class="p176-Slabel" ><font color="red">*</font>微信转发小图</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <div class="p176-Sfiled clearfix" style="margin-left:24px;">
+                                        <dl>
+                                            <dt><img id="wxSmallImg" src="{$publicserver}/public/chouke/images/wxcode.png" style="width:60px;height:60px;"
+                                                     alt=""></dt>
+                                            <dd>
+                                                <p>微信转发小图尺寸180*180</p>
+                                                <!--<a href="javascript:;" class="p176-uplodingBtn">上传</a>-->
+                                                <form action='/chouke/uploadfile' method='post' id="submit-8"
+                                                      enctype="multipart/form-data">
+                                                    <div class="uploader white">
+                                                        <input type="text" class="filename" value="请选择图片..."/>
+                                                        <input id="first8" type="file" name="file" class="p176-uplodingBtn"/>
+                                                        <input type="hidden" id="hidden8">
+                                                    </div>
+                                                    <div style="float:right;margin: 10px 0px;">
+                                                        <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up8"/>
+                                                    <span class="p176-count01">
+                                                        <span id="m8" style="color:red"></span>
+                                                    </span>
+                                                    </div>
+                                                </form>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                         
+                                
+                            </div>
+                        </div>
+              </div>
+              
+              	
+              		  
+                  
+              
+              	<div class="p176-setInfo-wrap clearfix">
+              	
+              	 <div class="p176-setInfoCon clearfix">
+              	                <div class="p176-Slabel"><font color="red">*</font>题图</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <dl style="margin-left:12px;">
+                                        <dt><img id="recommendPic" src="{$publicserver}/public/chouke/images/upfile-icon.png" style="width:86px;height:52px;" alt=""></dt>
+                                        <dd>
+                                            <p>题图上传</p>
+                                            <form action='/chouke/uploadfile' method='post' id="submit-6" enctype="multipart/form-data">
+                                                <div class="uploader white">
+                                                    <input type="text" class="filename" value="请选择图片..."/>
+                                                    <input type="file" name="file" id="first6" class="p176-uplodingBtn" />
+                                                    <input type="hidden" id="hidden6">
+                                                </div>
+                                                <div style="float:right;margin: 10px 10px 0px;">
+                                                    <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up6"/>
+                                                <span class="p176-count01">
+                                                    <span id="m6" style="color:red"></span>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </dd>
+                                    </dl>
+                                </div>
+                    </div>
+              	
+                 <div class="p176-setInfoCon clearfix">
+                                <div class="p176-Slabel"><font color="red">*</font>推荐金额</div>
+                                <div class="p176-Sfiled p176-SfiledWidth">
+                                  <input id="recomMoney" type="text" class="p176-Sminput chouke-input" placeholder="单个推荐优惠金额" >
+                                </div>
+              
+                        <div class="p176-Slabel"><font color="red">*</font>推荐数量上限</div>
+                        <div class="p176-Sfiled p176-SfiledWidth">
+                            <input id="recomLimitCount" type="text" class="p176-Sminput chouke-input" placeholder="推荐数量上限" >
+                        </div>
+                </div>
+                
+                
+                <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel"><font color="red">*</font>优惠规则</div>
+                    <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+                        <textarea class="p176-textarea" id="discountsRule"></textarea>
+                            <span class="p176-count">
+                                <span id="explainInformCnt9">0</span>/<span id="explainMaxCnt9">200</span>
+                            </span>
+                    </div>
+                </div>
+                
+    			<div class="p176-setInfoCon">
+                    <div class="p176-Slabel"><font color="red">*</font>推荐宣传语</div>
+                    <div class="p176-Sfiled p176-SfiledWidth">
+                        <input type="text" class="p176-Sminput chouke-input" id="rewardWord"
+                               maxlength="20" placeholder="推荐宣传语">
+                        <span class="p176-count01">
+                            <span id="explainInformCnt10">0</span>/<span id="explainMaxCnt6">20</span>
+                        </span>
+                    </div>
+                </div>
+                
+                 <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel"><font color="red">*</font>奖励类型</div>
+                    <div class="p176-Sfiled p176-SfiledWidth">
+                      <input id="awardType" type="text" class="p176-Sminput chouke-input"
+                               maxlength="5" placeholder="奖励类型" >
+                        <span class="p176-count" style="right:5px;bottom:4px;">
+                                <span id="explainInformCnt11">0</span>/<span id="explainMaxCnt7">5</span>
+                            </span>
+                    </div>
+                  </div>
+                
+                  <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel">
+                     <div class="checkbox"><label><input type="checkbox" id="switchTimeDown" checked>显示倒计时</label></div>
+                    </div>
+                </div>
+                
+                </div>
+                
+                <div class="p176-setInfo-wrap clearfix">
+                
+                 <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel">
+                     <div class="checkbox"><label><input type="checkbox" onclick="switchStatus($(this));" id="switchTestStatus">增加预约线下测试环节</label></div>
+                    </div>
+                </div>
+                
+                	<!-- 线下测试环节选择 -->
+                <div id="testDiv" style="display:none;">
+                
+                
+                  	<div class="p176-setInfoCon clearfix">
+              	                <div class="p176-Slabel"><font color="red">*</font>题图</div>
+                                <div class="p176-Sfiled clearfix">
+                                    <dl style="margin-left:12px;">
+                                        <dt><img id="testPic" src="{$publicserver}/public/chouke/images/upfile-icon.png" style="width:86px;height:52px;" alt=""></dt>
+                                        <dd>
+                                            <p>题图上传</p>
+                                            <form action='/chouke/uploadfile' method='post' id="submit-7" enctype="multipart/form-data">
+                                                <div class="uploader white">
+                                                    <input type="text" class="filename" value="请选择图片..."/>
+                                                    <input type="file" name="file" id="first7" class="p176-uplodingBtn" />
+                                                    <input type="hidden" id="hidden7">
+                                                </div>
+                                                <div style="float:right;margin: 10px 10px 0px;">
+                                                    <input type="button" name="file" class="p176-uplodingBtn" value="上传" id="up7"/>
+                                                <span class="p176-count01">
+                                                    <span id="m7" style="color:red"></span>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </dd>
+                                    </dl>
+                                </div>
+                    </div>
+                
+                
+                
+                 <div class="p176-setInfoCon clearfix">
+                 <div class="p176-Slabel"><font color="red">*</font>设置考试地点</div>
+	                 <div class="p176-Sfiled p176-SfiledWidth">
+	                	
+						<div class="hot-classes">
+						<ul class="list1">
+							<li style="height:auto;">
+							    <span class="tit">校区：</span>
+							    <span class="xian-wid2">
+							    </span>
+							</li>
+						</ul>
+                </div>
+	                 
+	                 </div>
+                </div>
+                <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel"><font color="red">*</font>考试说明</div>
+                    <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+                       <input id="testIntroduce" class="p176-Sminput chouke-input" maxlength="20" placeholder="购课时的弹窗提示，不填写则无提示" type="text" style="width:500px;">
+                            <span class="p176-count">
+                                <span id="explainInformCnt13">0</span>/<span id="explainMaxCnt5">20</span>
+                            </span>
+                    </div>
+                </div>
+			          
+                 <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel"><font color="red">*</font>注意事项</div>
+                    <div class="p176-Sfiled p176-SfiledWidth chou-wid-modify2">
+                        <textarea class="p176-textarea" id="attMatters"></textarea>
+                            <span class="p176-count">
+                                <span id="explainInformCnt14">0</span>/<span id="explainMaxCnt9">200</span>
+                            </span>
+                    </div>
+                </div>
+                      
+                <div class="p176-setInfoCon clearfix">
+                    <div class="p176-Slabel"><font color="red">*</font>设置考试时间</div>
+                    <div class="p176-filed-b">
+                        <i class="p176-queryImg"><img src="{$publicserver}/public/chouke/images/queryIcon.png" alt=""></i>
+                        <span class="p176-explain">设置线下考试时间段，可以设置多组 ，<font color='red'>*<b>如未设置考试时间，则为“校区自行安排”</b></font><div class="p176-addBtn" style="float:right"><a href="javascript:void(0)" onclick="addTestTime();return false;">添加</a></div></span>
+                    </div>
+                </div>
+             	<div id="testTime"></div>
+                	<!-- 线下测试环节选择结束 -->
+                </div>
+                </div>
+                
+                    <div class="p176-setInfo-nextStep mtop15 p176-tit-btnWrap">
+                        <a href="javascript:;" class="" onclick="saveCR(0);return false;">保存</a>
+                        <a href="javascript:;" class="" onclick="saveCR(1)" data-functionId='10709'>发布</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="position:absolute;background:#fff;border:1px solid rgb(204, 204, 204);width:480px;z-index:29891017;display:none;"class="J-inputAutoMenu">
+    <div class="p176-hour">
+        <dl>
+            <dt>小时</dt>
+            <dd class="p176-hour-table03 J-Hour-Box">
+                <table>
+                    <tbody><tr>
+                        <td><div class="mExt"><a href="javascript:;" class="on">0</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">1</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">2</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">3</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">4</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">5</a></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="mExt"><a href="javascript:;">6</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">7</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">8</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">9</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">10</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">11</a></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="mExt"><a href="javascript:;">12</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">13</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">14</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">15</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">16</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">17</a></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="mExt"><a href="javascript:;">18</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">19</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">20</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">21</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;" class="">22</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">23</a></div></td>
+                    </tr>
+                    </tbody></table>
+            </dd>
+        </dl>
+        <dl>
+            <dt>分钟</dt>
+            <dd class="p176-hour-table03 J-Minute-Box">
+                <table>
+                    <tbody><tr>
+                        <td><div class="mExt"><a href="javascript:;" class="on">0</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">5</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">10</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">15</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">20</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">25</a></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="mExt"><a href="javascript:;">30</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">35</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">40</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">45</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">50</a></div></td>
+                        <td><div class="mExt"><a href="javascript:;">55</a></div></td>
+                    </tr>
+                    </tbody></table>
+            </dd>
+        </dl>
+    </div>
+    <div class="clearfix"></div>
+    <div class="p176-popbottom clearfix" style="margin:10px;">
+        <div class="alignCenter">
+            <input type="button" class="btn-custom btn-custom-blue J-Btn-yes" value="确定">&nbsp;&nbsp;
+            <input type="button" class="btn-custom btn-custom-gray J-Btn-close" value="取消">&nbsp;&nbsp;
+        </div>
+    </div>
+</div>
+<div id="testTimeDiv" style="display:none;">
+	<div class="p176-filed-b">
+        <div class="p176-Input-wrap">
+            <input id="startDate" type="text" class="p176-Input" placeholder="2016-01-20" onclick="laydate()"
+                   autocomplete="off">
+            <i class="p176-input-data"></i>
+        </div>
+        <div class="p176-input-wrap">
+            <input id="startTime" type="text" class="p176-Hinput" placeholder="00:00" onclick="ModuleTimeMenu.init(this);" autocomplete="off">
+            <i class="p176-input-hour"></i>
+        </div>
+        <div class="p176-input-wrap">
+            <input id="startTime" type="text" class="p176-Hinput" placeholder="00:00" onclick="ModuleTimeMenu.init(this);" autocomplete="off">
+            <i class="p176-input-hour"></i>
+        </div>
+    </div>
+</div>
+</body>
+</html>

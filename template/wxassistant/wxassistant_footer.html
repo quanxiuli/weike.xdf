@@ -1,0 +1,213 @@
+</div>
+</div>
+<script src="{$publicserver}/public/wxas/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="{$publicserver}/public/wxas/js/jquery-ui.min.js" type="text/javascript"></script>
+<script  src="{$publicserver}/public/wxas/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="{$publicserver}/public/wxas/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script src="{$publicserver}/public/wxas/js/ueditor1_4_3/lang/zh-cn/zh-cn.js" type="text/javascript" defer="defer"></script>
+<script src="{$publicserver}/public/wxas/js/ueditor1_4_3/third-party/codemirror/codemirror.js" type="text/javascript" defer="defer"></script>
+
+<script src="{$publicserver}/public/wxas/js/jquery.jgrowl.min.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/less.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/colorPicker.js"></script>
+
+
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/ueditor1_4_3/ueditor.config.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/ueditor1_4_3/ueditor.all.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/ueditor1_4_3/third-party/zeroclipboard/ZeroClipboard.min.js"></script>
+<!-- <script type="text/javascript" src="{$publicserver}/public/wxas/js/ueditor1_4_3/third-party/zeroclipboard/ZeroClipboard.swf"></script> -->
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/wwei_editor.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/wxas/js/colpick.js"></script>
+
+
+<script type="text/javascript">
+	var less_parser = new less.Parser;
+	ZeroClipboard.config({ swfPath: "{$publicserver}/public/wxas/js/ueditor1_4_3/third-party/zeroclipboard/ZeroClipboard.swf" });
+
+	var wwei_editor = UE.getEditor('wwei_editor',{
+        initialFrameWidth : 600,
+        initialFrameHeight: 600,
+		PREFIX_URL: "http://{$domain}/wxas/",
+    });
+	
+	//加载本地缓存
+	/*
+	wwei_editor.ready(function(){
+		var editor_document = wwei_editor.selection.document;
+		if( window.localStorage){
+			if(typeof window.localStorage._wweiContent != "undefined"){
+				//wwei_editor.setContent(window.localStorage._wweiContent);
+			}
+			setInterval(function(){
+				window.localStorage._wweiContent = wwei_editor.getContent();
+			},2000);            
+		}
+	});*/
+	
+
+	$(function () {
+		/*模板Tab */
+		var dataType = 'title';
+		
+		function _loadtmp(dataType) {
+			// tab切换
+			// $("#temp-" + dataType).show().siblings().hide();
+			var tabPane = $("#temp-" + dataType);
+			var _tempLi = tabPane.find('.template-list li');
+			_tempLi.hover(function () {
+				$(this).css({ "background-color": "#f5f5f5" });
+			}, function () {
+				$(this).css({ "background-color": "#fff" });
+			});
+			// 点击 添加到右侧编辑区
+			_tempLi.unbind('click')
+			_tempLi.click(function(){
+				if (dataType == 'tpl') {
+					var _tempHtml = $(this).find('.tpl-code').html();
+					wwei_editor.setContent("");
+					wwei_editor.execCommand('insertHtml', _tempHtml);
+				} else {
+					var _tempHtml = $(this).html();
+					// console.log("---------------------------------")
+					// console.log(_tempHtml)
+					insertHtml(_tempHtml + "<p><br/></p>");
+				}
+			})
+		}
+		_loadtmp(dataType)
+		//TAB切换
+		$('#templateTab a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+
+			dataType = $(this).attr("data-type");
+			if (dataType) {
+				_loadtmp(dataType)
+			}
+		});
+
+
+		// 清空
+		$('#clear-editor').click(function () {
+			if (confirm('是否确认清空内容，清空后内容将无法恢复')) {
+				wwei_editor.setContent("");
+			}
+		});
+		//复制 copy-editor-html
+		var client = new ZeroClipboard($('#copy-editor-html'));
+		client.on('ready', function (event) {
+			//  alert( "ZeroClipboard SWF is ready!" );
+			// console.log('xdf-zeroclipborder')
+			client.on('copy', function (event) {
+				// xdf
+				// 
+				console.log('=====')
+				console.log(getEditorHtml())
+				event.clipboardData.setData('text/html', getEditorHtml());
+				event.clipboardData.setData('text/plain', getEditorHtml());
+				showSuccessMessage("已成功复制到剪切板");
+			});
+		});
+		
+		
+
+		//预览效果
+		$("#wx-template-name").blur(function () {
+			var val = $(this).val();
+			if (val) {
+				$("#wxpreview h4").html(val);
+			}
+		});
+		$("#wx-template-dateline").blur(function () {
+			var val = $(this).val();
+			if (val) {
+				$("#wxpreview em").html(val);
+			}
+		});
+		$("#wx-template-cover").blur(function () {
+			var val = $(this).val();
+			if (val) {
+				$("#wxpreview .wxpreimg").html('<img src="' + val + '" width="290" height="209">');
+			}
+		});
+
+		$("#wx-template-intro").blur(function () {
+			var val = $(this).val();
+			if (val) {
+				$("#wxpreview .wxstr").html(val);
+			}
+		});
+
+		$("#wx-template-wxid").change(function () {
+			var val = $(this).find("option:selected").val(), text = $(this).find("option:selected").text(), url = $(this).find("option:selected").attr("data-url");
+
+			if (text) {
+				if (val == 0) text = '';
+				if (!url) url = 'javascript:void(0);';
+				$("#wxpreview .wxhao").html('<a href="' + url + '" target="_blank">' + text + '</a>');
+			}
+		});
+		//定制效果
+		$("#is_show_title").click(function () {
+			var cked = $(this).attr("checked");
+			if (cked == undefined) {
+				$("#wx_show_title").hide();
+
+			} else {
+				$("#wx_show_title").show();
+			}
+		});
+		$("#is_show_statis").click(function () {
+			var cked = $(this).attr("checked");
+			if (cked == undefined) {
+				$("#wxpreview .wxfoot").hide();
+
+			} else {
+				$("#wxpreview .wxfoot").show();
+			}
+		});
+
+		//颜色选择
+		$("#picker").colpick({
+			layout: 'rgbhex',
+			submit: 0,
+			onChange: function (hsb, hex, rgb, el, bySetColor) {
+				changeObj = true;
+				var color_text = '#' + hex;
+				$(el).css('background', color_text);
+				$(el).val(color_text)
+
+				var tabPane = $("#temp-" + dataType);
+				var tempList = tabPane.find('.template-list') 
+				$('.wwei-editor [style*=background] ').css('background',color_text)
+			}
+		});
+		
+		// //颜色选择
+		// $('.colorPicker').colorPicker({
+		// 	customBG: '#222',
+		// 	init: function(elm, colors) { // colors is a different instance (not connected to colorPicker)
+		// 	  elm.style.backgroundColor = elm.value;
+		// 	  elm.style.color = colors.rgbaMixCustom.luminance > 0.22 ? '#222' : '#ddd';
+		// 	}
+		// });
+		// 打开对话框
+		$("#add-emotion").on('click',function(){
+			$('#wx-dialog').toggleClass('active')
+		})
+		// 微信编辑器对话框
+		$(".upload-img-wrapper button").on('click',function(){
+			var currentIndex=$(this).index()
+			$(".upload-img-wrapper .content div").eq(currentIndex).show().siblings().hide()
+		})
+		// 上传图片
+		
+	});
+
+
+</script>
+
+</body>
+
+</html>

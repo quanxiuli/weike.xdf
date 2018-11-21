@@ -1,0 +1,26 @@
+{include file="wxassistant/wxassistant_header.html"}
+<table>
+    <tr>
+        <th>序号</th>
+        <th>账号</th>
+        <th>会员昵称</th>
+        <th>创建时间</th>
+        <th>最后一次登陆时间</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    
+        
+    {foreach from=$list item=item}
+    <tr>
+        <td>{$item.id}</td>
+        <td>{$item.email}</td>
+        <td>{$item.userName}</td>
+        <td>{$item.createTime}</td>
+        <td>{$item.loginTime}</td>
+        <td>{$item.isSuperAdmin}</td>
+        <td><a href="adminEdit?id={$item.id}">编辑</a>|<a href="adminDel?id={$item.id}">删除</a></td>
+    </tr>
+    {/foreach}
+</table>
+{include file="wxassistant/wxassistant_footer.html"}

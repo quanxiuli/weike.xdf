@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>发布管理平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/index.css">
+    <script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jqPaginator.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/p176.js"></script>
+	<script type="text/javascript">
+		var PREFIX_URL = "http://{$domain}/chouke/";
+		var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+		var Global = {
+			    actionURL:PREFIX_URL+"ajax_service",
+			    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			    previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+			    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+			    cartID:"opt",
+			    previewCrURL:"{$previewCrUrl}",
+			    buyDomain:"http://bm.xdf.cn"//正式
+		};
+	</script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+    <script src="{$publicserver}/public/chouke/js/util.js"></script>
+    <script src="{$publicserver}/public/chouke/js/layer-v2.1/layer/layer.js"></script>
+    <script src="{$publicserver}/public/chouke/js/laydate-v1.1/laydate/laydate.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jquery-form.js"></script>
+    <script src="{$publicserver}/public/chouke/js/loginStatus.js"></script>
+    <style>
+	.disabled{
+		background: #868c8b;
+	}
+	a:hover {
+	}
+	</style>
+</head>
+<body onload="initMainPage('102');">
+<input type="hidden" id="classRecommendId" value="{$classRecommendId}" />
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap">
+        <div class="p176-main">
+            <div class="inner">
+
+				<h2 class="p176-tit pdRight20 clearfix">
+                    <span class="fz14" id="classRecommendName"></span>
+                </h2>
+                <div class="clearfix"></div>
+
+
+                <h2 class="p176-tit clearfix"><span class="p176-alresdy">校区设置</span></h2>
+                <div class="p176-table-wrap schools">
+					<h2 class="p176-tit clearfix" style="border-bottom: 0px;"><span  style="border-left: 0px;padding-left:10px;">已选择校区</span></h2>
+					<div id="openSchools">
+					{foreach from=$openSchools item=item}
+					<a href="javascript:;" class="p176-nextStep-btn" style="margin-bottom: 10px;" data-id="{$item.id}" title="{$item.sCode}-{$item.sCity}-[{$item.sPhone}]">{$item.sName}</a>
+					{/foreach}
+					</div>
+					<h2 class="p176-tit clearfix" style="border-bottom: 0px;"><span  style="border-left: 0px;padding-left:10px;">未选择校区</span></h2>
+					<div id="closeSchools">
+					{foreach from=$closeSchools item=item}
+					<a href="javascript:;" class="p176-nextStep-btn disabled" style="margin-bottom: 10px;" data-id="{$item.id}" title="{$item.sCode}-{$item.sCity}-[{$item.sPhone}]">{$item.sName}</a>
+					{/foreach}
+					</div>
+                </div>
+                  <h2 class="p176-tit pdRight20 clearfix">
+                   	 <span class="fz14"></span>
+                	</h2>
+                	<a href="javascript:void(0);" class="p176-nextStep-btn" style="margin-top:10px;" id="updateSchools">提交</a>
+            </div>
+        </div>
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+	$('.schools').find('a').click(function(){
+		var openSchool = $(this);
+		if(openSchool.hasClass('disabled')) openSchool.removeClass('disabled');
+		else openSchool.addClass('disabled');
+	});
+	$('#updateSchools').click(function(){
+		var index = layer.confirm('确认要修改吗？',{icon:5},function(){
+			var openSchools = [];
+			var closeSchools = [];
+			$('#openSchools a').each(function(index){
+				var openSchool = $(this);
+				if(openSchool.hasClass('disabled'))
+					closeSchools.push(openSchool.attr('data-id'));
+			});
+			$('#closeSchools a').each(function(index){
+				var closeSchool = $(this);
+				if(!closeSchool.hasClass('disabled'))
+					openSchools.push(closeSchool.attr('data-id'));
+			});
+			if(openSchools.length == 0 && closeSchools.length == 0){
+				layer.alert('您未选择任何校区');
+			}else{
+				$.ajax({
+					url:'/chouke/ajax_updateschools',
+					type:'POST',
+					dataType:'json',
+					data:{os:openSchools,cs:closeSchools},
+					beforeSend:function(){
+						 layer.load(2, {time: 10*1000});
+					},
+					success:function(data){
+						layer.closeAll();
+						if(data.code==1){
+							layer.alert(data.message,function(){
+								window.location.reload();
+							});
+						}else{
+							layer.msg(data.message);
+						}
+					}
+				});
+			}
+		});
+	});
+})
+</script>

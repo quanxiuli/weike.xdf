@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>发布管理平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/index.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/tab.css">
+    <script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/p176.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jqPaginator.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/layer-v2.1/layer/layer.js"></script>
+	<script type="text/javascript">
+		var PREFIX_URL = "http://{$domain}/chouke/";
+		var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+		var Global = {
+			    actionURL:PREFIX_URL+"ajax_service",
+			    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			    previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+			    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+			    cartID:"opt",
+			    buyDomain:"http://bm.xdf.cn"//正式
+		};
+	</script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+    <script src="{$publicserver}/public/chouke/js/util.js"></script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/activity.js"></script>
+    <script src="{$publicserver}/public/chouke/js/loginStatus.js"></script>
+</head>
+<body onload="initMainPage('401');initAtTotal()">
+<input type="text" id="loginId" hidden>
+<input type="text" id="userId" hidden>
+<input type="text" id="tokenId" hidden>
+<input type="text" id="schoolIdFinal" hidden>
+<input type="text" id="areaIdFinal" hidden>
+<input type="text" id="deptIdFinal" hidden>
+<!--<div class="p176-nav clearfix">
+    <div class="p176-logo-left"><a href="#" class="p176-logo">发布管理平台</a></div>
+    <div class="p176-nav-left" id="schoolAuthority" style="display: none">
+        <ul>
+            <li class="dropdown js-ads-drop">
+                <a href="#" id="schoolName1" hidden>城市<i class="dropdown-white"></i></a>
+                <ul class="b-sub-menu" id="schoolName"></ul>
+            </li>
+            <li class="dropdown js-area-drop">
+                <a href="#" hidden id="areaName1">校区<i class="dropdown-white"></i></a>
+                <ul class="a-sub-menu" id="areaName"></ul>
+            </li>
+            <li class="dropdown js-item-drop">
+                <a href="#" hidden id="deptName1">部门<i class="dropdown-white"></i></a>
+                <ul class="p-sub-menu" id="deptName"></ul>
+            </li>
+        </ul>
+    </div>
+    <div class="p176-nav-right">
+        <ul>
+            <li>
+                <a href="#" class="p176-nav-usename js-userName"></a>
+                <div class="p176-usename-menu js-userName-menu" style="z-index: 1000;">
+                    <ul>
+                        <li><a href="#" onclick="toLogout('91411a1a05fd4571859044ed18892ac1')" class="">退出登录</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>-->
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap">
+        <div class="p176-main" style="min-height: 1000px;">
+            <div class="inner">
+                <h2 class="p176-tit pdRight20 clearfix"><span class="fz14"><a href="javascript:;"
+                                                                              onclick="changeCenter('/chouke/cktotal')">筹课统计
+                    > </a>统计详情</span>
+                </h2>
+                <div class="p176-headline-wrap">
+                    <h1 class="p176-headline" id="activityName"></h1>
+                    <p class="p176-subhead">发布日期<span id="createTime"></span></p>
+                    <!--<p class="p176-subhead">阅读<span id="readCount"></span></p>-->
+                    <!--<p class="p176-subhead">参与用户 <span id="personCount"></span></p>-->
+                    <p class="p176-subhead">发布人<span id="launchPerson"></span></p>
+                </div>
+
+
+                <div id="Tab1">
+                    <div class="Menubox">
+                        <ul>
+                            <li id="one1" onclick="reloadList('one',1)" class="hover">新生活动</li>
+                            <li id="one2" onclick="reloadList('one',2)">老生活动</li>
+                        </ul>
+                    </div>
+                    <div class="Contentbox">
+                        <div id="con_one_1" class="hover">
+                            <div class="p176-total-wrap mtop20 clearfix">
+                                <dl class="p176-dl01">
+                                    <dt><img src="{$publicserver}/public/chouke/images/pepIcon.png" alt=""></dt>
+                                    <dd>
+                                        <h3>发起人数</h3>
+                                        <div class="p176-num"><span id="finalLaunchCount">0</span>
+                                            <a href="javascript:;">今日<em id="finalTodayLaunchCount">+0</em></a>
+                                        </div>
+                                        <h4 id="newAndOldLaunchCount">总数&nbsp;2419</h4>
+                                    </dd>
+                                </dl>
+                                <dl class="p176-dl02">
+                                    <dt><img src="{$publicserver}/public/chouke/images/pep02Icon.png" alt=""></dt>
+                                    <dd>
+                                        <h3>帮筹人数</h3>
+                                        <div class="p176-num"><span id="finalHelpCount">0</span>
+                                            <a href="javascript:;">今日<em id="finalTodayHelpCount">+0</em></a>
+                                        </div>
+                                        <h4 id="newAndOldHelpCount">总数&nbsp;2419</h4>
+                                    </dd>
+                                </dl>
+                                <dl class="p176-dl03">
+                                    <dt><img src="{$publicserver}/public/chouke/images/heatIcon.png" alt=""></dt>
+                                    <dd>
+                                        <h3>转发次数</h3>
+                                        <div class="p176-num"><span id="finalForwardCount">0</span>
+                                            <a href="javascript:;">今日<em id="finalTodayForwardCount">+0</em></a>
+                                        </div>
+                                        <h4 id="newAndOldForwardCount">总数&nbsp;2419</h4>
+                                    </dd>
+                                </dl>
+                                <!--<dl class="p176-dl04" id="finalForwardPercentDiv">-->
+                                <!--<dt><img src="../../images/ratioIcon.png" alt=""></dt>-->
+                                <!--<dd>-->
+                                <!--<h3>转化率</h3>-->
+                                <!--<div class="p176-num"><span id="finalForwardPercent">0.00%</span></div>-->
+                                <!--</dd>-->
+                                <!--</dl>-->
+                                <!--</div>-->
+                                <div class="p176-tableWrap fl">
+                                    <div class="p176-btn-export"><a href="javascript:exportExcel();" data-functionId="40101"><i
+                                            class="p176-btn-icon"></i>导出EXCEL表格</a>
+                                    </div>
+                                    <div class="p176-table-wrap">
+                                        <table class="p176-table fz14">
+                                            <thead>
+                                            <tr>
+                                                <th id="nameTH" style="width:20%;">姓名</th>
+                                                <th id="mobileTH" style="width:15%;">手机号</th>
+                                                <th id="isSuccessTH" style="width:20%;">筹课状态</th>
+                                                <th id="isWonTH" style="width:10%;">帮筹状态</th>
+                                                <th id="helpCountTH" style="width:15%;">帮筹人数（人）</th>
+                                                <th id="createTimes" style="width:15%;">参与时间</th>
+                                                <!--<th id="isPayTH" style="width:10%;">已付费学员</th>-->
+                                                <!--<th id="isBenefitTH" style="width:10%;">有效商机</th>-->
+                                            </tr>
+                                            </thead>
+                                            <tbody id="activiy_user_tbody">
+                                            </tbody>
+                                        </table>
+                                        <div class="PublicPage" id="publicPage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe name="saveIframe" style="display:none"></iframe>
+</body>
+</html>

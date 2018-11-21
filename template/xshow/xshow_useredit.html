@@ -1,0 +1,271 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+					<h4 class="page-title">
+							用户管理
+							   <small>   User management</small></h4>
+
+						<ul class="breadcrumb">
+							<li><i class="icon-home"></i><a href="/xshow/index">首页</a> 
+								<i class="icon-angle-right"></i></li>
+
+							<li><a href="/xshow/userlist">用户管理</a><i class="icon-angle-right"></i></li>
+							<li><a href="/xshow/useradd">添加新用户</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+	<!-- END PAGE HEADER-->
+                <div class="tabbable tabbable-custom tabbable-full-width">
+							<ul class="nav nav-tabs">
+			   <li class="{$ui.users}"> <a href="/xshow/userlist"> 前台用户管理</a> </li>
+			   {if $is_edit}
+		       <li class="{$ui.users_edit}"> <a href="/xshow/useredit"> 修改用户</a> </li>
+		       {else}
+		        <li class="{$ui.users_add}"> <a href="/xshow/useradd"> 添加新用户</a> </li>
+		       {/if}
+               <li class="{$ui.user_group}"> <a href='/xshow/grouplist'> 用户组管理</a> </li>
+							</ul>
+                            <hr>
+                </div>
+				<!-- BEGIN PAGE CONTENT-->          
+				<div class="row-fluid">
+					<div class="span12 ">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+							<div class="portlet-body">
+
+				
+                            
+                            
+                            <div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+				<input name="ctl00$ContentPlaceHolder1$txt" type="hidden" id="ctl00_ContentPlaceHolder1_txt" />
+                
+                <form action="" class="form-horizontal" method="post" id="modify_user">
+
+								
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								
+
+									<div class="control-group">
+
+										<label class="control-label">用户名</label>
+
+										<div class="controls">
+
+									  <input name="uname" type="text"   class="m-wrapt"  value="{$user.uname}" readonly placeholder="3~16位数字字母下划线组成"/>
+
+											<span class="help-inline"></span>
+
+										</div>
+
+									</div>
+
+	<div class="control-group">
+
+										<label class="control-label">登陆邮箱</label>
+										<div class="controls">
+											<div class="input-icon left">
+												<i class="icon-envelope"></i>
+      <input name="email" type="text"   class="m-wrapt" value="{$user.email_varchar}" readonly/>
+											</div>
+										</div>
+				  </div>
+
+								
+								
+									<div class="control-group">
+										<label class="control-label">新密码</label>
+										<div class="controls">
+  <input name="new_password" type="password"  class="m-wrap" value="" placeholder="8~16位数字字母字符至少两种"/>   
+
+										</div>
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label">确认密码</label>
+										<div class="controls">
+  <input name="confirm_password" type="password"  class="m-wrap" value="" />   
+
+										</div>
+									</div>
+									
+                                    
+                                    
+                               	<div class="control-group">
+										<label class="control-label">手机号码</label>
+										<div class="controls">
+                                        
+  <input type="text" name="tel" class="m-wrap"  value="{$user.tel}" readonly> 
+										</div>
+									</div>       
+                                    
+                                        	<div class="control-group">
+										<label class="control-label">联系QQ</label>
+										<div class="controls">
+                                        
+  <input type="text" name="qq" class="m-wrap"  value="{$user.qq}"> 
+										</div>
+									</div>    
+                                    
+                                    
+                                    
+                                        
+                                    	<div class="control-group">
+										<label class="control-label">赠送秀点</label>
+										<div class="controls">
+                                        
+  <input type="text" name="xd" class="m-wrap"  value="{$user.xd}"> 
+										</div>
+									</div>
+                                    
+                                    
+                                    
+                                    	<div class="control-group">
+										<label class="control-label">场景创建次数个数</label>
+										<div class="controls">
+                                        
+  <input type="text" name="scene_times" class="m-wrap"  value="{$user.scene_times}"> 
+										</div>
+									</div>
+                                    
+                                    
+                                    
+                                    
+
+							<div class="control-group">
+										<label class="control-label">到期时间</label>
+										<div class="controls">
+	<div class="input-append date date-picker" data-date="2017-05-04" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
+												<input class="m-wrap m-ctrl-medium "name="end_time" size="16" type="text" value="{if $user['end_time'] > 0}{$user.end_time_format}{/if}"><span class="add-on"><i class="icon-calendar"></i></span>
+										   </div>
+										</div>
+								  </div>
+								  
+								  <div class="control-group">
+					<label class="control-label">用户类型</label>
+													<div class="controls">
+                         <select name="type">
+                         <option value="0">请选择</option>
+                         {foreach from=$userTypes key="k" item="vo"}
+			                <option value="{$k}" {if $user['type'] == $k}selected{/if}>{$vo}</option>
+			                {/foreach}
+						</select>             
+							</div>
+
+												</div>
+								
+
+								
+                                
+								  <div class="control-group">
+					<label class="control-label">用户权限</label>
+													<div class="controls">
+                         <select name="level">
+                         <option value="0">请选择</option>
+                         {foreach from=$userLevels key="k" item="vo"}
+			                <option value="{$k}" {if $user['level_int'] == $k}selected{/if}>{$vo}</option>
+			                {/foreach}
+						</select>             
+							</div>
+
+												</div>
+												
+												
+												
+												
+							
+
+								
+
+									<div class="form-actions">
+										<input type="hidden" name="id" value="{$user.userid_int}"/>
+										<button type="submit" class="btn blue">确定修改</button>               
+
+									</div>
+
+							  </form>
+
+								<!-- END FORM-->       
+
+							</div>
+
+						</div>
+
+						<!-- END SAMPLE FORM PORTLET-->
+
+					</div>
+
+				</div>
+
+						<!-- END EXTRAS PORTLET-->
+					</div>
+			<!-- END PAGE CONTENT--><!-- END PAGE CONTAINER-->
+		</div>
+	</div>
+	<!-- END CONTAINER -->
+	<script src="{$publicserver}/public/xshow/media/js/form-components.js"></script>
+	<script type="text/javascript">
+		jQuery(function(){
+			FormComponents.init();
+			jQuery('#modify_user').submit(function(){
+				var reg_int = /^[1-9]\d*$/;
+				var new_password = jQuery(':input[name=new_password]').val();
+				if(password != ''){
+					if(!/((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^.{8,16}$/.test(password)){
+						alert('密码格式不正确');
+						return false;
+					}
+					var confirm_password = jQuery(':input[name=confirm_password]').val();
+					if(confirm_password != password){
+						alert('两次密码输入不一致');
+						return false;
+					}
+				}
+				var qq = jQuery(':text[name=qq]').val();
+				if(!/^[1-9][0-9]{4,14}$/.test(qq)){
+					alert('qq格式不正确');
+					return false;
+				}
+				var xd = jQuery(':text[name=xd]').val();
+				if(!reg_int.test(xd)){
+					alert('秀点格式不正确');
+					return false;
+				}
+				var scene_times = jQuery(':text[name=scene_times]').val();
+				if(!reg_int.test(scene_times)){
+					alert('场景创建次数个数格式不正确');
+					return false;
+				}
+				var end_time = jQuery(':text[name=end_time]').val();
+				if(end_time != ''){
+					if(!/^20[\d][\d]-[\d]{2}-[\d]{2}((\s[\d]{2}:[\d]{2})?(:[\d]{2})?)?$/.test(end_time)){
+						alert('qq格式不正确');
+						return false;
+					}
+				}
+				var type = jQuery('select[name=type]').val();
+				if(!reg_int.test(type)){
+					alert('请选择正确的用户类型');
+					return false;
+				}
+				var level = jQuery('select[name=level]').val();
+				if(!reg_int.test(level)){
+					alert('请选择正确的用户权限');
+					return false;
+				}
+			});
+		});
+	</script>
+{include file="xshow/xshow_footer.html"}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	    <title>新东方</title>
+	    <link rel="stylesheet" href="{$publicserver}/public/activity/css/style.css" type="text/css"/>
+
+
+<style>
+.warp {
+	max-width: 750px;
+	margin: 0 auto;
+	height:100%;
+	background: url({if $activity.qdPagePicture neq ''}{$activity.qdPagePicture}{else}{$publicserver}/public/activity/images/bodybg1.jpg{/if}) no-repeat;
+		  			
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+label>span {
+			float: left;
+			text-align: left;
+			color:white;
+			line-height: 1.1rem;
+    		text-align: left;
+    		font-size: 0.7rem;
+    		display:block;
+		}
+		
+</style>
+</head>
+<body class="warp">
+		
+		<div >
+			<header class="header" style="min-height:250px;">
+				<img src="{$publicserver}/public/activity/images/logo.png" alt=""  style="display:none;"/>
+			</header>
+			<div class="textinfo">
+				<p class="p1">{$user.nickname}正在 {$activity.title}活动现场,是第{$number}位来宾。</p>
+				
+				<p class="p3" style="text-align:right;"></p>
+			</div>
+			<div class="botcon">
+			<p>
+				<p class="">
+					<label>
+					<span style="width: 35%;">活动名称：</span>
+					<span style="width: 65%;">{$activity.title}</span>
+					</label>
+				</p>
+				<p class="">
+					<label>
+					<span style="width: 35%;">活动时间：</span>
+					<span style="width: 65%;">{$activity.beginTime}</span>
+					</label>
+				</p>
+				<div class="erweima" style="display:none;">
+					
+				</div>
+
+			</div>
+			
+			
+        </div>
+
+
+	</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>		
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <title>新东方教师节送祝福</title>
+	    <link rel="stylesheet" href="{$publicserver}/public/activity/css/style_teachersday.css" type="text/css"/>
+	    <link rel="stylesheet" href="{$publicserver}/public/activity/css/swiper.min.css" type="text/css"/>
+	    <link rel="stylesheet" href="{$publicserver}/public/activity/css/animate.min.css" type="text/css"/>	    	   
+		<script src="http://file.xdf.cn/diy/public/js/jquery.1.7.2.min.js"></script>
+		<script src="{$publicserver}/public/activity/js/swiper.min2.js" type="text/javascript" charset="utf-8"></script>
+
+		<!--集团统计开始-->
+		<!--neworiental全站异步 google分析开始-->
+		<script>
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-20005525-1']);
+			_gaq.push(['_setDomainName', '.xdf.cn']);
+			_gaq.push(['_setAllowLinker', true]);
+			_gaq.push(['_setAllowHash', false]);
+			_gaq.push(['_addOrganic', 'baidu', 'word']);
+			_gaq.push(['_addOrganic', '360', 'q']);
+			_gaq.push(['_addOrganic', 'so.com', 'q']);
+			_gaq.push(['_addOrganic', 'soso', 'w']);
+			_gaq.push(['_addOrganic', 'yodao', 'q']);
+			_gaq.push(['_addOrganic', 'sogou', 'query']);
+			_gaq.push(['_addOrganic', 'gougou', 'search']);
+			_gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+			_gaq.push(['_addOrganic', 'haosou', 'q']);
+			_gaq.push(['_setLocalGifPath', 'http://ads.staff.xdf.cn/_.gif']);
+			_gaq.push(['_setLocalRemoteServerMode']);
+			_gaq.push(['_trackPageview']);
+		</script>
+		<!-- google分析结束-->
+		 <!-- 晶赞头部统计js S -->
+		 <script type="text/javascript" src="http://www.xdf.cn/zhuanti/schoolJs/stat/jingzan-headStatsCode.js"></script>
+		 <!-- 晶赞头部统计js E -->
+		 <style>
+.tj2{
+	width:7.5rem;
+	height:1.8rem;
+	background:url({$publicserver}/public/activity/images/teachersday/dlax.png) no-repeat center;
+	background-size:100% 100%;
+	border: none;
+	margin: 0 auto;
+	display: block;
+	margin-top: .5rem;
+}
+		</style>
+	</head>
+	<body>
+		
+		<div class="warp">
+			
+			<div class="swiper-container">
+		        <div class="swiper-wrapper">
+			         <div class="swiper-slide">
+			            	<div class="header">
+								<img src="{$publicserver}/public/activity/images/teachersday/banner1.jpg" alt="" />	
+			            	</div>
+			            </div>
+			            <div class="swiper-slide">
+			            	<div class="header">
+								<img src="{$publicserver}/public/activity/images/teachersday/banner2.jpg" alt="" />	
+			            	</div>
+			            </div>
+			            <div class="swiper-slide">
+			            	<div class="header">
+							<img src="{$publicserver}/public/activity/images/teachersday/banner3.jpg" alt="" />		
+							<div class="xin">
+								<p class="wxin" id="mind">
+									<img src="{$publicserver}/public/activity/images/teachersday/xin.png"alt=""/>
+									<img src="{$publicserver}/public/activity/images/teachersday/dd.gif" alt="" class="dd animate"/>
+								</p>
+								<p class="wxin a" id="mind1"><img src="{$publicserver}/public/activity/images/teachersday/bxin.png" class="animate" alt=""/></p>
+								<div class="dlax">
+									<form action="/activity/teachersday_info" name="" class="form" method="POST">
+										<p class="xm_name">姓名<input type="text" id="" name="name" class="srk"/></p>
+										<p class="xm_name a">邮箱<input type="text" id="" name="email" class="srk a"/>@xdf.cn</p>
+										<p class="xm_name"><input type="submit" name="" id="" value="" class="tj2"/></p>
+									</form>
+								</div>
+							</div>							
+							</div>
+			            </div>
+			          </div>
+	    		</div>
+        	</div>
+        
+ 	
+		
+    <script type="text/javascript">
+   // $(document).ready(function(){       
+	   		var swiper = new Swiper('.swiper-container', {
+		        pagination: '.swiper-pagination',
+		        centeredSlides: true,
+			    autoplay: 3000,
+			    autoplayStopOnLast: true
+			    //autoplayDisableOnInteraction: false			        		
+		    });
+	   		
+            $("#mind").click(function(){
+            	//swiper.autoplay.stop();
+            	{if $new eq 1} 
+             		$("#mind").hide();
+             		$(".dlax").show();
+             	{else}
+             		window.location.href = '/activity/teachersday_info';
+             	{/if}
+             	
+             });
+             
+             $(".tj2").click(function(){
+             	//$(".dlax").hide();
+             	//$("#mind1").show();
+             });
+             
+                          
+    		
+		   
+		  
+  
+       
+
+
+
+		 
+ //});         
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+wx.config({
+    debug: false,
+    appId: '{$signPackage.appId}',
+    timestamp: '{$signPackage.timestamp}',
+    nonceStr: '{$signPackage.nonceStr}',
+    signature: '{$signPackage.signature}',
+    jsApiList: [
+        // 所有要调用的 API 都要加到这个列表中
+        'onMenuShareQQ',
+        'onMenuShareAppMessage',
+        'onMenuShareTimeline',
+        'getLocation',
+    ]
+});
+
+wx.ready(function () {
+	
+    // 在这里调用 API
+    //发给朋友
+    //分享到朋友圈
+    wx.onMenuShareTimeline({
+        title:  '新东方教师节送祝福',
+        desc:  '点亮爱心，为新东方第25个教师节送祝福！',
+        link:  'http://{$domain}/activity/teachersday_index?openid={$openid}',
+        imgUrl:  '{$publicserver}/public/activity/images/xdf.png',
+        type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+            // 用户确认分享后执行的回调函数
+        	
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+        }
+    });
+    // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+
+    wx.onMenuShareAppMessage({
+    	 title:  '新东方教师节送祝福',
+         desc:  '点亮爱心，为新东方第25个教师节送祝福！',
+         link:  'http://{$domain}/activity/teachersday_index?openid={$openid}',
+         imgUrl:  '{$publicserver}/public/activity/images/xdf.png',
+         type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+            // 用户确认分享后执行的回调函数
+        	
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+        }
+    });
+    wx.onMenuShareQQ({
+    	 title:  '新东方教师节送祝福',
+         desc:  '点亮爱心，为新东方第25个教师节送祝福！',
+         link:  'http://{$domain}/activity/teachersday_index?openid={$openid}',
+         imgUrl:  '{$publicserver}/public/activity/images/xdf.png',
+         type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+            // 用户确认分享后执行的回调函数
+        	
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+        }
+    });
+    
+});  
+</script>		
+		<!--google文件调用开始-->
+		<script> (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = 'http://file.xdf.cn/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
+		<!--google文件调用结束-->
+		<!--百度统计开始-->
+		<script type="text/javascript">
+			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+			document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe010d1faf316a4dbfe8639481a2a3f90' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<!--百度统计结束-->
+		<script type="text/javascript" src="http://images.xdf.cn/cms20150819/xinbannew/js/xdf_global.min.js"></script>
+		<script type="text/javascript">
+			st('default','{}');
+		</script>
+
+		<!--集团统计结束-->
+		<!-- 晶赞底部统计js S -->
+	    <script type="text/javascript" src="http://www.xdf.cn/zhuanti/schoolJs/stat/jingzan-footStatsCode.js"></script>
+	    <!-- 晶赞底部统计js E -->
+	</body>
+</html>

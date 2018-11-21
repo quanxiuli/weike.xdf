@@ -1,0 +1,223 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							单页模板列表
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">首页</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="/xshow/scenelist">模板管理</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="javascript:void(0);">单页模板列表</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="tabbable tabbable-custom tabbable-full-width">
+						<ul class="nav nav-tabs">
+                            <li {if $cate_id eq 0}class="active"{/if}><a href="/xshow/scenepagelist">全部</a></li>
+                            {foreach from=$xdf_pageSceneCategory key='k' item='item'}                                
+								<li {if $cate_id eq $k}class="active"{/if}><a href="/xshow/scenepagelist?c={$k}">{$item}</a></li>
+                            {/foreach}
+						</ul>
+                        </div>
+                        
+                        
+						<div class="tab-content" id="sub_search">
+                            <div class="row-fluid search-forms search-default">
+									<form class="form-search" action="/xshow/scenepagelist" method="GET">
+										<div class="chat-form">
+											<div class="input-cont">
+     										<select name="c" id="e_category">
+     											<option value="0" {if $cate_id eq 0}selected{/if}>全部</option>
+     											 {foreach from=$xdf_pageSceneCategory key='k' item='item'}                                
+													<option value='{$k}' {if $cate_id eq $k}selected{/if}>{$item}</option>
+					                            {/foreach}
+     										</select>
+											<span style="line-height:34px;">名称：</span>
+											<input type="text"  name="keyword"  value="{$keyword}" placeholder="请输入关键词..." class="m-wrap" style="width:200px" id="name_keyword">
+											<span style="line-height:34px;">状态：</span>
+     										<select name="s">
+     											<option value="0" {if $cate_id eq 0}selected{/if}>请选择</option>
+     											 {foreach from=$scenePageStatus key='k' item='item'}                                
+													<option value='{$k}' {if $s eq $k}selected{/if}>{$item}</option>
+					                            {/foreach}
+     										</select>
+											<span style="line-height:34px;">推荐：</span>
+     										<select name="r">
+     											<option value="0" {if $cate_id eq 0}selected{/if}>请选择</option>
+     											 {foreach from=$scenePageRecommend key='k' item='item'}                                
+													<option value='{$k}' {if $r eq $k}selected{/if}>{$item}</option>
+					                            {/foreach}
+     										</select>
+											<button type="submit" class="btn green" style=" ">搜 索 &nbsp; <i class="m-icon-swapright m-icon-white"></i></button>
+											</div>
+
+
+										</div>
+									</form>
+								</div>
+                                
+                                
+                    
+                        
+                        {foreach from=$pageScenes item=item}
+                         <div class="row-fluid portfolio-block">
+                      		  <div class="row-fluid portfolio-block">
+									<div class="span6 portfolio-text">
+										<img src="{$publicserver}/public/uploads/xshow/{$item.thumbsrc_varchar}" class="thumbnail" title="{$item.pagename_varchar}" style="margin:10px 10px 0px 15px;width:112px; height:170px;cursor:pointer;" onclick="ajaxpreview($(this),'{$item.pageid_bigint}');">
+										<div class="portfolio-text-info">
+										  <h4> {$item.pagename_varchar}</h4>
+											<p>添加时间：<span> {$item.createtime_time}</span></p>
+											<p>类别： <code>{$xdf_pageSceneCategory.$item.cate_id}</code></p>
+                                			<p>推荐: <code>{if $item.is_recommend eq 1}是{else}否{/if}</code></p>
+                                			<p>状态: <code>{if $item.showstatus_int eq 1}开启{else}关闭{/if}</code></p>
+                                			<p>	点击次数：<code>{$item.usecount_int}次</code></p>
+									  </div>
+						  			</div>
+						
+                                    <div class="span2" style="display:none;">
+										<form class="form-inline">
+											<div style="margin:10px 0px 10px;">
+										    	<span>名称：</span>
+											    <input type="text" class="form-control" value="{$item.pagename_varchar}">
+											</div>
+											<div style="margin:10px 0px 10px;">
+											    <span>类别：</span>
+											    <select>
+									    	 	{foreach from=$xdf_pageSceneCategory key=k item=i}                                
+													<option value='{$k}'>{$i}</option>
+				                            	{/foreach}
+											    </select>
+											</div>
+											<div style="margin:10px 0px 10px;">
+											    <span>状态：</span>
+											    <input type="radio" name="showStatus" class="form-control" value="1" /> 开启
+											    <input type="radio" name="showStatus" class="form-control" value="2" /> 关闭
+											</div>
+											<div style="margin:10px 0px 10px;">
+											    <span>推荐：</span>
+											   <input type="checkbox" class="form-control"/>
+											</div>
+											<div>
+												<input type="hidden" name="scenePageId" value="{$item.pageid_bigint}" />
+												<input type="hidden" name="scenePageName" value="{$item.pagename_varchar}"/>
+												<input type="hidden" name="scenePageCateId" value="{$item.cate_id}" />
+												<input type="hidden" name="scenePageStatusAndRecommend" value="{$item.showstatus_int}|{$item.is_recommend}" />
+										  		<button type="button" class="btn blue" onclick="modifyScenePage($(this));">修改</button>
+										  		<button type="button" class="btn gray" onclick="hideModifyForm($(this));">取消</button>
+										  	</div>
+										</form>
+                                    </div>
+									<div class="span2 portfolio-btn" style="float: right;">
+							    		<a href="javascript:void(0);" class="btn blue " style="width:47%" title="{$item.pagename_varchar}" onclick="ajaxpreview($(this),'{$item.pageid_bigint}');"><i class="icon-eye-open"></i> 预览</a>
+										<a href="javascript:void(0);" class="btn blue " style="width:47%" onclick="showModifyForm($(this));"><span><i class="icon-pencil"></i>  修改</span></a>
+									</div>
+
+						  	</div>
+					    </div>      
+                        {/foreach}  
+                           
+                              
+                                 
+                                <div class="pagination pagination-right"><div class="pages">{$page}</div></div>
+                                </div>
+                                </div>
+                                 </div>
+                                 </div>
+                                <style>
+                                .center{ text-align:center}
+								.center .p{ line-height:30px}
+                                </style>
+                                <div style="display:none;" id="category_json">{$e_ps_category}</div>
+                                <div style="display:none;" id="s_cate">{$s_cate}</div>
+                                {include file="xshow/xshow_footer.html"}                             
+ <script type="text/javascript">
+  function showModifyForm(obj){
+  	var modifyScenePageSysForm = obj.parent().prev();
+  	var scenePageName = modifyScenePageSysForm.find('input[name=scenePageName]').val();
+  	var scenePageCateId = modifyScenePageSysForm.find('input[name=scenePageCateId]').val();
+  	var scenePageStatusAndRecommend = modifyScenePageSysForm.find('input[name=scenePageStatusAndRecommend]').val();
+  	var scenePageSRArr = scenePageStatusAndRecommend.split('|');
+  	var scenePageStatus = scenePageSRArr[0];
+  	var scenePageRecommend = scenePageSRArr[1];
+  	modifyScenePageSysForm.find('input:radio').each(function(index){
+  		var radio = $(this);
+  		if(radio.val() == scenePageStatus){
+  			radio.prop('checked',true);
+  			return false;
+  		}
+  	});
+  	if(scenePageRecommend == 1){
+  		modifyScenePageSysForm.find('input:checkbox').prop('checked',true);
+  	}
+  	modifyScenePageSysForm.find('input:text').val(scenePageName);
+  	modifyScenePageSysForm.find('select').val(scenePageCateId);
+  	obj.parent().prev().show();
+  }
+  function hideModifyForm(obj){
+  	obj.parent().parent().parent().hide();
+  }
+  function modifyScenePage(obj){
+  	var modifyScenePageSysForm = obj.parent().parent().parent();
+  	var pageid = modifyScenePageSysForm.find('input[name=scenePageId]').val();
+  	var scenePageName = $.trim(modifyScenePageSysForm.find('input:text').val());
+  	var scenePageCateId = modifyScenePageSysForm.find('select').val();
+  	var scenePageStatus =  modifyScenePageSysForm.find('input:radio:checked').val();
+  	var scenepageRecommend = modifyScenePageSysForm.find('input:checkbox').prop('checked')?1:2;
+  	if(scenePageName == ''){
+  		layer.alert('请输入单页模板的名称',{icon:5});
+  		return false;
+  	}
+  	var data = {id:pageid,name:scenePageName,cateId:scenePageCateId,s:scenePageStatus,r:scenepageRecommend};
+  	var num = 0;
+  	$.ajax({
+  		url:'/xshow/ajax_updatescenepage',
+  		type:'post',
+  		dataType:'json',
+  		data:data,
+  		beforeSend:function(){
+  			num = layer.load(2, {time: 10*1000});
+  		},
+  		success:function(data){
+  			layer.close(num);
+  			if(data.result){
+  				layer.alert(data.msg,{icon:6},function(index){
+					modifyScenePageSysForm.hide();
+  					window.location.reload();
+  				});
+  			}else{
+  				layer.alert(data.msg,{icon:5});
+  			}
+  		}
+  	});
+  } 
+function ajaxpreview(obj,styleid) {
+	title = obj.attr('title');
+	layer.open({
+	  type: 2,
+	  title:title,
+	  shadeClose:true,
+	  area: ['323px','678px'] ,
+	  content: '/xshow/pageview?id='+styleid+'&a=1'
+	}); 
+	return false;
+}
+</script> 
+
+
+                              
+                             
+      

@@ -1,0 +1,48 @@
+{include file="xshow/xshow_header.html"}
+<style>
+		.team_box{
+			width: 80%;
+			height: 80%;
+			position: fixed;
+			text-align: center;
+		}
+		
+		.team_icon{
+			width: 30rem;
+			background-size: 3.73rem;
+			margin: auto;
+			margin-top: 2rem;
+		}
+		
+		.team_word{
+			font-size: 0.64rem;
+			margin-top: 1.37rem;	
+		}
+        .erweima1 {
+            width: 4.3rem;
+            height: 4.3rem;
+            position: absolute;
+            top: -0.8rem;
+            left: -0.2rem;
+            padding: 10rem 5rem;
+        }
+	</style>
+<div class="team_box">
+		<div class="team_icon">
+		<table cellpadding=0 cellspacing=0>
+			<tr>
+				<td height='3'  class="topTd" ></td>
+			</tr>
+			<tr class="row" >
+				<th class="tCenter space">{$msgTitle}</th>
+			</tr>
+			<tr class="row">
+				<td style="color:red">{$msg}</td>
+			</tr>
+			<tr>
+				<td height='3' class="bottomTd"></td>
+			</tr>
+		</table>
+		</div>
+	</div>
+{include file="xshow/xshow_footer.html"}

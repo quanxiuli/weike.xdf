@@ -1,0 +1,157 @@
+{include file="activity/common_header.html"}
+
+<div class="clearfix">
+	<div class="we7-padding-bottom clearfix">
+		<div class="pull-left">
+			<a href="/activity/adminmodify?id={$admin.id}" class="btn btn-primary we7-padding-horizontal">修改管理员</a>
+		</div>
+	</div>
+	<table class="table we7-table" style="width:600px;">
+		<tbody>
+			<tr>
+				<td>邮箱</td>
+				<td>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="email" placeholder="请输入新东方邮箱" value="{$admin.email}" disabled>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>状态</td>
+				<td>
+				<div class="col-md-8">
+					<select class="form-control" id="adminStatus">
+					  <option value="0">请选择</option>
+					  {foreach from=$adminStatus key=k item=item}
+					  {if $k==$admin.isEnabled}
+					  	<option value="{$k}" selected>{$item}</option>
+					  {else}
+					  	<option value="{$k}">{$item}</option>
+					  {/if}
+					  {/foreach}
+					</select>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>功能管理</td>
+				<td>
+					<ul id="functionTree" class="tree"></ul>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="hidden" value="{$admin.id}" id="id"/>
+					<button class="btn btn-primary" onclick="check_admin_modify();">修改</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+function getAdminModules(){
+	$.ajax({
+		url:'/activity/ajax_getadminmodules',
+		type:'POST',
+		dataType:'json',
+		data:{id:$('#id').val()},
+		success:function(data){
+			if(data.code==1){
+				//将权限列表放入ul
+                $("#functionTree").tree({
+                    data: data.modules,
+                    checkbox: true,
+                    cascadeCheck:false,
+					onCheck: function (node, checked) {
+					  if (checked) {
+					    var parentNode = $("#functionTree").tree('getParent', node.target);
+					    if (parentNode != null) {
+					      $("#functionTree").tree('check', parentNode.target);
+					    }else{
+					    	var childNode = $("#functionTree").tree('getChildren', node.target);
+						    if (childNode.length > 0) {
+						      for (var i = 0; i < childNode.length; i++) {
+						      	if(childNode[i].target == node.target){
+						        	$("#functionTree").tree('check', childNode[i].target);
+						        	break;
+						      	}
+						      }
+						    }
+					    }
+					  } else {
+					    var childNode = $("#functionTree").tree('getChildren', node.target);
+					    if (childNode.length > 0) {
+					      for (var i = 0; i < childNode.length; i++) {
+					        $("#functionTree").tree('uncheck', childNode[i].target);
+					      }
+					    }
+					    var parentNode = $("#functionTree").tree('getParent', node.target);
+					    var childrenLength = parentNode.children.length;
+					    if(parentNode != null){
+					    	var childNode = $("#functionTree").tree('getChildren', parentNode.target);
+					    	childrenLength = childNode.length;
+					    	var i = 0;
+					    	for(var index in childNode){
+					    		if(!childNode[index].checked){
+					    			i++;
+					    		}
+					    	}
+					    	if(childrenLength == i){
+					    		$("#functionTree").tree('uncheck', parentNode.target);
+					    	}
+					    }
+					  }
+					}
+                });
+			}else{
+				layer.alert(data.message,{icon:5});
+			}
+		}
+	});
+}
+function check_admin_modify(){
+	var id = $('#id').val();
+	if(!GLOBAL.reg_uuid.test(id)){
+		layer.alert('未获取管理员标识',{icon:5});
+		return false;
+	}
+	var adminStatus = $('#adminStatus').val();
+	if(adminStatus == 0){
+		layer.alert('请选择管理员状态',{icon:5});
+		return false;
+	}
+	var treeCheckedList = $("#functionTree").tree('getChecked', ['checked', 'indeterminate']);
+	if(treeCheckedList.length ==0){
+		layer.alert('请为管理员分配权限',{icon:5});
+		return false;
+	}
+	var modules = [];
+	for(var i in treeCheckedList){
+		modules.push(treeCheckedList[i].id);
+	}
+	var index = '';
+	$.ajax({
+		url:'/activity/ajax_adminmodify',
+		type:'POST',
+		dataType:'json',
+		data:{id:id,s:adminStatus,modules:modules},
+		beforeSend:function(){
+			index = layer.load(2);
+		},
+		success:function(data){
+			console.log(data);
+			layer.close(index);
+			if(data.code == 1){
+				layer.msg(data.message,{icon:6});
+				window.location.href = '/activity/adminlist';
+			}else{
+				layer.msg(data.message,{icon:5});
+			}
+		}
+	});
+}
+$(function(){
+	getAdminModules();
+});
+</script>
+{include file="activity/common_footer.html"}

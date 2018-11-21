@@ -1,0 +1,98 @@
+{include file="activity/common_header.html"}
+<div class="clearfix">
+	<div class="we7-padding-bottom clearfix">
+	<div class="pull-left">
+		<form class="form-inline" action="" method="GET">
+		  <div class="form-group">
+		    <label>奖项</label>
+		      <select name='sid'>
+		      	<option value="0">请选择</option>
+		      	{foreach from=$awardList key=k item=item}
+		      	<option value="{$item.id}" {if $item.id == $sid}selected{/if}>{$item.jxName}{if $item.jpName}-{$item.jpName}{/if}</option>
+		      	{/foreach}
+		      </select>
+		     <label>奖品类别</label>
+		      <select name='type'>
+		      	<option value="0">请选择</option>
+		      	<option value="1" {if $type eq 1}selected{/if}>抽奖</option>
+		      	<option value="2" {if $type eq 2}selected{/if}>摇一摇</option>
+		      </select>
+		    </div>
+		    <input type="hidden" name="id" value="{$aid}" />
+		  <button type="submit" class="btn btn-success" onclick="change_action();">查询</button>
+		</form>
+		</div>
+		<div class="pull-right">
+			<button class="btn btn-primary" data-functionid="1" style="display:none;" onclick="download_award_person_list();">下载</button>
+		</div>
+	</div>
+	<table class="table we7-table table-hover">
+	<caption style="color:black;">{$activityTitle}</caption>
+		<thead class="navbar-inner">
+		<tr>
+			<th class="text-center">编号</th>
+			{if $isxdf eq 1}
+			<th class="text-center" style="width:100px;">姓名</th>
+			<th class="text-center" style="width:100px">部门</th>
+			<th class="text-center" style="width:100px;">企业邮箱</th>
+			<th class="text-center" style="width:150px;">微信昵称</th>
+			<th class="text-center" style="width:100px;">手机号</th>
+			{else}
+			{foreach from=$field_var item=field}
+			<th class="text-center">{$field}</th>
+			{/foreach}
+			{/if}
+			<th class="text-center" style="width:150px;">所获奖项</th>
+			<th class="text-center" style="width:150px;">奖品名称</th>
+		</tr>
+		</thead>
+		<tbody>
+		{if $awardPersonList|@count neq 0}
+		{foreach from=$awardPersonList item=item}
+			<tr>
+				<td class="text-center">{$item.sortNum}</td>
+				{if $isxdf eq 1}
+				<td class="text-center">{if $item['name']}{$item.name}{else} -- {/if}</td>
+				<td class="text-center">{if $item['dept']}{$item.dept}{else} -- {/if}</td>
+				<td class="text-center">{if $item['email']}{$item.email}{else} -- {/if}</td>
+				<td class="text-center">
+				{if $item['avatar']}
+				<img src="{$item.avatar}" width="40" height="40" class="img-circle"/>
+				{/if}
+				{if $item['nickname']}{$item.nickname}{else} -- {/if}
+				</td>
+				<td class="text-center">{if $item['mobile']}{$item.mobile}{else} -- {/if}</td>
+				{else}
+				{foreach from=$fields_name item=i}
+				<td class="text-center">{if $item.$i}{$item.$i}{else}--{/if}</td>
+				{/foreach}
+				{/if}
+				<td class="text-center">{$item.jxName}</td>
+				<td class="text-center">{$item.jpName}</td>
+			</tr>
+		{/foreach}
+		{else}
+		<tr>
+			<td colspan="8" class="text-center">暂无数据</td>
+		</tr>
+		{/if}
+		</tbody>
+	</table>
+	<div style="text-align:right;">
+		<nav aria-label="Page navigation">
+			<ul class="pagination">{$page}</ul>
+		</nav>
+	</div>
+</div>
+{include file="activity/common_footer.html"}
+<script type="text/javascript">
+	function download_award_person_list(){
+		var form = $('form').eq(0);
+		form.attr('action','/activity/awardpersonexcel');
+		form.submit();
+	}
+	function change_action(){
+		var form = $('form').eq(0);
+		form.attr('action','');
+	}
+</script>

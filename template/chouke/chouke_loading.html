@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>发布管理平台</title>
+	<script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+	<script src="{$publicserver}/public/chouke/js/util.js"></script>
+	<script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+</head>
+<body>
+</body>
+</html>
+<script type="text/javascript">
+	$(function(){
+        setCookie("userName", '{$userName}', 1);
+        setCookie("loginId", '{$loginId}', 1);
+        setCookie("userId", '{$userId}', 1);
+        setCookie("access_token", '{$access_token}', 1);
+        sessionStorage.setItem("currentCityId",'');
+        sessionStorage.setItem("currentAreaId",'');
+        sessionStorage.setItem("currentDeptId",'');
+        var functionList = JSON.parse('{$functionList}');
+		functionIds = [];
+       	setFunctionList(functionList);
+        localStorage.functionCheckedList = JSON.stringify(functionList);
+        setCookie("functionIds", functionIds);
+        jumpPage(functionList);
+	})
+</script>

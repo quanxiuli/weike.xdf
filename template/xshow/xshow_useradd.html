@@ -1,0 +1,145 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+					<h4 class="page-title">
+							用户管理
+							   <small>   User management</small></h4>
+
+						<ul class="breadcrumb">
+							<li><i class="icon-home"></i><a href="/xshow/index">首页</a> 
+								<i class="icon-angle-right"></i></li>
+
+							<li><a href="/xshow/userlist">用户管理</a><i class="icon-angle-right"></i></li>
+							<li><a href="/xshow/useradd">添加新用户</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+	<!-- END PAGE HEADER-->
+                <div class="tabbable tabbable-custom tabbable-full-width">
+				<ul class="nav nav-tabs">
+			   <li class="{$ui.users}"> <a href="/xshow/userlist"> 前台用户管理</a> </li>
+		        <li class="{$ui.users_add}"> <a href="/xshow/useradd"> 添加新用户</a> </li>
+				</ul>
+                            <hr>
+                </div>
+				<!-- BEGIN PAGE CONTENT-->          
+				<div class="row-fluid">
+					<div class="span12 ">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+							<div class="portlet-body">
+
+				
+                            
+                            
+                            <div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+				<input name="ctl00$ContentPlaceHolder1$txt" type="hidden" id="ctl00_ContentPlaceHolder1_txt" />
+                
+                <form action="" class="form-horizontal" method="post" id="add_user">
+
+								
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+	<div class="control-group">
+
+										<label class="control-label">登陆邮箱</label>
+										<div class="controls">
+											<div class="input-icon left">
+												<i class="icon-envelope"></i>
+      <input name="email" type="text"   class="m-wrapt" value="" />
+											</div>
+										</div>
+				  </div>
+
+								
+								
+									
+                                    
+                          
+                                    
+                                    
+                                    
+                              
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+
+						
+				  {if $is_city ==0}		  
+								  <div class="control-group">
+					<label class="control-label">学校</label>
+													<div class="controls">
+                         <select name="city">
+						 	<option value="0">请选择</option>
+							{foreach from=$citys key=k item=vo}
+							<optgroup label="{$k}">
+							{foreach from=$vo item='item'}
+							  <option value="{$item.id}">{$item.name}</option>
+							  {/foreach}
+							</optgroup>
+							{/foreach}
+						</select>      
+							</div>
+
+												</div>
+				{/if}
+
+									<div class="form-actions">
+										<button type="submit" class="btn blue">确定提交</button>               
+
+									</div>
+
+							  </form>
+
+								<!-- END FORM-->       
+
+							</div>
+
+						</div>
+
+						<!-- END SAMPLE FORM PORTLET-->
+
+					</div>
+
+				</div>
+
+						<!-- END EXTRAS PORTLET-->
+					</div>
+			<!-- END PAGE CONTENT--><!-- END PAGE CONTAINER-->
+		</div>
+	</div>
+	<!-- END CONTAINER -->
+	<script type="text/javascript">
+		jQuery(function(){
+			jQuery('#add_user').submit(function(){
+				var email = jQuery(':text[name=email]').val();
+				if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@xdf\.cn$/.test(email)){
+					alert('邮箱格式不正确');
+					return false;
+				}
+				var city_obj = jQuery('select[name=city]');
+				if(city_obj.length > 0){
+					city_value = city_obj.val();
+					if(city_value ==0){
+						alert('请选择用户所属学校');
+						return false;
+					}
+				}
+			});
+		});
+	</script>
+{include file="xshow/xshow_footer.html"}

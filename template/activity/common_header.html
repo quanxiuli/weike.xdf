@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="shortcut icon" href="" />
+	<link href="{$publicserver}/public/activity/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{$publicserver}/public/activity/css/common.css" rel="stylesheet">
+	<link href="{$publicserver}/public/activity/css/easyUi/easyui.css" rel="stylesheet">
+	<link href="{$publicserver}/public/activity/css/easyUi/icon.css" rel="stylesheet">
+	<link href="{$publicserver}/public/activity/layui/css/layui.css" rel="stylesheet">
+	<link href="{$publicserver}/public/activity/colorpicker/css/jquery-ui.min.css" rel="stylesheet">
+	<link href="{$publicserver}/public/activity/colorpicker/css/evol-colorpicker.css" rel="stylesheet">
+	<script type="text/javascript" src="{$publicserver}/public/activity/js/lib/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{$publicserver}/public/activity/js/jquery.form.js"></script>
+	<script type="text/javascript" src="{$publicserver}/public/activity/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="{$publicserver}/public/activity/js/lib/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{$publicserver}/public/activity/layui/layui.all.js"></script>
+<!--	<script type="text/javascript" src="{$publicserver}/public/activity/js/layer.js"></script>
+	<script type="text/javascript" src="{$publicserver}/public/activity/js/laydate.js"></script>-->
+	<script type="text/javascript">
+		var GLOBAL = {
+						functionIds:'{$functionIds}',
+						reg_email:/^([a-zA-Z0-9]+[_|\_|\.\-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
+						reg_uuid:/^[a-z0-9A-Z]{32}$/,
+						reg_email_prefix:/^([a-zA-Z0-9]+[_|\_|\.\-]?)*[a-zA-Z0-9]+$/,
+						reg_image_suffix:new RegExp("^(jpg|jpeg|png|bmp|gif)$","i"),
+						reg_music_suffix:new RegExp('^(mp3)$','i'),
+						reg_int:new RegExp("^[1-9]\\d*$"),
+						reg_mobile:new RegExp("^1[3|4|5|8|7][0-9]\\d{4,8}$"),
+						reg_organizer_name:/^[0-9a-zA-Z\u0391-\uFFE5]+$/
+		};
+		var layer = layui.layer;
+		var laydate = layui.laydate;
+		var layedit = layui.layedit;
+	</script>
+	<script type="text/javascript" src="{$publicserver}/public/activity/js/common.js"></script>
+		<style>
+	.up_button .file {
+	    position: relative;
+	    display: inline-block;
+	    background: #D0EEFF;
+	    border: 1px solid #99D3F5;
+	    padding: 0px 12px;
+	    overflow: hidden;
+	    color: #1E88C7;
+	    text-decoration: none;
+	    text-indent: 0;
+	    line-height: 34px;
+		height: 34px;
+	}
+	.up_button .file input {
+	    position: absolute;
+	    font-size: 100px;
+	    right: 0;
+	    top: 0;
+	    opacity: 0;
+	}
+	.up_button .file:hover {
+	    background: #AADFFD;
+	    border-color: #78C3F3;
+	    color: #004974;
+	    text-decoration: none;
+	}
+	.tree {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}									
+</style>
+</head>
+<body>
+	<div class="loader" style="display:none">
+		<div class="la-ball-clip-rotate">
+			<div></div>
+		</div>
+	</div>
+<div class="main">
+<div class="container" style="border:1px solid #c7c7c7;">
+<div class="class="panel panel-content main-panel-content "">
+
+	
+<div class="content-head panel-heading main-panel-heading" style="height:55px;border-bottom:1px solid #e7e7eb;">
+				<a href="javascript:void(0);" class="we7-head-back"><!--<i class="wi wi-back-circle"></i>--></a>
+				<span class="we7-head-account"><a href="javascript:void(0);">微信大屏幕</a></span>
+				<div class="pull-right" style="height:55px;line-height:30px;padding-right:20px;">
+					<a href="/activity/manage" style="margin-right:20px;">操作说明</a>
+					<a href="/activity/logout">退出</a>
+				</div>
+</div>
+
+<div class="panel-body clearfix main-panel-body" style="padding:0;">
+
+<div class="left-menu">
+						<div class="left-menu-content">
+							<div class="panel panel-menu">
+								<ul class="list-group">
+								{foreach from=$functionList item=item}
+								   {if $item.checked}
+									<li class="list-group-item ">
+										<a href="{$item.url}" class="text-over">
+											<i class="{$item.className}"></i> {$item.name}								
+										</a>
+									</li>
+									{/if}
+								{/foreach}
+								</ul>
+							</div>
+						</div>
+</div>
+
+<div class="right-content">

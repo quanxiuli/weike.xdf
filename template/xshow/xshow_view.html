@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8" />
+    <meta name="baidu-site-verification" content="2MKKT6mbuL" />
+    	<title>{$confinfo2[title]}</title>
+    <meta name="keywords" content="" />
+    <meta id="metaDescription" name="description" content="{$confinfo2[title]}" />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <meta name="viewport" id="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="{$publicserver}/public/xshow/view/css/eqShow-2.1.5.3.css?v=1439295824"/>
+    <script> var  your_demain='{$config.site_url}';
+   			var  your_webname='{$config.site_name}';
+   var  logo_url='{$config.site_name}';
+     var  lastpagelink='{$config.lastpagelink}';
+	 var lastpagetext_color='{$config.lastpagetext_color}';
+    var  lastpagetext='{$config.lastpagetext}';
+	var jubao_link='{$config.jubao_link}';
+   </script>
+     <link rel="stylesheet" href="{$publicserver}/public/xshow/css/my52.css"/>
+</head>
+<body>
+
+<div id="ppitest" style="width:1in;visible:hidden;padding:0px"></div>
+<div class="p-index main phoneBox" id="con" style="display: none;">
+    <div class="top"></div>
+    <div class="phone_menubar"></div>
+    <div class="scene_title_baner" style="display: none">
+        <div class="scene_title">{$confinfo2.title}</div>
+    </div>
+    <div class="nr" id="nr">
+        <div id="audio_btn" class="off">
+            <div id="yinfu"></div>
+            <audio loop src="" id="media" autoplay="" preload></audio>
+        </div>
+    </div>
+    <div class="bottom"></div>
+</div>
+
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+    <script src="{$publicserver}/public/xshow/css/waiwan/jquery.min.js"></script>
+<script >
+ (function (window, $) {
+    window.PREFIX_URL = "http://{$domain}/xshow/";
+    window.PREFIX_S1_URL =  "http://{$domain}/xshow/";
+    window.PREFIX_S2_URL ="http://{$domain}/xshow/";
+	window.PREFIX_S6_URL ="http://{$domain}/xshow/";
+    window.PREFIX_HOST = "http://{$domain}/xshow/";
+    window.PREFIX_HOST1 = "http://{$domain}/xshow/";
+	window.PREFIX_SHOW_HOST = "http://{$domain}/xshow/";
+	window.TRACK_HOST = "http://{$domain}/public/xshow/view/js/";
+    window.PREFIX_FILE_HOST = "{$publicserver}/public/uploads/xshow/";
+	window.PREFIX_COMPANY_HOST_ARRAY = [
+	                                    "http://{$domain}",
+	                                	"http://{$domain}"
+	                                  ];
+	window.OLD_FILE_HOST="http://{$domain}/xshow/";
+    window.CLIENT_CDN ="{$publicserver}/public/xshow/";
+    window.clientWidth = document.documentElement.clientWidth;
+    window.clientHeight = document.documentElement.clientHeight;    
+	window.PREFIX_HOST_ARRAY = [
+	                            "http://{$domain}",
+	                        	"http://{$domain}"
+		];
+	window.SCENEID="{$confinfo2.scenecode_varchar}";   
+	window.SCENEURL="{$confinfo2.url}";  
+       
+})(window, jQuery)
+</script>
+ <script type="text/javascript" src="{$publicserver}/public/xshow/view/eqShow-preview-2.1.5.3.js?v=1439295824"></script>
+  
+<script>
+	var scene = {id:'{$confinfo2.workid}',code:'{$sceneinfo.scenecode_varchar}',name:'{$sceneinfo.scenename_varchar}',bgAudio:{"url":"{$sceneinfo.musicurl_varchar}","name":"","id":202382032},pageMode:"{$sceneinfo.movietype_int}",cover:"{$sceneinfo.cover}",property:{$sceneinfo.property}};
+	 	eqShow.bootstrap();
+	   (function () {
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/i.test(navigator.userAgent) ||
+                    window.innerWidth < 500;
+        }
+
+        function setScale() {
+            if (window.top !== window) {
+                return;
+            }
+            var pageScale = 1;
+
+            var width = document.documentElement.clientWidth || 320;
+            var height = document.documentElement.clientHeight || 486;
+
+
+            if (width / height >= 320 / 486) {
+                pageScale = height / 486;
+            } else {
+                pageScale = width / 320;
+            }
+             console.log('screen.width', width, 'screen.height', height, 'setScale', pageScale);
+            // meta
+            var content = 'width=320, initial-scale=' + pageScale + ', maximum-scale=' + pageScale + ', user-scalable=no';
+            document.getElementById('viewport').setAttribute('content', content);
+        }
+        
+        if (isMobile()) {
+            setScale();
+        }
+
+    })();
+	
+</script>
+ <script>
+          wx.config({
+			  debug: false,
+			  appId: '{$confinfo.appId}',
+			  timestamp: "{$confinfo.timestamp}",
+			  nonceStr: '{$confinfo.nonceStr}',
+			  signature: '{$confinfo.signature}',
+			  jsApiList: [
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage'
+			  ]
+		  });
+          wx.ready(function () {
+		  
+			  var shareData64 = {
+				title: '{$confinfo2.title}',
+				desc: '{$confinfo2.desc}',
+				link: '{$confinfo2.url}',
+				imgUrl:  PREFIX_FILE_HOST  +'{$confinfo2.imgsrc}',
+				type: 'link', // 分享类型,music、video或link，不填默认为link
+			    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			  };
+			  wx.onMenuShareAppMessage(shareData64);
+			  wx.onMenuShareTimeline(shareData64);
+			  $("#media").get(0).play();
+			  alert('{$confinfo2.url}');
+          });
+		  
+		  
+		wx.error(function (res) {
+			//alert(res.errMsg);
+		});
+        </script>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>筹课活动</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta itemprop="name" content="筹课"/>
+    <meta itemprop="description" name="description"  content="筹课"/>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/raiseClass/style.css">
+      <script type="text/javascript">
+		var PREFIX_URL = "http://{$domain}/chouke/";
+		var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+		var Global = {
+			    actionURL:PREFIX_URL+"ajax_service",
+			    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			    previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+			    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+			    cartID:"opt",
+			    buyDomain:"http://bm.xdf.cn"//正式
+		};
+	</script>
+</head>
+<body>
+
+<!-- 新东方app下载 zsj-->
+<div class="app-download app-download-fixed">
+    <div class="appmessage"><span></span><p></p></div>
+    <div class="btn-down-container">
+        <button class="btn-down">立即下载</button>
+        <div class="border-shadow"></div>
+    </div>
+    <img src="{$publicserver}/public/chouke/images/raiseClass/close-down.png" class="down-close" />
+</div>
+
+<section class="page page-animation page-green" style="margin-top:51px;">
+    <div class="page-container">
+        <header class="page-bg page-bg-large">
+            <div class="boat-bg"></div>
+            <div class="ck-head">
+                 <div class="t-logo"></div>
+                 <div class="ck-count-down">
+                     <span></span>
+                     <span id="timeunit"><i>0</i><i>0</i><span style="display: none"></span><i style="display: none">0</i><i style="display: none">0</i></span>
+                     <span id="timename"></span>
+                 </div>
+                 <div class="one"></div>
+                 <div class="circle"></div>
+                 <div class="gong unreverse"><img src="{$publicserver}/public/chouke/images/raiseClass/gong.png" class="img-responsive" alt=""></div>
+                 <div class="left-ball"><img src="{$publicserver}/public/chouke/images/raiseClass/left-airballoon.png" class="img-responsive" alt=""></div>
+                 <div class="right-ball"><img src="{$publicserver}/public/chouke/images/raiseClass/xsck_success_bg1_pre.png" class="img-responsive" alt=""></div>
+                 <div class="xsck-bgactivity">
+                     <!--<div class="text3"><em>50<b>万</b></em>课程福利大放送</div>-->
+                     <div class="text4 big-name"></div>
+                 </div>
+                 <div class="shake-boat"><img src="{$publicserver}/public/chouke/images/raiseClass/shake-boat.png" class="img-responsive" alt=""></div>
+            </div>
+        </header>
+
+        <!--跑马灯-->
+        <div class="chou-already clear">
+            <marquee behavior="scroll" direction="left" scrolldelay="140" scrollamount="10">
+            </marquee>
+        </div>
+
+        <!-- 课程信息区 -->
+        <div class="xsck-wrap" style="margin-top:-20px;">
+            <div class="xsck-info-wrap">
+                <div class="xsck-bg">
+                    <div class="xsck-bgl"></div>
+                    <div class="xsck-bgs"></div>
+                </div>
+                <div class="xsck-content">
+                    <p class="text1 color1"><span></span></p>
+                   <p class="text2 color2"></p>
+                   <div class="text4">
+                       <p class="color4 inPersonNum"></p>
+                       <p class="color4 fitPerson"></p>
+                    </div>
+                    <p class="text3 color3"></p>
+                </div>
+            </div>
+            <div class="xsck-border-wrap">
+                <div class="xsck-circle"></div>
+            </div>
+        </div>
+        <!--筹课list-->
+        <div class="">
+            <!-- 活动说明-zsj -->
+            <div class="xsck-remark">
+                <div class="remark-text1 f18">活动说明</div>
+                <div class="remark-text2">
+                    <div class="lines" id="overheight1">
+                        <p class="text-title"><span>1</span>筹课规则</p>
+                        <p class="text-remark"></p>
+                        <div class="text-detail">
+                            <p class="new">
+                        	</p>
+                        </div>
+                        <p class="details-btn details-btn-zhan"><a class="look_detail">查看详情</a></p>
+                        <p class="details-btn details-btn-shou" style="display:none;"><a class="look_detail">收起</a></p>
+                    </div>
+                    <div id="overheight2">
+                        <p class="text-title"><span>2</span>课程说明</p>
+                        <p class="text-remark"></p>
+                        <div class="text-detail">
+                            <p class="old">
+                            </p>
+                        </div>
+                        <p class="details-btn details-btn-zhan"><a class="look_detail">查看详情</a></p>
+                        <p class="details-btn details-btn-shou" style="display:none;"><a class="look_detail">收起</a></p>
+                    </div>
+                </div>
+                <div class="remark-text3">
+                    <p class="tel-title">官方客服</p>
+                    <p class="tel-text serviceCall"></p>
+                </div>
+            </div>
+            <!-- 关注公众号-zsj -->
+            <div class="QR-code public-number pnfix">
+                <p class="hint f14 text-center">长按 - 识别图中二维码 - 并关注</p>
+                <p class="hint2 text-center f12">北京优能中学官方公众账号</p>
+                <div class="icon-img">
+                    <img class="weixin mR25" src=""  alt=""/>
+                </div>
+            </div>
+        </div>
+        <!--筹课list end-->
+    </div>
+    <div class="fixed fixed-b">
+        <div class="start-btn start-btngray">
+            <div class="bg1 hint-help"><a class="bg1 close" href="javascript:void(0);"></a></div>  <!--提示层-->
+            <button class="f16 green" id="askFriend"><span>告诉朋友</span></button>
+            <button class="f16 red new" id="startLaunch"><span>发起筹课</span><br/><span class="font-small"></span></button>
+        </div>
+    </div>
+</section>
+<!--index end-->
+
+<!--微信弹框-->
+<div class="tan-box tan-weixin">
+	<div class="tan"></div>
+    <div class="con"><img src="{$publicserver}/public/chouke/images/raiseClass/xsck_gzh1.png"  alt=""/></div>
+</div>
+<!--活动结束/未开始弹框 通用-->
+<section class="popup pop1">
+    <a class="close" href="javascript:void(0)"></a>
+    <div class="head popupBg"></div>
+    <div class="cont-bg"></div>
+    <div class="cont">
+        <div class="end">该活动结束啦</div>
+    </div>
+</section>
+
+<!--活动已结束 弹框-->
+<section class="course-desc end-box">
+    <a class="close" href="javascript:void(0)"></a>
+    <div class="head f20 text-center">活动已结束</div>
+    <div class="cont-bg"></div>
+    <div class="cont white pb10" style="min-height:30px;">
+        <div class="cont-wrap tanover-down">
+        </div>
+    </div>
+</section>
+
+<!--输入手机号，参与活动弹框-->
+<div class="tan-chouke-launch">
+    <h1>输入手机号，马上参加活动！
+        <span class="close"><img src="{$publicserver}/public/chouke/images/raiseClass/close1.png" /></span>
+    </h1>
+    <div class="name-box">
+        <ul class="list1">
+            <li><input type="text" class="inp tel" placeholder="请输入手机号码" /></li>
+            <!--<li>
+                <input type="text" class="inp" placeholder="请输入验证码" />
+                <span class="yanzm"><img src="images/raiseClass/yzm1.png" /></span>
+            </li>-->
+            <li>
+                <input type="text" class="inp sms" placeholder="请输入短信码" />
+                <span class="yanzm2">发送验证码</span>
+            </li>
+        </ul>
+        <p class="error-red"></p>
+        <input type="button" value="确定" class="button-ok" />
+        <p class="text-tips">
+            请录入您的手机号号码作为中奖凭证提交，您的
+            信息仅作为新东方本次活动登记信息使用，并全
+            程保密。
+        </p>
+    </div>
+</div>
+
+<!--告诉朋友弹框-->
+<section class="mask-fq" id="tan1">
+    <img src="{$publicserver}/public/chouke/images/raiseClass/askfriend.png" class="img-askfriend" />
+</section>
+
+<!--火速分享弹框-->
+<div class="mask"></div>
+<section class="mask-fq" id="tan2">
+    <img src="{$publicserver}/public/chouke/images/raiseClass/askfriend2.png" class="img-askfriend" />
+</section>
+
+<!--就差一步弹框 输入手机-->
+<section class="popup popup-award" id="fillinInfo">
+    <a class="close close-hui" href="javascript:void(0)"></a>
+    <div class="cont-bg cont-bg2">
+
+    </div>
+    <div class="cont pb10">
+        <div class="blank_cet">
+            <h1 style="font-size:18px;">为了能及时通知您领奖<br>请确定您的联系方式！</h1>
+        </div>
+        <div class="blank_10"></div>
+        <div class="fillin">
+            <div class="itme">
+                <label>姓&nbsp;&nbsp;&nbsp;名：</label>
+                <span class="hou-color-hui">李雷</span>
+            </div>
+            <div class="itme itme-code">
+                <label>手机号：</label>
+                <span class="hou-color-hui">13823435678</span>
+            </div>
+
+        </div>
+        <div class="blank_20"></div>
+        <button class="btn btn-green" style="background:#17d081;">发起筹课</button>
+        <div class="blank_10"></div>
+    </div>
+</section>
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="{$publicserver}/public/chouke/js/require.js"></script>
+<script src="{$publicserver}/public/chouke/js/requireConfig.js"></script>
+<script>
+    require(['jquery'], function() {
+        require(['Barrett','BigInt','Prng4','Rng','RSA','Base64','Jsbn','RSAUtil','util','md5Util','layer'], function() {
+            require(['config'], function() {
+                require(['common'], function() {
+                    $(function(){
+                        indexFnPre();
+                        runFn();
+ 
+                        $('*').off('click touchend').on('click touchend',function(){
+                            return false
+                        })
+                    });
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

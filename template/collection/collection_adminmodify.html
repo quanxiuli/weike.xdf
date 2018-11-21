@@ -1,0 +1,144 @@
+{include file="collection/collection_header.html"}
+<div class="GlobalSetting2">
+                <div class="CollectionAll">
+                    <!--收集项管理标题栏 开始-->
+                    <div class="Collection_UP">
+                        <p>权限设置</p>
+                    </div>
+                    <!--收集项管理标题栏 结束-->
+                    <!--收集项管理结果栏 开始-->
+                    <div class="Collection_Down_QXSZ_BD" style="height: 124px;">
+                        <form id="adminAddForm">
+                            <div class="form_Ipt"style="height:360px;">
+                                <div class="QXSZ_BD_M QXSZ_BD_M_1">
+                                    <label for="name">账号：</label>
+                                    <input id="email" name="email" placeholder="请输入账号" type="text" value="{$admin.email}" disabled>
+                                   <!-- <span><a href="javascript:void(0);" style="color:#00ba97;">邮箱检测</a></span>-->
+                                </div>
+                                <div class="QXSZ_BD_M QXSZ_BD_M_2">
+                                    <label for="adminType">用户类别：</label>
+                                    <select name="adminType" id="adminType" disabled>
+                                        <option value="0">请选择</option>
+                                        {foreach from=$adminType key=key item=item}
+                           				<option value="{$key}" {if $key eq $admin.isSuperAdmin}selected{/if}>{$item}</option>
+                                		{/foreach}
+                                    </select>
+                                </div>
+                                <div class="QXSZ_BD_M QXSZ_BD_M_2">
+                                    <label for="school">所属学校：</label>
+                                    <select name="school" id="school" disabled>
+                                        <option value="0">请选择</option>
+                                        {foreach from=$schools key=key item=item}
+		                                <optgroup label="{$key}">
+		                                {foreach from=$item key=k item=i}
+		                                	<option value="{$k}" {if $k eq $admin.schoolid}selected{/if}>{$i}</option>
+		                                {/foreach}
+		                                </optgroup>
+		                                {/foreach}
+                                    </select>
+                                </div>
+                                {if $admin.isSuperAdmin gt 2}
+								<div class="QXSZ_BD_M QXSZ_BD_M_2">
+								    <label for="school">所属部门：</label>
+								    <select name="dept" id="dept" disabled>
+							        	<option value="{$deptAdmin.id}">{$adminDept}</option>
+								    </select>
+								</div>
+                                {/if}
+                                 <div class="QXSZ_BD_M QXSZ_BD_M_2">
+                                    <label for="school">用户状态：</label>
+                                    <select name="adminStatus" id="adminStatus">
+                                        <option value="0">请选择</option>
+                                        {foreach from=$adminStatus key=key item=item}
+		                                	<option value="{$key}" {if $key eq $admin.isEnabled}selected{/if}>{$item}</option>
+		                                {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form_KG">
+                                <div {if $adminEnableImg eq 2}style="display:none;"{/if}>
+                                    <span>图片上传:</span>
+                                    <input id="enableImg" name="enableImg" class="choice-box_hind" type="checkbox" {if $admin.isEnableImg eq 1}checked{/if}>
+                                    <label class="slider-v1" for="enableImg"></label>
+                                </div>
+                                <div {if $adminEnableAtt eq 2}style="display:none;"{/if}>
+                                    <span>附件上传:</span>
+                                    <input id="enableAtt" name="enableAtt" class="choice-box_hind" type="checkbox" {if $admin.isEnableatt eq 1}checked{/if}>
+                                    <label class="slider-v1" for="enableAtt"></label>
+                                </div>
+                            </div>
+                            <div class="form_Btn">
+                            	<input type="hidden" id="id" value="{$admin.id}" />
+                                <span class="form_Btn_BC" id="adminModify">保存</span>
+                                <span class="form_Btn_FH" id="back">返回</span>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!--收集项管理结果栏 结束-->
+                </div>
+</div>
+{include file="collection/collection_footer.html"}
+<script type="text/javascript">
+$(function(){
+	$('#back').click(function(){
+		window.location.href = '/collection/adminlist';
+	});
+});
+$('#adminModify').click(function(){
+  var form = $('#adminAddForm');
+  var id = $('#id').val();
+  var adminType = form.find('select[name=adminType]').val();
+  if(adminType == 0){
+  	CollectionDialogBox.alert('请选择管理员类别',{icon:4});
+  	return false;
+  }
+  var school = form.find('select[name=school]').val();
+  if(school == 0){
+  	CollectionDialogBox.alert('请选择管理员所属学校',{icon:4});
+  	return false;
+  }
+  var adminStatus = form.find('select[name=adminStatus]').val();
+  if(adminStatus == 0){
+  	CollectionDialogBox.alert('请选择管理员状态',{icon:4});
+  	return false;
+  }
+  var enableImg = 1;
+  var enableImgCheckBox = form.find('input[name=enableImg]');
+  if(!enableImgCheckBox.prop('checked'))enableImg = 2;
+  var enableAtt = 1;
+  var enableAttCheckBox = form.find('input[name=enableAtt]');
+  if(!enableAttCheckBox.prop('checked'))enableAtt = 2;
+  var params = {
+  	id:id,
+  	adminType:adminType,
+  	school:school,
+  	status:adminStatus,
+  	enableImg:enableImg,
+  	enableAtt:enableAtt
+  };
+  console.log(params);
+  var num = '';
+  $.ajax({
+  	url:"/collection/ajax_adminmodify",
+  	type:'POST',
+  	dataType:'JSON',
+  	data:params,
+  	beforeSend:function(){
+  		num = CollectionDialogBox.load(2, 10);
+  	},
+  	success:function(data){
+  		CollectionDialogBox.close(num);
+  		if(data.result){
+  			CollectionDialogBox.alert(data.message,{icon:6},function(index){
+  				window.location.href = '/collection/adminlist';
+  		});
+  		}else{
+  			CollectionDialogBox.alert(data.message,{icon:5});
+  		}
+  	}
+  });
+});
+
+</script>

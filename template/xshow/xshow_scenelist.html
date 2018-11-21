@@ -1,0 +1,231 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							场景模板列表
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">首页</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="/xshow/userscenelist">场景管理</a>/
+								<a href="/xshow/scenelist">模板管理</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="javascript:void(0);">场景模板列表</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="tabbable tabbable-custom tabbable-full-width">
+						<ul class="nav nav-tabs">
+                            <li class="{if $s_cate eq 0}active{/if}"><a  href="/xshow/scenelist">全部</a></li>
+                            {foreach from=$sceneCategory key=k item='item'}                                
+								<li class="{if $s_cate eq $k}active{/if}"><a href="/xshow/scenelist?c={$k}" >{$item}</a></li>
+                            {/foreach}
+						</ul>
+                        </div>
+                        
+                        
+						<div class="tab-content">
+                            <div class="row-fluid search-forms search-default">
+									<form class="form-search" action="#" method="GET">
+										<div class="chat-form">
+											<div class="input-cont">   
+												<select id="sceneCategory" name="c" onChange="changeSceneType()" style="width:120px" >
+												<option value="0" {if $s_cate eq 0}selected{/if}>请选择</option>
+												{foreach from=$sceneCategory key=k item='item'}
+											    <option value="{$k}" {if $s_cate eq $k}selected{/if}>{$item}</option>
+										        {/foreach}
+									           </select>- 
+									           <select  id="sceneSubCategory" name="sub" style="width:120px" >
+												<option value="0">请选择</option>
+												</select>
+												<span style="line-height:34px;">来源：</span>
+												<select name="is_xdf">
+												<option value="0">请选择</option>
+												{foreach from=$is_xdf_scene key=k item=item}
+												<option value="{$k}"{if $is_xdf eq $k}selected{/if}>{$item}</option>
+												{/foreach}
+												</select>
+												<span style="line-height:34px;">名称：</span>
+     											<input type="text"  name="keyword"  value="{$keyword}" placeholder="请输入关键词..." class="m-wrap" style="width:200px">
+												<button type="submit" class="btn green" style=" ">搜 索 &nbsp; <i class="m-icon-swapright m-icon-white"></i></button>
+											</div>
+
+
+										</div>
+									</form>
+								</div>
+                                
+                                
+                    
+                       
+                  
+                        {foreach from=$sceneList item='item'}
+                        <div class="row-fluid portfolio-block">
+									<div class="span6 portfolio-text">
+										<img src="{$publicserver}/public/uploads/xshow/{$item.thumbnail_varchar}" class="thumbnail" title="{$item.scenename_varchar}" style="margin:10px 10px 0px 15px;width:{$item.thumbnail_varchar_width}px; height:{$item.thumbnail_varchar_height}px;cursor:pointer;" onclick="ajaxpreview($(this),'{$item.scenecode_varchar}');">
+										<div class="portfolio-text-info">
+										  	<h4> {$item.scenename_varchar}</h4>
+											<p>添加时间：<span> {$item.createtime_time}</span></p>
+											<p>类别： {$item.scenetype_name}</p>
+                                			<p>翻页方式: <code>{$item.movietype_name}</code></p>
+									  	</div>
+
+						  			</div>
+									<div class="span4">                     
+										<div class="portfolio-info">
+										场景关闭情况
+										<p>
+										{if $item['showstatus_int'] == 1}
+											<a href="javascript:void(0);" title="点击关闭" class="btn purple-stripe" style="color:#0af005;" onclick="setSceneStatus('{$item.sceneid_bigint}','{$item.showstatus_int}')"><i class="icon-play"></i> 开启</a>
+										{else}
+											<a href="javascript:void(0);" title="点击开启" class="btn purple-stripe" style="color:#000;" onclick="setSceneStatus('{$item.sceneid_bigint}','{$item.showstatus_int}')"><i class="icon-pause"></i>  关闭</a>
+										{/if}
+										</p>
+										</div>
+										<div class="portfolio-info">
+											使用次数
+										  	<code>{$item.usecount_int}次</code>
+										</div>
+									</div>
+									<div class="span2 portfolio-btn" style="float: right;">
+										<a href="javascript:void(0);" onclick="ajaxpreview($(this),'{$item.scenecode_varchar}');" class="btn blue " title="{$item.scenename_varchar}" style="width:47%">
+											<i class="icon-eye-open"></i> 预览
+										</a>
+										<a href="/xshow/sceneedit?id={$item.sceneid_bigint}" class="btn blue " style="width:47%" >
+											<span><i class="icon-pencil"></i>  修改</span>
+										</a>
+										<a href="javascript:void(0);" onClick="delScene($(this),{$item.sceneid_bigint})" class="btn blue " style="width:47%">
+											<span><i class="icon-remove"></i>   删除</span>
+										</a>
+									</div>
+
+						</div>
+						{/foreach}  
+                        <div class="space5"></div>
+                        <div class="pagination pagination-right">
+							<div class="pages">{$page}</div>
+						</div>
+                                </div>
+                                </div>
+                                 </div>
+                                 </div>
+                                <style>
+                                .center{ text-align:center}
+								.center .p{ line-height:30px}
+                                </style>
+                                <div style="display:none;" id="sceneModifySubCategoryJson">{$sceneModifySubCategoryJson}</div>
+                                <input type="hidden" id="subCategoryValue" value="{$sub_cate}" />
+                                {include file="xshow/xshow_footer.html"}                             
+ <script type="text/javascript">
+	 var scesceneModifySubCategoryJson = $('#sceneModifySubCategoryJson').html();
+	 var scesceneModifySubCategory = JSON.parse(scesceneModifySubCategoryJson);
+	 var subCategoryValue = $('#subCategoryValue').val();
+	 $(function(){
+		 changeSceneType();
+	 });
+	 function changeSceneType(){
+	 	var s_cate = $('#sceneCategory').val();
+	 	var sub_cate_option = "<option value='0'>请选择</option>";
+	 	if(s_cate > 0){
+	 		$.each(scesceneModifySubCategory,function(index,entry){
+	 			if(s_cate == index){
+	 				$.each(entry,function(i,e){
+	 					sub_cate_option += "<option value='"+i+"'";
+	 					if(subCategoryValue == i){
+	 						sub_cate_option += " selected ";
+	 					}
+	 					sub_cate_option += ">"+e+"</option>";
+	 				});
+	 				return false;
+	 			}
+	 		});
+	 	}
+	 	$('#sceneSubCategory').empty().append(sub_cate_option);
+	}
+	function ajaxpreview(obj,styleid) {
+		title = obj.attr('title');
+		layer.open({
+		  type: 2,
+		  title:title,
+		  shadeClose:true,
+		  area: ['323px','678px'] ,
+		  content: '/xshow/v/'+styleid+'?a=1'
+		});
+		return false;
+	}
+	function setSceneStatus(sceneId,status_int){
+		var tpl_msg = '模板';
+		var msg = '您确定要关闭该'+tpl_msg+'吗？';
+		if(status_int == 2){
+			msg = '您确定要开启该'+tpl_msg+'吗？';
+		}
+		layer.confirm(msg,{icon:5},function(index){
+			$.ajax({
+				url:'/xshow/ajax_setscenestatus',
+				type:'POST',
+				dataType:'json',
+				data:{sceneId:sceneId},
+				beforeSend:function(){
+					num = layer.load(2, {time: 10*1000});
+				},
+				success:function(data){
+					layer.close(num);
+					if(data.code){
+						layer.alert(data.msg, {icon: 5},function(index){
+							window.location.reload();
+						});
+					}else{
+						layer.alert(data.msg, {icon: 6});
+					}
+				}
+			});
+		});
+	}
+	function delScene(obj,sceneId){
+		var name = $.trim(obj.parent().prev().prev().find('h4').text());
+		var msg = '';
+		if(name == ''){
+			msg = '您确认要删除该场景吗？';
+		}else{
+			msg = '您确定要删除名称为['+name+']的场景吗？';
+		}
+		layer.confirm(msg,{icon:5},function(index){
+			$.ajax({
+				url:'/xshow/ajax_delscene',
+				type:'POST',
+				dataType:'json',
+				data:{sceneId:sceneId},
+				beforeSend:function(){
+					num = layer.load(2, {time: 10*1000});
+				},
+				success:function(data){
+					layer.close(num);
+					if(data.code){
+						layer.alert(data.msg, {icon: 5},function(index){
+							window.location.reload();
+						});
+					}else{
+						layer.alert(data.msg, {icon: 6});
+					}
+				}
+			});
+		});
+	}
+</script>
+
+
+                              
+                             
+      

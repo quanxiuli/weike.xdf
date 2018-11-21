@@ -1,0 +1,219 @@
+{include file="collection/collection_header.html"}
+
+<div class="GlobalSetting2 GlobalSetting3">
+
+                <div class="sectionr">
+                    <!--我的收集项-->
+                    <div class="rc_sjx">
+                        <p class="rc_wdsjx floatL clear">我的收集项</p>
+                    </div>
+                    <!--我的收集项-->
+
+
+                    <!-- 收集项三项-->
+                    <div class="sjx_bt">
+                        <div class="sjx_mc">
+                            <span class="sjx_mc1">收集项名称 : </span>
+                            <input type="text" name="collectionname" id="collectionname" value="" placeholder="请输入收集项名称" class="sjx_ipt"/>
+                            <p class="wzxz"><span id="result">0</span>/25</p>
+                            <span class="sjx_bt1">(必填)</span>
+                        </div>
+                        <p class="sjx_mc a">
+                            <span class="sjx_mc1">收集项类型 : </span>
+                            <select name="" class="sjx_xl"  id="collectiontype" onchange="func()">
+                                <option value="">请选择类型</option>
+                                <option value="1">营销类</option>
+                                <option value="2">服务类</option>
+                                <option value="3">其他</option>
+                            </select>
+                            <span class="sjx_bt1">(必填)</span>
+                        </p>
+                        <p class="sjx_mc a">
+                            <span class="sjx_mc1">采集时间 : </span>
+                            <input type="text" name="collectionstart" id="collectionstart"  placeholder="请选择开始日期" class="datet"  data-options="{'type':'YYYY-MM-DD','beginYear':2018,'endYear':2099}"/>
+                            ———
+                            <input type="text" name="collectionend" id="collectionend"  placeholder="请选择结束日期" class="datet a" data-options="{'type':'YYYY-MM-DD','beginYear':2018,'endYear':2099}"/><span class="sjx_bt1">(必填)</span>
+                        </p>
+                    </div>
+                    <!-- 收集项三项-->
+
+                    <!--选择模板-->
+                    <div class="xzmb">
+                        <p class="xzmba">选择模板：</p>
+                        <div class="xzmbb">
+                        <div class="xzmbb1 active floatL clear template3">
+                                <div class="yulan">
+                                    <span>预览</span>
+                                    <div class="yulan_Fixed">
+                                        <div><img src="{$publicserver}/public/collection/images/yygj2/WJWXD.jpg" alt=""/></div>
+                                    </div>
+                                </div>
+                                <p class="mbtu b"><img src="{$publicserver}/public/collection/images/yygj2/wjmb.jpg" alt=""/></p>
+                                <p class="wxmb b">问卷模板</p>
+                                <p class="mbms"><span></span>适用问卷和长标题</p>
+                            </div>
+                            <div class="xzmbb1  a  floatL clear template1">
+                                <div class="yulan">
+                                    <span>预览</span>
+                                    <div class="yulan_Fixed">
+                                        <div><img src="{$publicserver}/public/collection/images/yygj2/WXD.jpg" alt=""/></div>
+                                    </div>
+                                </div>
+                                <p class="mbtu"><img src="{$publicserver}/public/collection/images/yygj2/wxmb.jpg" alt=""/></p>
+                                <p class="wxmb">微信模板</p>
+                                <p class="mbms"><span></span>微信应用风格</p>
+                            </div>
+                            <div class="xzmbb1 a floatL clear template2">
+                                <div class="yulan">
+                                    <span>预览</span>
+                                    <div class="yulan_Fixed">
+                                        <div><img src="{$publicserver}/public/collection/images/yygj2/ZTWXD.jpg" alt=""/></div>
+                                    </div>
+                                </div>
+                                <p class="mbtu a"><img src="{$publicserver}/public/collection/images/yygj2/ztmb.jpg" alt=""/></p>
+                                <p class="wxmb a">专题模板</p>
+                                <p class="mbms"><span></span>清爽简洁，提示文字必填</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--选择模板-->
+
+                    <!--设计返回-->
+                    <div class="shfh">
+                        <div class="kssj">开始设计</div>
+                        <div class="fhsj">返回</div>
+                    </div>
+
+                    <!--设计返回-->
+
+
+                </div>
+ </div>
+                
+{include file="collection/collection_footer.html"}
+
+<script>
+    if($('#collectiontype option:selected').text()=='请选择类型'){
+        $('#collectiontype').css('color','#a9a9a9');
+    }
+    function func(){
+        if($('#collectiontype option:selected').text()=='请选择类型'){
+            $('#collectiontype').css('color','#a9a9a9');
+        }else{
+            $('#collectiontype').css('color','#333');
+        }
+    }
+</script>
+<script type="text/javascript">
+	var template=3;
+	
+	$("#collectionname").bind('input', function () {
+        var bb = $('#collectionname').val();//
+        var cc = bb.substring(0, 25);//
+        $('#collectionname').val(cc);//该三行写在“input”函数外面也可以
+        var aa = $(this).val().length;
+        if (aa < 25) {
+            $('#result').html(25 - $(this).val().length);
+        } else {
+            $('#result').html("0");
+        }
+    })
+    
+    $(".template1").click(function () {
+    	template=1;
+    });
+    $(".template2").click(function () {
+    	template=2;
+    });
+    $(".template3").click(function () {
+    	template=3;
+    });
+    
+    $(".fhsj").click(function () {
+    	window.history.back();
+    });
+    
+    $(".kssj").click(function () {
+        //ajax create, get id
+        var name=$('#collectionname').val();
+        var type=$('#collectiontype').val();
+        var start=$('#collectionstart').val();
+        var end=$('#collectionend').val();
+        
+        if(name==''){
+        	CollectionDialogBox.alert('收集项名称不能为空',{icon:4});
+        	return false;
+        }
+        if(type=='' || type==undefined){
+        	CollectionDialogBox.alert('请选择收集项类型',{icon:4});
+        	return false;
+        }
+        if(start=='' || end==''){
+        	CollectionDialogBox.alert('请选择采集时间',{icon:4});
+        	return false;
+        }
+        if(template==0){
+        	CollectionDialogBox.alert('请选择模板',{icon:4});
+        	return false;
+        }
+        var param = {name:name,type:type,template:template,start:start,end:end};
+        //alert(JSON.stringify(param));
+        $.get("ajax_collectioncreate", param,
+        		  function(data){
+        			if(data.errno==0){
+        				location.href="edit?id="+data.data.id;
+        			} else{
+        				CollectionDialogBox.alert(data.msg,{icon:4});
+            			return false;
+        			}
+        });
+    })
+
+    /*预览*/
+    $(".xzmbb1 .yulan").click(function (e) {
+        $(this).children(".yulan_Fixed").css("display","block");
+        e.stopPropagation();
+    });
+    $(".yulan_Fixed").click(function (e) {
+    	$(this).css("display","none");
+        e.stopPropagation();
+    });
+    $(".xzmbb1").click(function () {
+    	$(this).addClass("active").siblings().removeClass("active");
+    })
+</script>
+
+<!--<script src="{$publicserver}/public/collection/js/jquery.date.js"></script>-->
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  laydate.render({
+    elem: '#collectionstart'
+    ,format: 'yyyy/MM/dd'
+    ,theme: 'molv'
+  });
+laydate.render({
+    elem: '#collectionend'
+    ,format: 'yyyy/MM/dd'
+    ,theme: 'molv'
+  });
+});
+//$.date('#collectionstart');
+//$.date('#collectionend');
+</script>
+<script type="text/javascript" src="http://images.xdf.cn/cms20150819/xinbannew/js/xdf_global.min.js"></script>
+<script type="text/javascript">
+    //st('default', '{}');
+</script>
+<!--<div class="ModalFrame_TTSY" id="ModalFrame_TTSY">
+    <div class="ModalFrameBox_TTSY">
+        <div class="ModalFrameBox1_TTSY"><span class="Close"></span></div>
+        <div class="ModalFrameBox2_TTSY_FB" id="ModalFrameBox2_TTSY_FB"></div>
+        <div class="ModalFrameBox3_TTSY">
+            <h4>提示信息</h4>
+            <p>发布后，在采集期间您将不能再修改。</p>
+        </div>
+        <div class="ModalFrameBox4_TTSY">确定</div>
+    </div>
+</div>-->

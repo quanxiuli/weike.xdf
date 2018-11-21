@@ -1,0 +1,768 @@
+{include file="activity/common_header.html"}
+<div class="panel panel-default">
+	<div class="panel-heading">
+	添加活动
+	</div>	
+	<div class="panel-body">
+		<ul class="nav nav-tabs" id="myTab">
+			<li class="active"><a href="#tab_style" id="a_style">活动设置</a></li>
+			<li><a href="#tab_3dqd" id="a_3dqd">签到设置</a></li>
+			<li><a href="#tab_cj" id="a_cj">抽奖设置</a></li>
+			<li><a href="#tab_yyy" id="a_yyy" style="display:none;">摇一摇设置</a></li>
+			<li><a href="#tab_dm" id="a_dm">消息上墙设置</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="tab_style">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+								活动<font color=red>整体布局</font>基本设置
+							</div>
+							<div class="panel-body">
+							<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2">内部活动 <font color='red'>*</font></label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="isxdf" id="inlineRadio1" value="1" checked> 是
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="isxdf" id="inlineRadio2" value="0"> 否
+											</label>
+										</div>
+									</div>
+								</div>
+								
+							 <div class="form-group row">
+							 	<div class="col-md-12">
+									<label class="col-md-2 control-label">本次活动主题 <font color='red'>*</font></label>
+									<div class="col-md-9">
+										<input type="text" value="" class="form-control" name="title" id="title">
+									</div>
+									<div class="col-md-10 col-md-offset-2"><span class="help-block">本次活动主题</span></div>
+								</div>
+							</div>
+							<div class="form-group row" style="display:none;">
+							 	<div class="col-md-12">
+									<label class="col-md-2 control-label">主持人登录密码 <font color='red'>*</font></label>
+									<div class="col-md-9">
+										<input type="text" value="123456" class="form-control" name="user_pwd" id="user_pwd">
+									</div>
+									<div class="col-md-10 col-md-offset-2"><span class="help-block">主持人登录密码</span></div>
+								</div>
+							</div>
+									 <div class="form-group">
+										<label class="col-xs-12 col-sm-3 col-md-2 control-label">本次活动起止时间 <font color='red'>*</font></label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" name="b_e_t" id="begin_end_time"/>
+											<span class="help-block">本次活动起止时间</strong></span>
+										</div>
+									</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2 control-label">背景墙设置 <font color='red'>*</font></label>
+										<div class="col-md-5">
+										    <select class="form-control" name="b_p" id="background_picture">
+										    <option value="0">请选择</option>
+										    {foreach from=$defaultBackgroundPictrues key=k item=item}
+										    	<option value="{$k}" data-url="{$item.url}">{$item.name}</option>
+											 {/foreach}
+											</select>
+											<input type="hidden" name="c_b_p" id="customBackgroundPicture"/>
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="progressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="progressBarValue">
+										  </div>
+										</div>
+										<div class="col-md-10 col-md-offset-2" id="backgroundPictureUpload" style="display:none;">
+											<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data" id="backgroundPictureUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="picture" id="backgroundPictureUploadInput" style="display:inline;">
+											</form>
+										</div>
+										<div class="col-md-10 col-md-offset-2"><span class="help-block">背景墙图片规格1920*1080，图片类型 jpg|jpeg|png|bmp|gif</span></div>
+										<div class="col-md-10 col-md-offset-2"><img src='' width="360" height="207" style="display:none;" id="currentBackgroundPicture"/></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2">背景音乐设置 <font color='red'>*</font></label>
+										<div class="col-md-5">
+											<select name="indexstyle" class='form-control' name="b_m" id="background_music">
+											  <option value="0">请选择</option>
+											  {foreach from=$defaultBackgroundMusics key=k item=item}
+											  <option value="{$k}" data-url="{$item.url}">{$item.name}</option>
+											  {/foreach}
+											</select>
+											<input type="hidden" name="c_b_m" id="customBackgroundMusic" />
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="musicProgressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="musicProgressBarValue">
+										  </div>
+										</div>
+										<div class="col-md-10 col-md-offset-2" id="backgroundMusicUpload" style="display:none;">
+											<form action="/activity/ajax_uploadmusic" method="POST" enctype="multipart/form-data" id="backgroundMusicUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="music" id="backgroundMusicUploadInput" style="display:inline;">
+											</form>
+										</div>
+										<div class="col-md-10 col-md-offset-2"><span class="help-block"> 音乐格式为mp3，文件不大于5M</span></div>
+										<div id="backgroundMusicControlDiv" style="display:none;">
+										<div class="col-md-10 col-md-offset-2" id="backgroundMusicName"></div>
+											<div class="col-md-10  col-md-offset-2">
+												<audio controls="controls" src="" type="audio/mpeg" id="backgroundMusicControl">
+													您的浏览器不支持 audio 标签，请使用最新版的google浏览器
+												</audio>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2">开启背景音乐 <font color='red'>*</font></label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="switch_b_m" id="inlineRadio1" value="1" checked> 是
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="switch_b_m" id="inlineRadio2" value="0"> 否
+											</label>
+										</div>
+									</div>
+								</div>
+								
+								
+						</div>
+						</div>
+			</div>
+			<div class="tab-pane" id="tab_3dqd">
+						<div class="panel panel-success">
+							<div class="panel-heading">签到墙设置</div>
+							 <div class="panel-body">
+								<div class="form-group">
+									<label class="col-md-2 control-label">是否开启3d签到墙</label>
+									<div class="col-md-9">
+										<label class="radio-inline">
+											<input type="radio" name="3dsign" value="1" checked> 是
+										</label>
+										<label class="radio-inline">
+											<input type="radio" name="3dsign" value="0">否
+										</label>
+										<span class="help-block">不开启将使用默认签到模式</span>
+									</div>
+								</div>
+							 	
+								<div class="row">
+									<div class="col-md-5">
+										<h5 style="margin-left:15px;">3D签到大屏设置</h5>
+									</div>
+								</div>
+								<hr style="margin:5px 0px 20px 0px;"/>
+								<div style="display:none;">
+								
+								<div class="form-group">
+									<label class="col-md-2 control-label">是否显示签到人数</label>
+									<div class="col-md-9">
+										<label class="radio-inline">
+											<input type="radio" name="3dsignNum" value="1" checked> 是
+										</label>
+										<label class="radio-inline">
+											<input type="radio" name="3dsignNum" value="0">否
+										</label>
+										<span class="help-block">不开启将使用默认签到模式</span>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2 control-label">3D签到背景设置</label>
+										<div class="col-md-5">
+										    <select class="form-control" name="qd_b_p" id="tDBackgroundPicture">
+											  <option value="0">请选择</option>
+											  {foreach from=$defaultThreeDBackgroundPictures key=k item=item}
+											  <option value="{$k}" data-url="{$item.url}">{$item.name}</option>
+											  {/foreach}
+											</select>
+											<input type="hidden" name="td_b_p" id="tDBPicture" />
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="threeDProgressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="threeDProgressBarValue">
+										  </div>
+										</div>
+										<div class="col-md-10 col-md-offset-2" id="tDBPictureUpload" style="display:none;">
+											<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data" id="tDBPictureUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="picture" id="tDBPictureUploadInput" style="display:inline;">
+											</form>
+										</div>
+										<div class="col-md-10 col-md-offset-2"><span class="help-block">3D签到背景图片规格1920*1080</span></div>
+										<div class="col-md-10 col-md-offset-2"><img src='' width="495" height="270" style="display:none;" id='tDBpictureImg' /></div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2">背景音乐设置 <font color='red'>*</font></label>
+										<div class="col-md-5">
+											<select name="qdMusic" class='form-control' id="qdMusic">
+											  <option value="0">请选择</option>
+											  {foreach from=$defaultQdBackgroundMusics key=k item=item}
+											  <option value="{$k}" data-url="{$item.url}">{$item.name}</option>
+											  {/foreach}
+											</select>
+											<input type="hidden" name="qd_b_m" id="qdBackgroundMusic" />
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="qdmProgressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="qdmProgressBarValue">
+										  </div>
+										</div>
+										<div class="col-md-10 col-md-offset-2" id="qdMusicUpload" style="display:none;">
+											<form action="/activity/ajax_uploadmusic" method="POST" enctype="multipart/form-data" id="qdMusicUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="music" id="qdMusicUploadInput" style="display:inline;">
+											</form>
+										</div>
+										<div class="col-md-10 col-md-offset-2"><span class="help-block"> 音乐格式为mp3，文件不大于5M</span></div>
+										<div style="display:none" id="qdMusicDiv">
+										<div class="col-md-10 col-md-offset-2" id="qdMusicName"></div>
+											<div class="col-md-10  col-md-offset-2">
+												<audio controls="controls" src=" " id="qdMusicControl" type="audio/mpeg">
+													您的浏览器不支持 audio 标签，请使用最新版的google浏览器
+												</audio>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-2 control-label">3D动画效果设置 <font color='red'>*</font></label>
+									<div class="col-md-10">
+										<table class="table table-hover" id="tDAnimationSet">
+										{foreach from=$animations key=k item=item}
+											<tr>
+												<td style="border-top:0px;">
+													<div class="col-md-2" style="padding:6px 0px 6px 0px;">
+													{$item.name}
+													</div>
+													<div class="col-md-2">
+													<button class="btn btn-primary" data-key="{$k}">开启</button>
+													</div>
+													<div class="col-md-2">
+														<input type="text" class='form-control' style="display:inline;width:50%;"/> 秒
+													</div>
+													<div class="col-md-2">
+														<input type="text" class='form-control' placeholder="排序权重"/>
+													</div>
+													<div class="col-md-2">
+														<a class="btn btn-success" data-name="{$item.name}" data-url="{$item.url}">预览</a>
+													</div>
+												</td>
+											</tr>
+											{/foreach}
+										</table>
+									</div>
+								</div>
+								<div class="row">
+									<table class="table table-condensed">
+										<tr class="success">
+											<td style="border-top: 0px solid #ddd;height:30px;line-height:30px;color: #3c763d;background-color:#dff0d8;padding-left:10px;">签到页设置</td>
+										</tr>
+									</table>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2 control-label">签到起止时间 <font color='red'>*</font></label>
+									<div class="col-sm-9">
+										<input type="text" id="qdBeginEmdTime" class="form-control"/>
+										<span class="help-block">签到起止时间</strong></span>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2 control-label">背景设置 <font color='red'>*</font></label>
+										<div class="col-md-5">
+										    <select class="form-control" id="qdPage">
+											  <option  value="0">请选择</option>
+											  {foreach from=$defaultQdBackgroundPictures key=k item=item}
+											  <option value="{$k}" data-url="{$item.url}">{$item.name}</option>
+											  {/foreach}
+											</select>
+											<input type="hidden" name="qd_p_b_p" id="qdPagePicture" />
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="qdPageProgressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="qdPageProgressBarValue">
+										  </div>
+										</div>
+										<div class="col-md-10 col-md-offset-2" id="qdPagePictureUpload" style="display:none;">
+											<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data" id="qdPagePictureUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="picture" id="qdPagePictureUploadInput" style="display:inline;"/>
+											</form>
+										</div>
+										<div class="col-md-10 col-md-offset-2"><span class="help-block">签到页背景图片规格750*1334</span></div>
+										<div class="col-md-10 col-md-offset-2"><img src='' width="150" height="167" style="display:none;" id="qdPageImg" /></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2">签到页字体颜色设置</label>
+									<div class="row">
+									<div class="col-md-2">
+										<input type="text" id="qdFontColor" class="form-control"/>
+										<span class="help-block">签到页字体颜色设置</strong></span>
+									</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2">显示字段设置</label>
+									<div class="col-md-10" id="qdParams">
+									{foreach from=$defaultParams key=k item=item}
+										<button class="btn btn-default" data-key="{$k}">{$item}</button>
+									{/foreach}
+										<span class="help-block"></span>
+									</div>
+								</div>
+								<div class="form-group">
+										<label class="col-md-2">签到成功页面文字</font></label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="qdSuccess" value="1" checked> 显示活动文字
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="qdSuccess" value="2"> 显示签到位次
+											</label>
+										</div>
+										<div class="col-md-9 col-md-offset-2">
+											<span class="help-block"><p>尊敬的来宾：</p></span>
+											<textarea style="height:100px;" class="form-control" name="qdSuccess_text" cols="50">您好！欢迎参加[活动名称]</textarea>
+											<span class="help-block"><p align="right">请入席！</p></span>
+										</div>
+								</div>
+								
+								
+								
+								<div class="form-group">
+									<label class="col-md-2">重复签到提示文字</label>
+									<div class="col-md-9">
+										<textarea style="height:100px;" class="form-control" name="qdrepeat_text" id="quit-tips" cols="50">您好！欢迎参加[活动名称]</textarea>
+										<span class="help-block"></span>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2 control-label">关注公众号</label>
+										<div class="col-md-5">
+								
+											<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data" id="weChatCodePictureUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="picture" id="weChatCodeUploadInput" style="display:inline;">
+											</form>
+									
+											<input type="hidden" name="weChatCodePicture" id="weChatCodePicture"/>
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="weChatCodePogressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="weChatCodeProgressBarValue">
+										  </div>
+										</div>
+										
+										<div class="col-md-10 col-md-offset-2"><span class="help-block">关注公众号，图片类型 jpg|jpeg|png|bmp|gif</span></div>
+										<div class="col-md-10 col-md-offset-2"><img src='' width="200" height="200" style="display:none;" id="currentWeChatCodePicture"/></div>
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>	
+			</div>
+			<div class="tab-pane" id="tab_cj">
+								<div class="panel panel-success">
+						<div class="panel-heading">
+							抽奖基本设置（<font color='red'> *为必填</font>）
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-md-2">是否开启抽奖</label>
+								<div class="col-md-10">
+									<label class="radio-inline">
+										<input type="radio" name="cjshow" value="1" checked /> 是
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="cjshow" value="0" />否
+									</label>
+									<span class="help-block">不开启将不显示</span>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2 control-label">抽奖背景 <font color='red'>*</font></label>
+										<div class="col-md-5">
+										    <select class="form-control" name="cjBg_select" id="cjBg_select">
+										    <option value="0" data-url="">请选择</option>
+										    {foreach from=$cjBg_pictures key=k item=item}
+										    	<option value="{$k}" data-url="{$item.url}" data-default="{$item.default}">{$item.name}</option>
+											 {/foreach}
+											</select>
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="cjBgProgressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="cjBgprogressBarValue">
+										  </div>
+										</div>
+										<div class="col-md-10 col-md-offset-2" id="cjBgPictureUpload" style="display:none;">
+											<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data" id="cjBgPictureUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="picture" id="cjBgPictureUploadInput" style="display:inline;">
+											</form>
+										</div>
+										<div class="col-md-10 col-md-offset-2"><span class="help-block">背景墙图片规格1920*1080，图片类型 jpg|jpeg|png|bmp|gif</span></div>
+										<div class="col-md-10 col-md-offset-2"><img src='' width="360" height="207" style="display:none;" id="cjBgPicture"/></div>
+									</div>
+								</div>
+							
+							
+							
+							<div class="row">
+							<div class="col-md-5">
+								<h5 style="margin-left:15px;">奖项设置</h5>
+							</div>
+							<div class="col-md-7" style="text-align:right;padding-right:30px;">
+								<button class="btn btn-primary" id="add_award_button" onclick="add_award(1);">添加奖项</button>
+							</div>
+							</div>
+							<hr style="margin:5px 0px 20px 0px;"/>
+							<div class="col-md-12">
+								<table class="table we7-table table-hover" id="award_list">
+									<thead class="navbar-inner">
+									<tr>
+										<th class="text-center" style="width:150px;">顺序权重</th>
+										<th class="text-center" style="width:100px">奖项名称</th>
+										<th class="text-center" style="width:100px;">奖品图片</th>
+										<th class="text-center" style="width:100px;">奖品名称</th>
+										<th class="text-center" style="width:150px;">奖品数量</th>
+										<th class="text-center" style="width:100px;">操作</th>
+									</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+							
+					</div>
+					</div>
+			</div>
+			<div class="tab-pane" id="tab_yyy">
+								<div class="panel panel-success">
+						<div class="panel-heading">
+							摇一摇基本设置（<font color="red"> *为必填</font>）
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-md-2">是否开启摇一摇</label>
+								<div class="col-md-9">
+									<label class="radio-inline">
+										<input type="radio" name="yyyshow" value="1"> 是
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="yyyshow" value="0" checked>否
+									</label>
+									<span class="help-block">说明：建议参与人数不超过500人</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2">是否去重</label>
+								<div class="col-md-9">
+									<label class="radio-inline">
+										<input type="radio" name="yyynorepeat" value="1"> 是
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="yyynorepeat" value="0" checked>否
+									</label>
+									<span class="help-block"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">摇一摇计时时间设置 </label>
+								<div class="col-md-4">
+									 <input type="text" name="yyySecond" value="" class="form-control"  style="display:inline;width:50%;"> 秒
+									<span class="help-block">说明：每一轮摇奖有效时间 建议30秒以内</span>
+								</div>
+							</div>
+								<div class="row">
+							<div class="col-md-7">
+								<h5 style="margin-left:15px;">奖项设置</h5>
+							</div>
+							<div class="col-md-5" style="text-align:right;padding-right:30px;">
+								<button class="btn btn-primary" id="add_yyy_award_button" onclick="add_award(2);">添加奖项</button>
+							</div>
+							</div>
+							<hr style="margin:5px 0px 20px 0px;"/>
+							<div class="col-md-12">
+								<table class="table we7-table table-hover" id="yyy_award_list">
+									<thead class="navbar-inner">
+									<tr>
+										<th class="text-center" style="width:150px;">顺序权重</th>
+										<th class="text-center" style="width:100px">奖项名称</th>
+										<th class="text-center" style="width:100px;">奖品图片</th>
+										<th class="text-center" style="width:100px;">奖品名称</th>
+										<th class="text-center" style="width:150px;">奖品数量</th>
+										<th class="text-center" style="width:100px;">操作</th>
+									</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+							
+							
+							
+					</div>
+					</div>
+			</div>
+			<div class="tab-pane" id="tab_dm">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+								消息上墙基本设置
+							</div>
+							<div class="panel-body">
+							<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2">是否开启</label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="msg_open" value="1"> 是
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="msg_open" value="0" checked> 否
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row" style="display:none;">
+									<div class="col-md-12">
+										<label class="col-md-2">显示顺序</label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="msg_sort" value="1" checked> 最新不循环
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="msg_sort" value="2" > 随机循环
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+								<div class="col-md-12">
+									<label class="col-md-2 control-label">消息滚动间隔 </label>
+									<div class="col-md-4">
+										 <input type="text" name="msg_roll_interval" value="3" class="form-control"  style="display:inline;width:50%;"> 秒
+										<span class="help-block">说明：建议大于等于3秒</span>
+									</div>
+									</div>
+								</div>
+							   <div class="form-group row">
+							   		<div class="col-md-12">
+										<label class="col-md-2 control-label">每人发送频率 </label>
+										<div class="col-md-4">
+											 <input type="text" name="msg_send_interval" value="0" class="form-control"  style="display:inline;width:50%;"> 秒
+											<span class="help-block">说明：0为不限制</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row" style="display:none;">
+									<div class="col-md-12">
+										<label class="col-md-2">审核形式</label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="msg_verify" value="1" checked> 人工审核
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="msg_verify" value="2" > 自动审核
+											</label>
+										</div>
+									</div>
+								</div>
+								 <div class="form-group row" style="display:none;">
+							   		<div class="col-md-12">
+										<label class="col-md-2 control-label">禁词 </label>
+										<div class="col-md-8">
+											<textarea name="sensitive_word" class="form-control" rows="3"></textarea>
+											<span class="help-block">说明：多条以#隔开，注意#为英文半角符号，请认真填写，如果不确认，请复制(<font color="red">#</font>)</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<table class="table table-condensed">
+										<tr class="success">
+											<td style="border-top: 0px solid #ddd;height:30px;line-height:30px;color: #3c763d;background-color:#dff0d8;padding-left:12px;">主办方设置</td>
+										</tr>
+									</table>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2">是否开启主办方消息</label>
+										<div class="col-md-10">
+											 <label class="radio-inline">
+											  <input type="radio" name="organizer_open" value="1" checked> 是
+											</label>
+											<label class="radio-inline">
+											  <input type="radio" name="organizer_open" value="0" > 否
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+								<div class="col-md-12">
+									<label class="col-md-2 control-label">昵称 </label>
+									<div class="col-md-6">
+										 <input type="text" name="organizer_name" class="form-control"  style="display:inline;width:70%;">
+										 <span class="help-block">说明：2到16位由字母、数字、下划线或汉字组成的字符串</span>
+									</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-12">
+										<label class="col-md-2 control-label">上传头像</label>
+										<div class="col-md-5">
+								
+											<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data" id="organizerFaceUploadForm">
+												<input type="submit" value="上传"/>
+												<input type="file" name="picture" id="organizerFaceUploadInput" style="display:inline;">
+											</form>
+									
+											<input type="hidden" name="organizerFacePicture" id="organizerFacePicture"/>
+										</div>
+										<div class="col-md-2 progress" style="padding:0px;margin-top:5px;display:none;" id="organizerFacePogressBar">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="organizerFaceProgressBarValue">
+										  </div>
+										</div>
+										
+										<div class="col-md-10 col-md-offset-2"><span class="help-block">主办方头像，图片类型 jpg|jpeg|png|bmp|gif</span></div>
+										<div class="col-md-10 col-md-offset-2"><img src='' width="200" height="200" style="display:none;" id="organizerFacePictureImg"/></div>
+									</div>
+								</div>	
+							   <div class="form-group row">
+							   		<div class="col-md-12">
+										<label class="col-md-2 control-label">预存消息 </label>
+										<div class="col-md-7">
+											<textarea id="organizer_words" name="organizer_words"></textarea>
+											<span class="help-block">说明：每行为一条信息，回车换行，每行消息不能超过25个字。</span>
+										</div>
+									</div>
+								</div>
+
+				
+								
+								
+						</div>
+						</div>
+			</div>
+			
+			
+			
+		</div>
+	</div>
+	</div>
+	<div class="pull-right"><button class="btn btn-primary" id="bigwall">提交</button></div>
+	<div id="award_form" style="display:none;">
+	<form action="/activity/ajax_uploadpicture" method="POST" enctype="multipart/form-data">
+	<table class="table table-hover">
+		<tr>
+			<td style="border-top:0px;">奖项名称</td>
+			<td style="border-top:0px;"><input type="text" class="form-control" id="awardSortName"/></td>
+		</tr>
+		<tr>
+			<td style="border-top:0px;">奖品名称</td>
+			<td style="border-top:0px;"><input type="text" class="form-control" id="awardName"/></td>
+		</tr>
+		<tr>
+			<td style="border-top:0px;">中奖数量</td>
+			<td style="border-top:0px;">
+				<input type="text" class="form-control" id="awardCount"/>
+				说明：中奖页面最多只能展示60个名单。所以每轮抽奖数量不能超过60人。
+			</td>
+		</tr>
+		<tr>
+			<td style="border-top:0px;">奖品图片</td>
+			<td style="border-top:0px;">
+				<input type="file" name="awardFile" id="awardFile"/>
+				图片规格910*486
+			</td>
+		</tr>
+		<tr>
+			<td style="border-top:0px;">顺序权重</td>
+			<td style="border-top:0px;"><input type="text" class="form-control" id="awardSortNum"/></td>
+		</tr>
+		<tr id="add_award_tip" style="display:none;">
+			<td colspan="2" class="text-center" style="color:red;"></td>
+		</tr>
+		<tr>
+			<td style="border-top:0px;" colspan="2">
+				<div class="col-md-12 progress" style="padding:0px;margin-top:5px; id="awardProgressBar">
+					<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;" id="awardProgressBarValue">
+				</div>
+			</td>
+		</tr>
+	</table>
+	</form>
+	</div>
+<div style="display:none;padding:20px 20px 0px;" id="qdFieldCustom">
+	<form class="layui-form" action="">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label" style="width:100px;">字段名称：</label>
+	    <div class="layui-input-block">
+	      <input type="text" placeholder="请输入字段名称" autocomplete="off" class="layui-input" id="qdFieldCustomLabel" maxlength="6">
+	    </div>
+	  </div>
+	  <div style="color:red;" id="labelTip"></div>
+	  </form>
+</div>
+<script type="text/javascript" src="{$publicserver}/public/activity/js/activityAdd.js"></script>
+{include file="activity/common_footer.html"}
+<script type="text/javascript" src="{$publicserver}/public/activity/colorpicker/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/activity/colorpicker/js/evol-colorpicker.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#qdFontColor').colorpicker({
+		color:'#ffffff',
+		hideButton: true,
+		displayIndicator: true,
+		history: false,
+		strings: '基本颜色色,标准颜色,Web颜色,基本颜色,Back to Palette,History,No history yet.'
+	});
+	var customButton = $('#qdParams').find('button').last();
+	//customButton.attr('title','修改名称需要按钮处于未选中状态');
+	customButton.click(function(){
+		if(customButton.hasClass('btn-primary')){
+			customButton.removeClass('btn-primary').addClass('btn-default');
+		}else{
+			var qdFieldCustomLabel = $('#qdFieldCustomLabel');
+			qdFieldCustomLabel.val(customButton.text()=='自定义'?'':customButton.text());
+			var str = "";
+			layer.open({
+			  title:'编辑字段名称'
+			  ,type: 1 
+			  ,content: $('#qdFieldCustom')
+			  ,btn: ['确定']
+			  ,yes: function(index, layero){
+			  	var labelValue = qdFieldCustomLabel.val();
+			  	if(labelValue == ''){
+			  		$('#labelTip').empty().append('请输入字段名称');
+			  	}else{
+			   		customButton.empty().append($.trim(labelValue)).removeClass('btn-default').addClass('btn-primary');
+			   		$('#labelTip').empty();
+			   		layer.close(index);
+		   			$('#qdFieldCustom').hide();
+			  	}
+			  }
+			  ,cancel:function(index, layero){ 
+				layer.close(index);
+				$('#qdFieldCustom').hide();
+			  }
+			});
+		}
+	});
+});
+</script>

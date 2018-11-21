@@ -1,0 +1,234 @@
+{include file="xshow/xshow_header.html"}
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<!-- END BEGIN STYLE CUSTOMIZER -->   
+
+						<h3 class="page-title">场景模板编辑</h3>
+
+						<ul class="breadcrumb">
+
+							<li>
+
+								<i class="icon-home"></i>
+
+								<a href="/xshow/index">首页</a> 
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li>
+								<a href="/xshow/scenelist">场景模板</a>
+								<span class="icon-angle-right"></span>
+							</li>
+
+							<li><a href="javascript:void(0);">场景模板编辑</a></li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN SAMPLE FORM PORTLET-->   
+
+		  <div class="tabbable tabbable-custom tabbable-full-width">
+							<ul class="nav nav-tabs">
+                               <li class=""><a href="/xshow/scenelist"> 场景模板列表</a></li>
+                			   <li class="active"><a href="javascript:void(0);">场景模板编辑</a></li>
+							</ul>
+                            <hr>
+                </div>
+							
+                            
+                            
+                            <div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+   <input name="ctl00$ContentPlaceHolder1$txt" type="hidden" id="ctl00_ContentPlaceHolder1_txt" />
+                
+                <form action="" class="form-horizontal" method="post" onsubmit="return modifySceneForm();">
+
+									<div class="control-group">
+
+										<label class="control-label"></label>
+
+										<div class="controls">
+
+							<img src="{$publicserver}/public/uploads/xshow/{$user.thumbnail_varchar}" width="180" height="180" />
+                            <img src="http://qr.liantu.com/api.php?w=180&m=10&text={$HTTP_HOST}/xshow/view?id={$user.scenecode_varchar}" style="border: 1px solid #CCC;"/>
+										</div>
+
+									</div>
+                            
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								
+
+									<div class="control-group">
+										<label class="control-label">模板名</label>
+										<div class="controls">
+<input name="scenename_varchar" type="text"   class="m-wrapt" value="{$user.scenename_varchar}" style="width:360px"/>
+	
+
+											<span class="help-inline"></span>
+
+										</div>
+
+									</div>
+                                    
+      
+                                    
+                                    
+                                    
+                              <div class="control-group">
+
+													<label class="control-label">翻页方式</label>
+
+													<div class="controls">
+														<select name="movietype" style="width:180px">
+															<option value="">选择</option>
+															{foreach from=$movietypelist item='item' key='key'}
+															  <option value="{$key}" {if $key == $user['movietype_int']}selected{/if}>{$item}</option>
+															  {/foreach}   
+														 </select>   
+													</div>
+												</div>              
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                <div class="control-group">
+													<label class="control-label">类型</label>
+													<div class="controls" id="scenetype">
+													{foreach from=$sceneSubCategory key=k item='item'}
+ 														<div class="col-md-2" style="float:left">
+ 														<ul>
+ 															<li style="padding-left:25px;">{$sceneCategory.$k}</li>
+ 															<li>
+ 																<ul>
+ 																	{foreach from=$item key=key item='i'}
+ 																	<li><input type="checkbox" name="scenetype[]" value="{$key}"/> {$i}</li>
+ 																	{/foreach} 
+ 																</ul>
+ 															</li>
+ 														</ul>
+														</div>
+      													{/foreach}
+													</div>
+													<div style="clear:both;"></div>
+												</div>     
+                                        				
+								
+			<div class="control-group" id="ctl00_ContentPlaceHolder1_rdiIsEnable_help">
+
+					<label class="control-label">启用状态</label>
+
+			<div class="controls">
+<label class="radio"> <input id="ctl00_ContentPlaceHolder1_rdiIsEnable_help_1" type="radio"   name="delete_int" value="1" {if $user['showstatus_int'] == 1}checked="checked" {/if}/>开启</label>
+
+<label class="radio"> <input id="ctl00_ContentPlaceHolder1_rdiIsEnable_help_0" type="radio" name="delete_int" value="2" {if $user['showstatus_int'] == 2}checked="checked" {/if}/>关闭</label>  
+
+
+													</div>
+
+												</div>
+
+								
+
+							
+
+								
+
+									<div class="form-actions">
+										<input type="hidden" id="sceneSubCategory" value="{$user.s_cate_id}" />
+    									<input type="hidden"  name="id" value="{$user.sceneid_bigint}" />
+										<button type="submit" class="btn blue">确定提交</button>
+									</div>
+
+								</form>
+
+								<!-- END FORM-->       
+
+							</div>
+
+						</div>
+
+						<!-- END SAMPLE FORM PORTLET-->
+
+					</div>
+
+				</div>
+
+		
+
+						<!-- END EXTRAS PORTLET-->
+
+					</div>
+
+			<!-- END PAGE CONTENT--><!-- END PAGE CONTAINER-->
+{include file="xshow/xshow_footer.html"}
+<script type="text/javascript">
+var sceneSubCategoryStr = $('#sceneSubCategory').val();
+$(function(){
+	if(sceneSubCategoryStr != ''){
+		var sceneSubCategory = sceneSubCategoryStr.split(',');
+		var sceneTypeCheckbox = $('#scenetype').find('input:checkbox');
+		for(var i in sceneSubCategory){
+			sceneTypeCheckbox.each(function(index){
+				var checkbox = $(this);
+				if(checkbox.val() == sceneSubCategory[i]){
+					checkbox.prop('checked',true);
+				}
+			});
+		}
+	}
+});
+function modifySceneForm(){
+	var sceneName = $('input[name=scenename_varchar]').val();
+	if(sceneName == ''){
+		layer.alert('请输入模板名称',{icon:5});
+		return false;
+	}
+	var moiveType = $('select[name=movietype]').val();
+	if(moiveType == ''){
+		layer.alert('请选择模板翻页方式',{icon:5});
+		return false;
+	}
+	var i = 0;
+	var sceneTypeCheckbox = $('#scenetype').find('input:checkbox');
+	sceneTypeCheckbox.each(function(index){
+		var checkbox = $(this);
+		if(checkbox.prop('checked'))i++;
+	});
+	if(i == 0){
+		layer.alert('请选择模板所属类型',{icon:5});
+		return false;
+	}
+	return true;
+}
+</script>

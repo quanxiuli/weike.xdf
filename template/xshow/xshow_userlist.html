@@ -1,0 +1,129 @@
+{include file="xshow/xshow_header.html"}
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+					<h4 class="page-title">
+							用户管理
+							   <small>   User management</small></h4>
+
+						<ul class="breadcrumb">
+							<li><i class="icon-home"></i><a href="/xshow/index">首页</a> 
+								<i class="icon-angle-right"></i></li>
+
+							<li><a href="/xshow/userlist">用户管理</a><i class="icon-angle-right"></i></li>
+							<li><a href="javascript:void(0);">用户设置</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+	<!-- END PAGE HEADER-->
+                <div class="tabbable tabbable-custom tabbable-full-width">
+				<ul class="nav nav-tabs">
+			   <li class="{$ui.users}"> <a href="/xshow/userlist"> 前台用户管理</a> </li>
+		        <li class="{$ui.users_add}"> <a href="/xshow/useradd"> 添加新用户</a> </li>
+				</ul>
+			</br>			
+			<form class="login-form" action="" method="GET" id="search_user">
+			
+				
+				根据用户邮箱搜索&nbsp:&nbsp&nbsp&nbsp <input type="text" name="email" id="id"  value="{$email_varchar}"  placeholder="请输入用户邮箱"/>
+			
+			&nbsp&nbsp&nbsp <input type="submit" id="button" value="搜索">
+			</form>
+							
+                            <hr>
+                </div>
+				<!-- BEGIN PAGE CONTENT-->          
+				<div class="row-fluid">
+					<div class="span12 ">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+							<div class="portlet-body">
+
+				<!-- END PAGE HEADER-->
+                
+               
+
+										<div class="portlet-body form ">
+                                        
+                                        
+                                         {foreach from=$select item='user'}
+                                        
+
+
+									<div class="media-body">
+
+
+										
+
+										<!-- Nested media object -->
+
+										<div class="media">
+
+
+											<div class="media-body">
+
+												<h4 class="media-heading">
+                                                  <strong class="btn purple-stripe">登陆名：{$user.email_varchar}</strong>   
+					<span><a  href="javascript:void(0);" class="btn purple-stripe">状态：</a>
+					{if $user['status_int'] == 1}<a href="/xshow/setuserstatus?id={$user.userid_int}" class="btn icn-only green" onclick="if(!confirm('确认要禁用该用户吗？')){return false;};"><i class="icon-play"></i></a>{/if}
+					{if $user['status_int'] == 0}<a href="/xshow/setuserstatus?id={$user.userid_int}" class="btn icn-only red" onclick="if(!confirm('确认要恢复该用户吗？')){return false;};"><i class="icon-remove"></i></a>{/if}
+					{if $user['status_int'] == 2}<a href="javascript:void(0);" class="btn icn-only red"><i class="icon-remove"></i></a>{/if}
+					</span>
+                                                  
+                                        
+                                              
+                                               
+                                                
+                                                
+                                                {if $user['status_int'] == 2}
+                                                	<span  class="pull-right"><a href="javascript:void(0);" class="btn black"><i class="icon-remove icon-white"></i>已删除</a></span>
+                                                {else}
+	                                                <span  class="pull-right"><a  href="/xshow/useredit?id={$user.userid_int}"  class="btn blue"><i class="icon-remove icon-pencil"></i>  修改</a>
+	                                                <a href="/xshow/userdel?id={$user.userid_int}" class="btn black" onclick="if(!confirm('删除后无法恢复,确认要删除该管理员吗？')){return false;};"><i class="icon-remove icon-white"></i>  删除</a></span>
+                                                {/if}
+                                                </h4>
+
+												<p>
+                                                 <span class="btn mini green-stripe">用户ID：{$user.userid_int}</span>
+                                                <span class="btn mini green-stripe">注册时间：{$user.create_time} </span>
+                                                <span class="btn mini green-stripe">所属学校:{$user.city_name}</span></p>
+
+										  </div>
+
+									  </div>
+
+										<!--end media-->
+
+									
+										<!--end media-->
+
+									</div>
+
+<hr>
+    {/foreach}
+										</div>
+
+									</div>
+
+								</div>
+
+				<!-- BEGIN PAGE CONTENT-->
+                <div class="pagination pagination-right">
+
+							<ul>
+                            
+                           
+                              {$page}
+
+						
+							</ul>
+
+						</div>
+
+			</div></div></div>
+
+{include file="xshow/xshow_footer.html"}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>发布管理平台</title>
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/core.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/p176.css">
+    <link rel="stylesheet" href="{$publicserver}/public/chouke/css/index.css">
+    <script src="{$publicserver}/public/chouke/js/common/jquery-1.11.0.min.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/p176.js"></script>
+    <script src="{$publicserver}/public/chouke/js/common/jqPaginator.min.js"></script>
+	<script type="text/javascript">
+		var PREFIX_URL = "http://{$domain}/chouke/";
+		var PREFIX_PUBLIC_URL = "{$publicserver}/public/chouke/";
+		var Global = {
+			    actionURL:PREFIX_URL+"ajax_service",
+			    previewURL:PREFIX_URL+"appindexpre?channel=Wechat&activityId=",
+			    previewURL_new:PREFIX_URL+"raiseclassnewpre?activityId=",
+			    baseUploadPath:"",//http://xshow.xdf.cn/chouke/
+			    cartID:"opt",
+			    buyDomain:"http://bm.xdf.cn"//正式
+		};
+	</script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/market.js"></script>
+    <script src="{$publicserver}/public/chouke/js/util.js"></script>
+    <script src="{$publicserver}/public/chouke/js/layer-v2.1/layer/layer.js"></script>
+    <script src="{$publicserver}/public/chouke/js/busiJs/crAnalyse.js"></script>
+    <script src="{$publicserver}/public/chouke/js/loginStatus.js"></script>
+</head>
+<body onload="initMainPage('406');initCkTotal()">
+<div class="p176-wrap-all">
+    <div class="p176-mainWrap">
+        <div class="p176-main">
+            <div class="inner">
+
+                <div class="xdf_special_title" id="tabs">
+                    <ul id="xdf_recommend">
+                        <li class="xdf_border"><a href="javascript:void(0);">购课推荐</a></li>
+                    </ul>
+                </div>
+                <!--search-->
+                <div class="xdf_special_search">
+                    <span>
+                        <form action="javascript:search();">
+						<button></button>
+						<input type="search" id="nameText" placeholder="请输入购课推荐名称搜索" />
+                         </form>
+                    </span>
+                    <input type="button" value="搜索" onclick="search()" class="search"/>
+                </div>
+                <div class="clearfix"></div>
+                <!--分类-->
+                <div class="hot-classes">
+                    <ul class="list1">
+                        <li>
+                            <span class="tit">地区：</span>
+                            <span class="xian-wid">
+                            </span>
+                            <span>
+                                <em class="open">展开<i class="ico-open"></i></em>
+                                <em class="shou">收起<i class="ico-shou"></i></em>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="tit">校区：</span>
+                            <span class="xian-wid2">
+                            </span>
+                            <span>
+                                <em class="open2">展开<i class="ico-open"></i></em>
+                                <em class="shou2">收起<i class="ico-shou"></i></em>
+                            </span>
+                        </li>
+                        <li class="last">
+                            <span class="tit">部门：</span>
+                            <span class="xian-wid3">
+                            </span>
+                            <span>
+                                <em class="open3">展开<i class="ico-open"></i></em>
+                                <em class="shou3">收起<i class="ico-shou"></i></em>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="botton" id="m1"></div>
+                </div>
+
+               
+
+                <div class="p176-table-wrap mtop50">
+                    <div class="p176-btn-export" style="padding-top: 0px">
+                    </div>
+                    <table class="p176-table fz14">
+                        <thead>
+                        <tr id="ckTotalListHead">
+                            <th style="width:20%;">活动名称</th>
+                            <th style="width:25%;">活动时间</th>
+                            <th style="width:10%;">班级数</th>
+                            <th style="width:10%;">班级名额</th>
+                            <th style="width:10%;">购课人数</th>
+                            <th style="width:10%;">交易班次</th>
+                            <th style="width:10%;">交易金额(元)</th>
+                            <th style="width:10%;">推荐成功次数</th>
+                            <th style="width:10%;">阅读人数</th>
+                            <th style="width:10%;">转发次数</th>
+                            <th style="width:10%;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="activity_tbody">
+                        </tbody>
+                    </table>
+                    <div class="PublicPage" id="publicPage"></div>
+                </div>
+            </div>
+        </div>
+        <div class="p176-left">
+            <div class="p176-leftmenu">
+                <ul class="mtop10">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe name="saveIframe" style="display:none"></iframe>
+</body>
+</html>

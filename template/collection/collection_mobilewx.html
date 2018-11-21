@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>		
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <title>{$collection.title}</title>
+	    {if $pmc eq 1}  
+	    <link href="https://cdn.bootcss.com/framework7/1.6.5/css/framework7.ios.min.css" rel="stylesheet">
+	    {/if}
+	    <link rel="stylesheet" href="{$publicserver}/public/collection/css/MobileStyle6_1.css" type="text/css"/>
+	    <script src="http://file.xdf.cn/diy/public/js/jquery.1.7.2.min.js"></script>
+		<script src="{$publicserver}/public/gouke/app/js/layer/layer.js" type="text/javascript"></script>
+    	<link rel="stylesheet" href="{$publicserver}/public/gouke/app/js/layer/skin/layer.css">
+    	<style type="text/css">
+.con_p.a input[type="radio"]:checked+label {
+    background: url({$publicserver}/public/collection/images/MobileImg/yuan.png) no-repeat left center;
+    background-size: contain;
+}
+label {
+    padding-left: 1.2rem;
+    cursor: pointer;
+    background: url({$publicserver}/public/collection/images/MobileImg/yuan1.png) no-repeat left center;
+    background-size: contain;
+    font-size: .75rem;
+}
+
+.choice .choice-box1 {
+    background: url({$publicserver}/public/collection/images/MobileImg/zx.jpg) no-repeat left top;
+    background-size: contain;
+    display: inline-block;
+    color: #9a9a9a;
+    font-size: .6rem;
+    padding-left: 1.2rem;
+}
+.choice #userlicense_check:checked + .choice-box1 {
+    background: url({$publicserver}/public/collection/images/MobileImg/xz1.jpg) no-repeat left top;
+    background-size: contain; 
+}
+.picker-modal {
+    position: fixed;
+}
+.warp1{
+	padding-top:1rem;
+}
+
+.gouhao{
+	position: relative;
+	width:5.6rem;
+	height:auto;
+	margin: 0 auto;
+}
+
+.gouhao img{
+    width: 100%;
+	height: 100%;
+	display: block;
+}
+.tjcg{
+	font-size:.87rem;
+	text-align: center;
+	color:#373737;
+	padding-top:.3rem;
+}
+.tjcg.a{
+	width:80%;
+	height:auto;
+	margin:0 auto;
+	color:#a4a3a3;
+	font-size:.6rem;
+	padding-top:1rem;
+	line-height:1.1rem;
+}
+.tjcg.a.b{
+	padding-top:.1rem;
+}
+.wait{
+	display: inline-block;
+	color:#f9931a;
+	margin-left: .05rem;
+	margin-right: .05rem;
+}
+		</style>
+		<!--neworiental全站异步 google分析开始-->
+		<script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-20005525-1']);
+            _gaq.push(['_setDomainName', '.xdf.cn']);
+            _gaq.push(['_setAllowLinker', true]);
+            _gaq.push(['_setAllowHash', false]);
+            _gaq.push(['_addOrganic', 'baidu', 'word']);
+            _gaq.push(['_addOrganic', '360', 'q']);
+            _gaq.push(['_addOrganic', 'so.com', 'q']);
+            _gaq.push(['_addOrganic', 'soso', 'w']);
+            _gaq.push(['_addOrganic', 'yodao', 'q']);
+            _gaq.push(['_addOrganic', 'sogou', 'query']);
+            _gaq.push(['_addOrganic', 'gougou', 'search']);
+            _gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+            _gaq.push(['_addOrganic', 'haosou', 'q']);
+            _gaq.push(['_setLocalGifPath', 'http://ads.staff.xdf.cn/_.gif']);
+            _gaq.push(['_setLocalRemoteServerMode']);
+            _gaq.push(['_trackPageview']);
+		</script>
+		<!-- google分析结束-->
+	</head>
+	<body style="height:auto;">
+	<div class="warp_all">	
+{if $preview eq 1 and not $iswx}
+<div class="warp_Box">	
+{/if}	
+
+		<div class="warp warp_pc">
+		   <div class="banner">
+			 	<img src="{$publicserver}/public/collection/images/MobileImg/bannerwx.jpg" alt="" />
+				
+		 </div>
+		 <div class="badw">
+				    <div class="part1">
+					  <p class="bt"><b>{if $item.required}*{/if}</b>{$formlabel}</p>
+					  <p class="bt a">{$formdesc}</p>
+				    </div>
+				</div>
+		   
+		 <div class="part1a">
+				<form action="" class="form" id="clform">
+					{if $inputs}
+						{foreach from = $inputs item=item}
+							{if $item.type eq 'text'}
+							<p class="con_p">
+								<span class="con_span"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<input type="text" id="{$item.name}" name="{$item.name}" placeholder="{$item.placeholder}"/>
+							</p>
+							{/if}
+							
+							{if $item.type eq 'select'}
+							<p style="width:100%;height:.5rem;background:#ededed;"></p>
+							<p class="con_p b">
+								<span class="con_span3"><b>{if $item.required}*{/if}</b>{$item.label}</span><select name="{$item.name}" id="{$item.name}"  class="set ">
+									            <span style="text-align: center;"></span>
+												{foreach from = $item.values item=i}
+												<option value="{$i.value}">{$i.name}</option>
+												{/foreach}
+											</select>
+							</p>
+							{/if}
+							
+							{if $item.type eq 'radio'}
+							<p style="width:100%;height:.5rem;background:#ededed;"></p>
+							<div class="con_p a">
+								<span class="con_span2"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+							    <p class="contxb a"  style="line-height:1.5rem;">
+							    {foreach from = $item.values item=i name=foo}
+								<input type="radio" name="{$item.name}"  id="{$item.name}_{$smarty.foreach.foo.index}"  value="{$i.value}" >
+								<label name="fc_gender_lab" for="{$item.name}_{$smarty.foreach.foo.index}" >{$i.name}</label><br/>
+								{/foreach}				
+								</p>
+							</div>
+							
+							{/if}
+						
+							{if $item.type eq 'textarea'}
+							<p style="width:100%;height:.5rem;background:#ededed;"></p>
+								<div class="con_p gr">
+								<span class="con_span2 a"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<textarea name="{$item.name}" rows="" cols="" placeholder="{$item.placeholder}" class="area" maxlength="{$item.choiceNumber}"></textarea>
+							</div>
+							{/if}
+							
+							{if $item.type eq 'checkbox'}
+							<p style="width:100%;height:.5rem;background:#ededed;"></p>
+							<p class="con_p b" id="{$item.name}p" >
+								<span class="con_span3"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<span id="{$item.name}s" class="jtzz a" style="display:inline-block;margin-top:0;"></span>
+								<input type="hidden" class="jtzz a" id="{$item.name}"  name="{$item.name}" placeholder="{$item.placeholder}"/>						
+							</p>
+							<div class="tc" id="pop_{$item.name}" >
+								<div class="tc_a">
+									<ul class="qxqd">
+											<li class="qx">取消</li>
+											<li class="qd">确定</li>
+										</ul>
+									<ul class="dxk" id="{$item.name}_dxk">
+										{foreach from = $item.values item=i}
+										<li>{$i.name}</li>
+										{/foreach}								
+									</ul>																						
+								</div>
+							</div>
+							{/if}
+							
+							{if $item.type eq 'image'}
+							<p style="width:100%;height:.5rem;background:#ededed;"></p>
+							<div class="con_p d">
+								<span class="con_span" style="width:30%;"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<span class="sfz">
+								<input type="button" id="filebtn" value="上传图片"  style="width:100%;background:#fff;float:right;border: none;padding-top:8px;"><span id="text"></span>
+        						<input type="file" id="imgUploadBtn" onChange="handleInputChange();" style="position: absolute; right: 20px;width:75%; top: 0; opacity: 0;">
+								<!--
+								<input type="file" id="imgUploadBtn"  style="opticy:0;" accept=“image/*” onChange='handleInputChange();'/> 
+								-->
+								</span>
+								<div class="sc_sfz">
+									<input type="hidden" name="image" id="image" /> 
+									<input type="hidden" name="{$item.aux}" id="{$item.aux}" /> 
+									<img src="{$publicserver}/public/collection/images/MobileImg/sfz.png" alt=""   id="img_preview"/>
+								</div>
+							</div>
+							{/if}
+							
+							{if $item.type eq 'date'}
+							<div class="con_p b">
+								<span class="con_span"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<input class="birth"  type="date" name="{$item.name}" placeholder="{$item.placeholder}" >
+							</div>
+							{/if}
+							{if $item.type eq 'datetime'}
+							<div class="con_p b">
+								<span class="con_span3"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<input class="birth1"  type="datetime-local" name="{$item.name}" placeholder="{$item.placeholder}" >
+							</div>
+							{/if}
+							
+							{if $item.type eq 'time'}
+							<div class="con_p b">
+								<span class="con_span"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<input  type="time" name="{$item.name}" placeholder="{$item.placeholder}" >
+							</div>
+							{/if}
+							
+							{if $item.type eq 'pmc'}
+							<div class="con_p b">
+								<span class="con_span"><b>{if $item.required}*{/if}</b>{$item.label}</span>
+								<input type="text" id="location" name="pmc" placeholder="{$item.province}  {$item.city}  "/>
+							</div>
+							{/if}
+							
+						{/foreach}
+					{/if}
+										
+					<div class="choice">
+			            <p class="choicea">
+			                <input type="checkbox" name="fc_question" id="userlicense_check" style="display: none;">
+			                <label for="userlicense_check" class="choice-box1">我已阅读并同意《<a href="/collection/userlicense" onclick="javascript: window.location.href='userlicense';" >用户服务条款</a>》和 《<a href="/collection/privacypolicy" onclick="javascript: window.location.href='privacypolicy';" >隐私政策</a>》</label>
+			            </p>        
+					</div>
+					
+					<div class="btn">
+						<input type="hidden" name="scene_id" value="{$sid}" />
+						<input type="button" name="" id="submitbtn" value="{if $submit.label}{$submit.label}{else}提交{/if}"  class="tijiao"  {if $themecolor neq ''}style="background:{$themecolor};"{/if}/>
+					</div>
+					
+					
+					</form>
+			</div>
+			
+			
+
+        </div>
+    {if $preview eq 1}
+	<div class="QRCode">
+			<div class="QRCode_Up">
+				<img src="{$publicserver}/public/collection/fileS/QRfilePath/{$collection.id}.png" alt=""/>
+				<p>扫描二维码在手机上预览</p>
+				<!-- <a href="javascript:void(0);">返回编辑界面</a> -->
+			</div>
+			<div class="QRCode_Down" style="display:none;">
+				<input type="text" value="http://{$domain}/collection/collect?id={$collection.aid}" style="padding-top: 10px;border:none;" readonly="readonly">
+				<img src="{$publicserver}/public/collection/fileS/QRfilePath/{$collection.aid}.png" alt=""/>
+				<a href="javascript:void(0);">复制网址</a><a href="javascript:void(0);">下载二维码</a>
+			</div>
+		</div>
+	{/if}
+	</div>	
+{if $preview eq 1 and not $iswx}	
+</div>	
+{/if}	
+
+	
+<script type="text/javascript">
+    const imgFile = {};
+  	//email //mobile
+	var mobilereg=/^[1][3,4,5,6,7,8][0-9]{9}$/;
+	var emailreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+
+
+    if(window.innerHeight>($('.banner img')[0].clientHeight+$('.badw')[0].clientHeight+$('.part1a')[0].clientHeight)){
+        //$($('.warp_pc')[0]).css('height',window.innerHeight);
+        $($('.warp_pc')[0]).css('background','#fff');
+        
+        $($('.choice')[0]).css('position','absolute');
+        //$($('.choice')[0]).css('bottom',$('.btn')[0].clientHeight);
+        $($('.choice')[0]).css('top',window.innerHeight-$('.btn').height()-$('.choice').height());
+        
+        $($('.btn')[0]).css('position','absolute');
+        //$($('.btn')[0]).css('bottom',0);
+        $($('.btn')[0]).css('top',window.innerHeight-$('.btn').height());
+        
+        			$(".con_p input").on('focus', function() {
+					
+					/*$('.warp_all').css({
+						position: "relative",
+
+					});*/
+					
+
+				});
+				$(".con_p input").on('blur', function() {
+					
+$('.warp_all').css({
+						position: "fixed",
+
+					});
+				})
+        
+    }
+    
+    
+
+   
+
+	{if $inputs}
+   
+	{foreach from = $inputs item=item}
+		{if $item.type eq 'checkbox'}
+    
+		var {$item.name}limit=255;
+		if(parseInt('{$item.choiceNumber}')>0){
+			{$item.name}limit=parseInt('{$item.choiceNumber}');
+		}
+		
+		
+		
+	 	 
+		
+	    $("#{$item.name}p").click(function(){
+	    	
+	    	$("#pop_{$item.name}").show();
+	     	$("#pop_{$item.name} .tc_a").animate({"bottom":"0px"},300,function(){})
+	     	
+	    });
+	    $("#pop_{$item.name} .qx").click(function(){  
+	    	$("#pop_{$item.name}").hide();
+	    });
+	    $("#pop_{$item.name} .qd").click(function(){  
+	    	
+         	$("#pop_{$item.name} .tc_a").animate({"bottom":"-100%"},500,function(){    
+         		var newv='';
+         		$("#{$item.name}").val(newv);
+         		$('ul#{$item.name}_dxk .active').each(function(){
+         			if($("#{$item.name}").val()==''){
+         				$("#{$item.name}").val($(this).text());
+         				$("#{$item.name}s").text($(this).text());
+         			}else{
+         				newv=$("#{$item.name}").val()+","+$(this).text();
+         				$("#{$item.name}").val(newv);
+         				$("#{$item.name}s").text(newv);
+         			}
+         		  });
+         		$("#pop_{$item.name}").hide();
+         	});                  	
+         });
+	    $('#{$item.name}_dxk li').click(function(e){
+       	 if($(this).hasClass('active')){
+       		 $(this).removeClass('active');
+       	 }else{
+       		 var num=$('ul#{$item.name}_dxk .active').length;
+       		 
+       		 if({$item.name}limit>0  && num>={$item.name}limit){
+       				layer.msg('{$item.label}限选'+{$item.name}limit+'项');
+        			return false;
+       		 }else{
+       			 $(this).addClass('active');
+       		 }
+	    	 }
+       	 
+		 });
+        
+         {/if}
+         
+         {if $item.type eq 'image'  and  $preview neq 1}
+         function handleInputChange (e) {
+        	 var fileObj = document.getElementById("imgUploadBtn").files[0]; 
+             var url =  "ajax_collectionuploadimage?id={$collection.aid}"; 
+
+             var form = new FormData(); 
+             form.append("file", fileObj); 
+
+             xhr = new XMLHttpRequest();  
+             xhr.open("post", url, true);
+             xhr.onload = uploadComplete; 
+             xhr.send(form); //开始上传，发送form数据
+         }
+         function uploadComplete(evt) {
+             var data = JSON.parse(evt.target.responseText);
+             if(data.errno==0){
+	                	//$('#img_preview').attr("src","{$publicserver}/public/uploads/collection/"+result.data.path);
+	                	var bg="{$publicserver}/public/uploads/collection/"+data.data.path;
+	                	$('.sc_sfz').css("background","url("+bg+") no-repeat");
+	                	$('.sc_sfz').css("background-size","100% 100%");
+	                	$('#image').val(data.data.path);
+	                	$('#{$item.aux}').val(data.data.path);
+	                	$('#img_preview').css("display","none");
+             }else{
+            	 layer.msg(data.msg);
+             }
+
+         }
+         
+         {/if}
+      {/foreach}
+      {/if}
+      
+         
+         {if $preview neq 1}
+         
+         $("#submitbtn").click(function(){
+        	 
+        	 var data=new Object();
+        	 data.id='{$collection.aid}';
+        	 
+        	 var agreed=$('#userlicense_check').prop("checked");
+        	 if(!agreed){
+        		 layer.msg('请先同意用户服务条款!');
+        		 return false;
+        	 }
+        	 
+        	 {foreach from = $inputs item=item}
+        	 {if $item.type eq 'radio'}
+	 	 		var {$item.name}=  $("*[name='{$item.name}']:checked").val();
+	 	 	 {else}
+	 	 		var {$item.name}=  $("*[name='{$item.name}']").val();
+	 	 	 {/if}
+	 	 	 {if $item.type eq 'image'}
+	 	 		var {$item.aux}=   $("*[name='{$item.aux}']").val();
+	 	 		data.{$item.aux}={$item.aux};
+	 	 	 {/if}
+	 	 	 
+        	 	data.{$item.name}={$item.name};
+        	 	if($("#image")!=undefined){
+        	 		data.image=$("#image").val();
+        	 	}
+        	 	
+        	 	{if $item.required and $item.type neq 'file'}
+        	 	if({$item.name}=='' || {$item.name}==undefined){
+        			layer.msg('{$item.label}'+'不能为空!');
+        			return false;
+        		}
+        	 	{/if}
+        	 		if('{$item.name}'=='mobile' && {$item.name}!=''){
+            	 		if(!mobilereg.test({$item.name})) {
+            				layer.msg('手机号无效');
+            	         	return false;
+            	 		}
+            	     }
+            	 	 if('{$item.name}'=='email'  && {$item.name}!=''){
+                	 		if(!emailreg.test({$item.name})) {
+                				layer.msg('邮箱无效');
+            	         		return false;
+                	 		}
+            	     }
+        		
+        	 {/foreach}
+        	 var scene_id = $('input[name=scene_id]').val();
+        	 if(scene_id > 0)data.scene_id = scene_id;
+        	 var submitBtnValue = $('#submitbtn').val();
+        	 $.ajax({
+        	 	url:'ajax_collectionsubmit',
+        	 	type:'POST',
+        	 	dataType:'json',
+        	 	data:data,
+        	 	beforeSend:function(){
+        	 		$('#submitbtn').prop('disabled',true).val('提交中...');
+        	 	},
+        	 	success:function(data){
+        	 		if(data.errno!=0){
+			        		layer.msg(data.msg);
+			        		$('#submitbtn').prop('disabled',false).val(submitBtnValue);
+			        	}else{
+			        		if(data.popupTitle != ''){
+			        			$('#title').empty().append(data.popupTitle);
+			        		}
+			        		if(data.popupContent != ''){
+			        			$('#successConent').empty().append(data.popupContent).show();
+			        		}
+			        		var submitSuccessTip = $('#submitSuccessTip').html();
+			        		$('.part1a').empty().append(submitSuccessTip);
+			        		if(data.redirect !=undefined){
+			        			$('#interval').show();
+			        			var num=parseInt($("#second").text());
+			        			var  interval = setInterval(function() {
+			        				num--;
+			        				if(num==0){
+			        					clearInterval(interval);
+			        					$("#interval").empty().append('跳转中...');
+			        					st('default',{session_id:data.clid});
+			        					window.location.href=data.redirect;
+			        				}
+			        				$("#second").empty().append(num);
+		                        },1000);
+			        		}
+			        	}
+        	 	}
+        	 });
+//        	 $.post("ajax_collectionsubmit",data).success(function(data){
+//			        	if(data.errno!=0){
+//			        		layer.msg(data.msg);
+//			        	}else{
+//			        		$('.part1a').empty().append('提交成功啦');
+//			        		//layer.msg(data.msg);
+//			        		//$('#content').val("");
+//			        		//$('#result').html("0");
+//			        		if(data.redirect !=undefined){
+//			        			setTimeout(function() {
+//			        				st('default',{session_id:data.clid});
+//			        				window.location.href=data.redirect;
+//		                        },3000);
+//			        		}
+//			        	}
+//            });
+          });
+      {/if}   
+</script>
+{if $pmc eq 1}     
+<script type="text/javascript" src="{$publicserver}/public/collection/js/framework7.min.js"></script>
+<script type="text/javascript" src="{$publicserver}/public/collection/js/district.js"></script>
+<script type="text/javascript">
+;(function(window,$,undefined){
+function getProvince(regions){ {if $province eq ''} return regions['provincesArr']; {else} return new Array("{$province}");{/if} }
+function getCity(regions,provinceName){return regions['provinces'][provinceName]['citiesArr'];}
+function getArea(regions,provinceName,cityName){
+	if(cityName==''){
+		cityName=regions['provinces'][provinceName]['citiesArr'][0];
+	}
+	return regions['provinces'][provinceName]['cities'][cityName]['areasArr'];
+	
+}
+var myApp=new Framework7();
+var province=getProvince(regions),
+{if $province eq '' and $city eq ''}
+			city=getCity(regions,'北京市'),
+			area=getArea(regions,'北京市','北京市');
+{/if}
+{if $province neq '' and $city eq ''}
+		city=getCity(regions,'{$province}'),
+		area=getArea(regions,'{$province}','');
+{/if}
+
+{if $province neq '' and $city neq ''}
+			city=new Array('{$city}'),
+			area=getArea(regions,'{$province}','{$city}');
+{/if}	
+
+var provinceSelect='{$province}';
+var pickerLocation=myApp.picker({input:'#location',rotateEffect:true,toolbarTemplate:'<div class="toolbar">\
+                            <div class="toolbar-inner">\
+                                <div class="left">\
+                                 </div>\
+                                <div class="right">\
+                                    <a href="#" class="link close-picker">完成</a>\
+                                </div>\
+                            </div>\
+                        </div>',cols:[{cssClass:'f-s-14',width:'33.33%',textAlign:'left',values:province,
+                        	onChange:function(picker,province){if(picker.cols[1].replaceValues){provinceSelect=province;city=getCity(regions,province);area=getArea(regions,province,city[0]);picker.cols[1].replaceValues(city);if(area.length!==0){picker.cols[2].replaceValues(area);}else{picker.cols[2].replaceValues(city);}}}},{cssClass:'f-s-14',width:'33.33%',textAlign:'center',values:city,onChange:function(picker,city){if(picker.cols[2].replaceValues){area=getArea(regions,provinceSelect,city);if(area.length!==0){picker.cols[2].replaceValues(area);}else{picker.cols[2].replaceValues([city]);}}}},{cssClass:'f-s-14',width:'33.33%',textAlign:'right',values:area,}]});})(window,jQuery);
+
+</script>
+{/if}
+
+	<!--google文件调用开始-->
+	<script> (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = 'http://file.xdf.cn/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+	</script>
+	<!--google文件调用结束-->
+	<!--百度统计开始-->
+	<script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe010d1faf316a4dbfe8639481a2a3f90' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<!--百度统计结束-->
+<script type="text/javascript"
+	src="http://images.xdf.cn/cms20150819/xinbannew/js/xdf_global.min.js?v=2016-02291112"></script>
+<script type="text/javascript">
+        st('default','{}');
+</script>
+<div id="submitSuccessTip" style="display:none;">
+	<div class="warp1" id="warp">						
+				<p class="gouhao"><img src="{$publicserver}/public/collection/images/gouhao.png" alt="" /></p>
+				<p class="tjcg" id="title">提交成功</p>
+				<p class="tjcg a" id="successConent" style="display:none;"></p>
+				<p class="tjcg a b" id="interval" style="display:none;">倒计时<span class="wait" id="second">3</span>秒后自动跳转下一页。</p>	
+        </div>
+</div>
+</body>
+</html>
