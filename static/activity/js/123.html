@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--抽奖结果1人-->
+<div v-if="numlres==1" class="mingdang5">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <p class="ydjtit"></p>
+            <div class="jianinfo"><img src="{$publicserver}/public/activity/images/jiangpin.jpg" alt=""/><span
+                    class="jpname">MacBook Pro</span></div>
+        </div>
+        <div class="col-md-6">
+            <p class="zjmdtit"></p>
+            <div class="container-fluid">
+                <div class="col-md-4 col-sm-offset-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images//icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽奖结果1人-->
+<!--抽奖结果2人-->
+<div v-if="numlres==2" class="mingdang6">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <p class="ydjtit"></p>
+            <div class="jianinfo"><img src="{$publicserver}/public/activity/images/jiangpin.jpg" alt=""/><span
+                    class="jpname">MacBook Pro</span></div>
+        </div>
+        <div class="col-md-6">
+            <p class="zjmdtit"></p>
+            <div class="container-fluid">
+                <div class="col-md-4 col-sm-offset-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽奖结果2人-->
+<!--抽奖结果6人-->
+<div v-if="numlres>2&&numlres<=6" class="mingdang1">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <p class="ydjtit"></p>
+            <div class="jianinfo"><img src="{$publicserver}/public/activity/images/jiangpin.jpg" alt=""/><span
+                    class="jpname">MacBook Pro</span></div>
+        </div>
+        <div class="col-md-6">
+            <p class="zjmdtit"></p>
+            <div class="container-fluid">
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+            </div>
+            <div class="container-fluid">
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-4">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽奖结果6人-->
+
+<!--抽奖结果10人-->
+<div v-if="numlres>6&&numlres<=10" class="mingdang2">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <p class="ydjtit"></p>
+            <div class="jianinfo"><img src="{$publicserver}/public/activity/images/jiangpin.jpg" alt=""/><span
+                    class="jpname">MacBook Pro</span></div>
+        </div>
+        <div class="col-md-6">
+            <p class="zjmdtit"></p>
+            <div class="container-fluid">
+                <div v-for="item in resultprizetemporary" class="col-md-2 col-sm-offset-1">
+                    <div class="imgbg4"><img v-bind:src="item.avatar" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+            </div>
+            <div class="container-fluid">
+                <div class="col-md-2 col-sm-offset-1">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+                <div class="col-md-2">
+                    <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/>
+                    </div>
+                    <span class="nickname">Hilary</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽奖结果10人-->
+
+<!--抽奖结果20人-->
+<div v-if="numlres>10&&numlres<=20" class="mingdang3">
+    <p class="zjmdtit"></p>
+    <div class="container-fluid">
+        <div class="col-md-1 col-sm-offset-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-1 col-sm-offset-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+</div>
+
+<!--抽奖结果60人-->
+<div v-if="numlres>20&&numlres<=60" class="mingdang4">
+    <p class="zjmdtit"></p>
+    <div class="container-fluid">
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+        <div class="col-md-1">
+            <div class="imgbg4"><img src="{$publicserver}/public/activity/images/icon4.png" alt=""/></div>
+            <span class="nickname">Hilary</span></div>
+    </div>
+</div>
+<!--抽奖结果60人-->
+</body>
+</html>

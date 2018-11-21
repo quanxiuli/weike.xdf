@@ -1,0 +1,171 @@
+@import url(reset.css);
+@media screen and (max-width:320px) { html{ font-size:20px !important;} }
+@media screen and (min-width:320px) { html{ font-size:20px;} }
+@media screen and (min-width:340px) { html{ font-size:21.25px;} }
+@media screen and (min-width:360px) { html{ font-size:22.5px;} }
+@media screen and (min-width:380px) { html{ font-size:23.75px;} }
+@media screen and (min-width:400px) { html{ font-size:24.8px;} }
+@media screen and (min-width:400px) { html{ font-size:24.72px;} }
+@media screen and (min-width:413px) { html{ font-size:24.8px;} }
+@media screen and (min-width:440px) { html{ font-size:27.5px;} }
+@media screen and (min-width:480px) { html{ font-size:30px;} }
+@media screen and (min-width:520px) { html{ font-size:32.5px;} }
+@media screen and (min-width:560px) { html{ font-size:35px;} }
+@media screen and (min-width:600px) { html{ font-size:37.5px;} }
+@media screen and (min-width:640px) { html{ font-size:40px !important;} }
+body{
+	background:#fff;
+}
+.wrap {
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	box-orient: vertical;
+
+}
+
+.header{
+	width: 40%;
+	height: 100%;
+	padding: 2.5rem 0 4rem;
+	margin: 0 auto;
+}
+.header2{
+	padding-bottom: 2rem;
+}
+.header img{
+	display: block;
+	width: 100%;
+}
+.textinfo{
+	width: 75%;
+	margin: 0 auto;
+	padding-bottom: 2.5rem;
+	border-bottom: 1px solid #fff;
+}
+.p1{
+	margin-bottom: 1rem;
+	text-align: left;
+	font-size: 0.75rem;
+	color: #fff;
+}
+.p3{
+	margin-bottom: 1rem;
+	text-align: left;
+	text-indent: 2em;
+	font-size: 0.65rem;
+	color: #fff;
+}
+.p4{
+	font-size: 0.85rem;
+	color: #f2c246;
+}
+.botcon{
+	width: 75%;
+	padding: 1rem 0;
+	margin: 0 auto;
+}
+.botcon p{
+	line-height: 1.1rem;
+	text-align: left;
+	font-size: 0.7rem;
+	color: #fff;
+}
+.botcon p.mb{
+	margin-bottom: .8rem;
+}
+.erweima{
+	width: 30%;
+	padding: .1rem;
+	margin: 0 auto;
+	border-radius: 3px;
+	background: rgba(255,255,255,0.6);
+}
+.erweima img{
+	display: block;
+	width: 100%;
+}
+.textform{
+	width: 75%;
+	margin: 0 auto;
+	border-bottom: 1px solid #fff;
+}
+.textform input[type="text"]{
+	width: 100%;
+	height: 2rem;
+	padding-left: .8rem;
+	margin: 0 auto .5rem;
+	border-radius: 3px;
+	font-size: 0.65rem;
+	color: #ceceeb;
+	border-bottom: 2px solid rgba(255,255,255,0.39);
+	background: rgba(255,255,255,0.23);
+}
+.textform input.submit{
+	width: 100%;
+	height: 2.5rem;
+	margin: 1rem auto 1.5rem;
+	border: none;
+	font-size: 0.8rem;
+	color: #8c5507;
+	background: #e9c35d;
+}
+
+.part{
+	position:absolute;
+	top:10.5rem;
+	width:100%;
+	height:13.4rem;
+}
+.part1{
+	width:90%;
+	height:13.4rem;
+	margin: 0 auto;
+}
+.username{
+	width:100%;
+    height:9.2rem;
+    color:#ebd0d3;
+    background-color: rgba(169,109,109,.3);
+    border:none;
+    border-radius:.4rem;
+    font-size:.7rem;
+    line-height:1.5rem;
+    padding:.5rem;
+}
+.wzxz{
+	position: absolute;
+    right: 7%;
+    bottom: 34%;
+    color: #c67f88;
+}
+.tj{
+	width:10rem;
+	height:2rem;
+	background:#f1d255;
+	text-align: center;
+	line-height: 2rem;
+	border-radius:.2rem;
+	color: #914b00;
+	font-size:.9rem;
+	margin: 0 auto;
+	margin-top: 1.9rem;
+}
+.warp .xxsq{
+	position: absolute;
+    bottom:12%;
+    right:3%;
+    width:6rem;	
+}
+.xxsq a{
+	display: block;
+}
+.xxsq a img{
+	width: 100%;
+	height: 100%;
+	display: block;
+}

@@ -1,0 +1,783 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/*所有订单S*/
+
+/*头部S*/
+.choose_top2 {
+    height: 1.88rem;
+    font-size: 0.77rem;
+    background-color: #00ba97;
+    line-height: 1.88rem;
+    text-align: center;
+    color: #fff;
+    position: relative;
+}
+.title_arrow{
+	display: inline-block;
+    background: url(../images/title_arrow.png) no-repeat;
+    background-position: right center;
+    background-size: 0.58rem 0.32rem;
+    padding-right: 0.8rem;
+}
+.tittle_arrowup{
+	background: url(../images/tittle_arrowup.png) no-repeat;
+	background-position: right center;
+    background-size: 0.58rem 0.32rem;
+}
+
+.order_showbox{
+	width: 100%;
+	padding:0 0.64rem 0.64rem;
+	position: absolute;
+	top: 1.88rem;
+    left: 0;
+    z-index: 7;
+    background-color: #fff;
+}
+
+.order_showbox a{
+	width: 4.5rem;
+    font-size: 0.77rem;
+    padding: 0.47rem 0.6rem;
+	border: 0.06rem solid #ebebeb;
+	margin-right: 0.6rem;
+	text-align: center;
+	color: #333;
+	border-radius: 0.1rem;
+}
+
+.order_showbox .mt30{
+	margin-top: 0.64rem;
+}
+
+/*.order_showbox .mr0{
+	margin-right: 0;
+}*/
+.orderDiv{
+	width: 15.3rem;
+}
+
+.order_mask{
+	width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 1.88rem;
+    left: 0;
+    background-color: #000000;
+    opacity: 0.3;
+    z-index: 1;
+}
+/*头部E*/
+
+/*导航栏S*/
+.nav_box{
+	overflow: hidden;
+	height: 2.3rem;
+	position: relative;
+}
+
+.nav_box .nav_tittle{
+	width: 24rem;
+}
+.mohu_icon{
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 0.92rem;
+    height: 2.16rem;
+    background: url(../images/mohu.png) no-repeat;
+    background-size: contain;
+    z-index: 2;
+}
+.nav_box a{
+    font-size: 0.68rem;
+    padding: 0.7rem 0.7rem;
+    position: relative;
+    color: #666666;
+	width: auto;
+}
+
+.nav_boxhover{
+	color: #00BA97;
+	border-bottom: 0.1rem solid #00BA97;
+}
+
+.pay_number{
+    width: 0.7rem;
+    height: 0.7rem;
+    font-size: 0.5rem;
+    border-radius: 50%;
+    background-color: #ff6a6a;
+    color: #fff;
+    text-align: center;
+    line-height: 0.7rem;
+    position: absolute;
+    top: 0.45rem;
+    right: 0.3rem;
+}
+/*导航栏E*/
+
+/*第三块学校S*/
+.school_bigbox{
+	border-top: 0.55rem solid #ededed;
+}
+.school_titllebox{
+	height: 1.92rem;
+	line-height: 2.15rem;
+	padding: 0 0.64rem;
+	font-size: 0.73rem;
+	border-top: 0.04rem solid #ebebeb;
+	position: relative;
+}
+.school_titllebox i{
+	color: #4e4e4e;
+}
+.school_icon_on,.school_icon_off{
+    width: 1rem;
+    height: 1rem;
+    background-size: .85rem .85rem;
+    background-repeat: no-repeat;
+    margin-top: 0.65rem;
+    margin-right: 0.3rem;
+}
+
+.school_icon_on{
+	background-image: url(../images/on.png);
+}
+
+.school_icon_off{
+	background-image: url(../images/off.png);
+}
+
+.bepaid{
+	color: #fb565c;
+}
+
+.becanceled{
+	color: #a3a3a3;
+}
+
+.pay_over{
+	width: 3.33rem;
+	height: 2.99rem;
+	background: url(../images/pay_over.png) no-repeat center;
+	background-size: contain;
+	position: absolute;
+	top: 0.64rem;
+	right: 0.64rem;
+}
+
+.order_detailbox{
+	background-color: #f8f8f8;
+	padding: 0.8rem 0.64rem;
+	margin-top: 0.12rem;
+}
+
+.oldorder_titlebox {
+    font-size: 0.77rem;
+}
+
+.places {
+    font-size: 0.55rem;
+    color: #999;
+    margin-top: 0.2rem;
+}
+
+.oldorder_money {
+    font-size: 0.68rem;
+    color: #646464;
+    margin-top: 0.2rem;
+    margin-bottom: -0.2rem;
+}
+
+
+
+.adress_word {
+	width: 85%;
+    margin-top: 0.62rem;
+    margin-left: 0.3rem;
+    font-size: 0.59rem;
+    color: #808080;
+    line-height: 1rem;
+}
+
+
+.time-word {
+    width: 85%;
+    font-size: 0.59rem;
+    color: #808080;
+    margin-top: 0.32rem;
+    margin-left: 0.3rem;
+    line-height: 0.9rem;
+}
+
+.real_paybigbox{
+	height: 1.71rem;
+	line-height: 1.71rem;
+	border-bottom: 0.06rem solid #ebebeb;
+	position: relative;
+}
+
+.real_paybox{
+	position: absolute;
+	right: 0.64rem;
+	font-size: 0.6rem;
+    color: #666;
+}
+
+.real_paymoney{
+	color: #fb565c;
+	font-size: 0.77rem;
+    margin-right: 0.3rem;
+    margin-left: -0.1rem;
+}
+
+.cancel_orderbox,.cancel_orderbox2{
+	height: 2.25rem;
+	padding-top: 0.3rem;
+}
+
+.cancel_orderbox{
+    position: relative;	
+}
+.cancel_orderbox a{
+    position: absolute;
+    right: 0.64rem;
+    top: 0.38rem;
+    width: 3.5rem;
+    height: 1.41rem;
+    text-align: center;
+    line-height: 1.3rem;
+    font-size: 0.68rem;
+    border-radius: 0.2rem;
+    margin-left: 0.4rem;
+    background-color: #FF6A6A;
+	color: #FFFFFF;
+	border: 0.04rem solid #fff;
+}
+
+.cancel_orderbox2{
+    padding-left: 11.5rem;	
+}
+
+.cancel_orderbox .cancel_order{
+    border: 0.06rem solid #ebebeb;
+    right: 4.5rem;
+    background-color: #fff;
+    color: #333;
+}
+
+/*第三块学校E*/
+
+/*吸底按钮S*/
+.order_blankbox{
+	border-top: 0.55rem solid #EDEDED;
+	display: block;
+}
+.blank_btn{
+	height: 2.13rem;
+	background-color: #FFFFFF;
+}
+
+.order_btn{
+	display: block;
+	width: 100%;
+	height: 2.13rem;
+	line-height: 2.13rem;
+	text-align: center;
+	color: #FFFFFF;
+	background-color: #FF6A6A;
+	font-size: 0.77rem;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+/*吸底按钮E*/
+
+/*弹窗S*/
+.popup_box,.popup_failbox{
+	width: 80%;
+	text-align: center;
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	margin-left: -40%;
+	background-color: #fff;
+    z-index: 1;
+    border-radius: 0.25rem;
+}
+
+.popup_box{
+	height: 5.67rem;	
+}
+
+.enroll_ok{
+	font-size: 0.77rem;
+    height: 60%;
+    line-height: 3.5rem;
+}
+
+.order_sure1{
+	font-size: 0.77rem;
+    height: 40%;
+    line-height: 2rem;
+    color: #00BA97;
+    border-top: 0.06rem solid #ebebeb;
+}
+
+.order_sure2{
+	font-size: 0.77rem;
+    height: 34%;
+    line-height: 2rem;
+    color: #00BA97;
+    border-top: 0.06rem solid #ebebeb;	
+}
+
+.popup_failbox{
+	height: 6.61rem;
+}
+
+.enroll_fail{
+    height: 33%;
+    padding-top: 1.2rem;
+    font-size: 0.77rem;
+}
+
+.enroll_reason{
+    height: 33%;
+    font-size: 0.72rem;
+    padding-top: 0.2rem;
+}
+
+.order_cancelbtn,.order_surebtn{
+	width: 50%;
+	height: 100%;
+}
+
+.order_cancelbtn{
+	border-right: 0.06rem solid #ebebeb;
+	color: #707070;
+}
+
+.order_surebtn{
+	color: #00BA97;
+}
+/*弹窗E*/
+
+/*所有订单S*/
+
+/*没有相关订单S*/
+.content_box{
+	width: 100%;
+	height: 24rem;
+	background-color: #ededed;
+	text-align: center;
+	background-image: url(../images/order_no.png);
+	background-repeat: no-repeat;
+	background-position: center 20% ;
+	background-size: 2.35rem 2.77rem;
+}
+
+.order_notip{
+    color: #666666;
+    font-size: 0.73rem;
+    padding-top: 8rem;
+}
+
+.order_noword{
+    color: #999;
+    margin-top: 0.2rem;
+    font-size: 0.7rem;
+}
+
+.go_chooseclass{
+    display: block;
+    width: 7.68rem;
+    height: 1.92rem;
+    text-align: center;
+    line-height: 1.92rem;
+    font-size: 0.81rem;
+    color: #FFFFFF;
+    background-color: #00BA97;
+    border-radius: 0.15rem;
+    margin-top: 0.5rem;
+    margin-left: 4.1rem;
+}
+/*没有相关订单E*/
+
+/*订单详情S*/
+.order_statebox,.order_waitbox,.order_waitpaybox,.order_cancelbox,.order_payoverbox{
+	padding: 1rem 0.64rem 0.6rem 2.64rem;
+	border-bottom: 0.55rem solid #ededed;
+	background-repeat: no-repeat;
+	background-size: 1.49rem;
+	background-position: 0.64rem 0.8rem;
+}
+
+.order_statebox{
+	background-image: url(../images/signup_success.png);
+}
+
+.order_detail{
+	font-size: 0.81rem;
+	margin-bottom: 0.45rem;
+}
+
+.order_detail2{
+	font-size: 0.6rem;
+	margin-bottom: 0.2rem;
+	color: #999999;
+}
+.color6{
+	color: #666666;
+}
+.colorf{
+	background-color: #FFFFFF;
+}
+
+.oldorder_money2{
+	color: #FB565C;
+	font-size: 0.77rem;
+	margin-top: 0.2rem;
+    margin-bottom: -0.2rem;
+}
+
+.order_peoplebox{
+	width: 100%;
+	background-color: #f9f9f9;
+	padding: 0.64rem 0 0.29rem 0.64rem;;
+	background-image: url(../images/lace_g.png);
+	background-repeat: no-repeat;
+	background-size: 100% 0.62rem;
+	background-position: center bottom;
+	border-top: 0.06rem solid #ebebeb;
+}
+
+.order_peopleicon{
+	width: 0.92rem;
+	height: 0.92rem;
+	background: url(../images/people.png) no-repeat;
+	background-size: 0.92rem;
+	margin-right: 0.6rem;
+	margin-top: 0.2rem;
+}
+
+.people_rightbox{
+    border-bottom: 0.06rem solid #ebebeb;
+    width: 90%;
+    padding-bottom: 1rem;
+}
+
+.people_inform span{
+	font-size: 0.77rem;	
+	color: #333;
+}
+
+.people_inform i{
+	font-size: 0.7rem;	
+    color: #666;
+    margin-left: 0.3rem;
+    margin-top: 0.15rem;
+}
+
+.class_permit{
+	margin-bottom: -0.2rem;
+}
+
+.class_permit span{
+	font-size: 0.6rem;
+	color: #999999;
+}
+
+
+
+/*配送地址S*/
+.class_permit2 {
+    background-image: url(../images/class_permittop_g.png);
+    background-size: 100% 0.13rem;
+    background-position: 100% -0.04rem;
+    background-repeat: no-repeat;
+    border-top: 0.06rem solid #ebebeb;
+    background-color: #fff;
+    padding-top: 0.1rem;
+}
+.permit_line {
+    height: 2.26rem;
+    line-height: 2.26rem;
+    border-bottom: 0.06rem solid #ebebeb;
+    padding-left: 0.64rem;
+    background-color: #fff;
+    /*margin-top: 0.1rem;*/
+    padding-right: 0.64rem;
+}
+.city_express {
+    font-size: 0.68rem;
+    color: #666;
+}
+.permit_money {
+    font-size: 0.51rem;
+    color: #999;
+    margin-left: .2rem;
+}
+.fill_permiticon {
+    height: 0.77rem;
+    width: 0.43rem;
+    background-image: url(../images/send_icon.png);
+    background-position: left center;
+    background-size: 0.43rem 0.77rem;
+    background-repeat: no-repeat;
+    line-height: 1.92rem;
+    margin-top: 0.75rem;
+    margin-left: .4rem;
+    margin-right: 0.64rem;
+}
+.permit_adress {
+    background-image: url(../images/class_permittop.png);
+    background-size: 100% 0.09rem;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    padding-left: 0.64rem;
+    padding-bottom: 0.7rem;
+    margin-top: .7rem;
+}
+.permit_title{
+	color: #808080;
+}
+.permit_name {
+    font-size: 0.55rem;
+    color: #666;
+    margin-top: 0.3rem;
+}
+.class_permit2 span {
+    font-size: 0.68rem;
+}
+/*.permit_ren {
+    margin-top: 0.1rem;
+}*/
+/*配送地址E*/
+/*发票信息S*/
+.invoice_box{
+	padding: 0.6rem 0.64rem;
+	border-top: 0.55rem solid #ededed;
+	border-bottom: 0.55rem solid #ededed;
+}
+
+.invoice_box span{
+	font-size: 0.68rem;
+}
+.invoice_box em{
+	font-size: 0.68rem;
+	color: #666666;
+	max-width: 70%;
+}
+/*发票信息E*/
+/*课程总价S*/
+.class_totalbigbox{
+	padding: 0.6rem 0;
+}
+
+.class_totalbox{
+    border-bottom: 0.06rem solid #ebebeb;
+    padding: 0 0.64rem 0.6rem 0.64rem;
+}
+.class_total{
+	margin-bottom: 0.3rem;
+}
+.class_total span{
+	font-size: 0.68rem;
+	color: #333;
+}
+.class_total span:nth-of-type(2){
+	margin-top: 0.1rem;
+}
+.class_discount,.class_yunfei{
+	margin-top: 0.2rem;
+}
+
+.class_discount span{
+	/*width: 80%;*/
+	font-size: 0.65rem;
+	background: url(../images/class_total.png) no-repeat;
+	background-size: 0.64rem 0.5rem;
+	background-position: left center;
+	padding-left: 1rem;
+	color: #666666;
+}
+
+.class_discount em,.class_yunfei em{
+	font-size: 0.65rem;
+	color: #666666;
+}
+/*.class_discount i{
+    display: inline-block;
+    margin-top: -2.3rem;	
+}*/
+.class_yunfei span{
+	width: 80%;
+	font-size: 0.65rem;
+	background: url(../images/yunfei.png) no-repeat;
+	background-size: 0.64rem 0.5rem;
+	background-position: left center;
+	padding-left: 1rem;	
+	color: #666666;
+}
+.class_yunfei i{
+    display: inline-block;
+    margin-top: -2.3rem;
+}
+.real_pay{
+    padding: 0.4rem 0.64rem 0 0.64rem;
+}
+
+.real_pay span{
+	font-size: 0.7rem;
+    margin-top: 0.1rem;
+}
+
+.real_pay em{
+	font-size: 0.81rem;
+	color: #fb565c;
+}
+/*课程总价E*/
+/*订单详情E*/
+
+/*北京配送地址和发票信息提示*/
+.bj_address_mess
+{
+     padding-left: 0.64rem;
+     padding-right: 0.64rem;
+     background-color:#ededed;
+     padding-top: 20px;
+     padding-bottom:20px;
+    }
+.bj_address_mess h3
+{
+    font-size:14px;
+    color:#333;
+    }
+.bj_address_mess p
+{
+    margin-top:0.26rem;
+    font-size:12px;
+    line-height:21px;
+    color: #999;
+    }
+/*北京配送地址和发票信息提示*/
+
+/*待报名S*/
+.class_tip{
+	height: 1.58rem;
+	line-height: 1.58rem;
+	background-color: #fef8e2;
+	color: #f5750d;
+	font-size: 0.55rem;
+	background-image: url(../images/warn.png);
+	background-repeat: no-repeat;
+	background-size: 0.55rem;
+	background-position: 0.64rem 0.5rem;
+	padding-left: 1.4rem;
+}
+
+.order_waitbox{
+	background-image: url(../images/wait_signup.png);	
+}
+
+.order_waitpaybox{
+	background-image: url(../images/wait_pay.png);
+}
+
+.order_cancelbox{
+	background-image: url(../images/canceled.png);
+}
+.order_payoverbox{
+	background-image: url(../images/time_over.png);
+}
+.canel_orderbtn{
+	width: 100%;
+	height: 2.13rem;
+	line-height: 2.13rem;
+	color: #FFFFFF;	
+	font-size: 0.77rem;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+
+.canel_orderbtn a{
+	width: 50%;
+	height: 100%;
+	text-align: center;
+}
+
+.cancel_btn{
+	background-color: #FFFFFF;
+	border-top: 0.06rem solid #ebebeb;
+	color: #828282;
+}
+
+.order_btn2{
+	background-color: #FF6A6A;
+	color: #fff;
+}
+
+/*待报名E*/
+/*冒泡提示S*/
+.tip_box{
+	width:10rem;
+	font-size: 0.7rem;
+	color: #FFFFFF;
+	background-color: #000000;
+	text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -5rem;
+    z-index: 4;
+    border-radius: 0.5rem;
+    opacity: .7;
+    padding: 0.2rem;
+}
+/*冒泡提示E*/
+/*loadingS*/
+.mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: #000 50% 50% repeat-x;
+    opacity: 0.3;
+}
+.page {
+    width: 2.5rem;
+    height: 2.5rem;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    margin-left: -1.25rem;
+    z-index: 99;
+}
+/*loadingE*/
+
+.blank_box {
+    width: 100%;
+    height: 9.6rem;
+    background-color: #f5f5f5;
+}
+/*代报人信息*/
+.invoice_box em i{
+	margin-left: 0.4rem;
+}
+
+.adress_detail{
+	width: 70%;
+	
+}
+
+
+
+.borderBN{
+	border-bottom: none;
+}

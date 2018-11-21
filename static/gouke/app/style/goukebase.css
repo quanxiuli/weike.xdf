@@ -1,0 +1,116 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body,div,span,p,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,object,form,iframe,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+h1,h2,h3,h4,h5,h6{ margin: 0; font-weight: normal; font-size: 12px;}
+a{ color: #000;  text-decoration: none;}
+ol,ul,li{ list-style: none;}
+i,em{ font-style: normal;}
+b,strong{ font-weight: normal;}
+a img{display:block; border: none;}
+.clearfix:after{ display: block; content: ""; clear: both;}
+.clearfix{ zoom: 1;}
+.fl{ display:inline; float: left;}
+.fr{ display:inline; float: right;}
+input,select { border:none 0; background:none; font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;}
+textarea, input, select { outline:none; resize: none; /*appearance:none; -moz-appearance:none; -webkit-appearance:none;*/}
+table { table-layout:fixed; border-collapse:collapse;}
+body{ font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif; }
+input{ letter-spacing:1px;}
+::-webkit-input-placeholder{ font-size:14px;}
+img{
+    width: 100%;
+    height: 100%;
+}
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+.posR{
+	position: relative;
+}
+
+.mb8{
+	margin-bottom: 0.8rem;
+}
+
+.mb_pay{
+	margin-bottom: 2.3rem;
+}
+
+.head_line{
+	height: 0.47rem;
+	border-top: 0.04rem solid #e3e3e5;
+	border-bottom: 0.04rem solid #e3e3e5;
+	background-color: #ededed;
+}
+
+.choose_top {
+    height: 1.88rem;
+    font-size: 0.77rem;
+    background: url(../images/head_top.png);
+    background-size: 0.47rem 0.75rem;
+    background-repeat: no-repeat;
+    background-position: 5% center;
+    background-color: #00ba97;
+    line-height: 1.88rem;
+    text-align: center;
+    color: #fff;
+}
+/*头部右边的下拉菜单*/
+.tittle-pop {
+    width: 1.2rem;
+    height: 0.26rem;
+    position: absolute;
+    top: 42%;
+    right: 0.64rem;
+    background-image: url(../images/retirement.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-top: 0.8rem;
+}
+.tit-poplist {
+    width: 7.5rem;
+    height: 9.5rem;
+    background: url(../images/retire_pop.png) no-repeat;
+    background-size: 7.5rem 9.5rem;
+    position: absolute;
+    right: 0.36rem;
+    top: 2.2rem;
+    padding: 0.3rem 0.64rem 0.85rem 0.64rem;
+    z-index: 3;
+    display:none;
+}
+.tit-poplist li:nth-of-type(1) {
+    background: url(../images/homepage.png) no-repeat 0.5rem 0.4rem;
+    background-size: 1.02rem 0.96rem;
+}
+.tit-poplist li:nth-of-type(2) {
+    background: url(../images/search.png) no-repeat 0.5rem 0.4rem;
+    background-size: 1.02rem 0.9rem;
+}
+.tit-poplist li:nth-of-type(3) {
+    background: url(../images/buycar.png) no-repeat 0.5rem 0.4rem;
+    background-size: 1rem;
+}
+.tit-poplist li.tit-wode:nth-of-type(3) {
+    background: url(../images/my_icon.png) no-repeat 0.5rem 0.4rem;
+    background-size: 1rem;
+}
+.tit-poplist li:nth-of-type(4) {
+    background: url(../images/my_icon.png) no-repeat 0.5rem 0.4rem;
+    background-size: 0.9rem;
+}
+.tit-poplist li a {
+    display: block;
+    width: 100%;
+    height: 1.5rem;
+    margin-top: 0.6rem;
+    color: #00BA97;
+    font-size: 0.73rem;
+    padding-left: 2rem;
+    text-align: left;
+}
+
+.mt38{
+	margin-top: 0.81rem;
+}

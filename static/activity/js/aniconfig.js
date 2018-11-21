@@ -1,0 +1,22 @@
+var aniConfig=[
+    {
+        name:'earthProject',//地球
+        index:1
+    },
+    {
+        name:'merryGoRoundProject',//旋转木马
+        index:2
+    },
+    {
+        name:'screwProject',//螺旋
+        index:3
+    },
+    {
+        name:'bambooTubesProject',//竹筒
+        index:4
+    },
+    {
+        name:'tileProject',//平铺
+        index:5
+    }
+]
